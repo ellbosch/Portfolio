@@ -7,9 +7,7 @@ $(document).ready(function() {
 
 		// cover page at top
 		if (windowTop > coverPageMax) {
-			nav.css("position", "fixed");
 			nav.css("background-color", "rgba(255, 255, 255, 0.7)");
-			nav.css("top", "0");
 		// section 1 at top
 		} else if (windowTop > $("#sec1").position().top) {
 			// change color of sec1 div
@@ -21,9 +19,8 @@ $(document).ready(function() {
 			// change color of sec3 div
 			activateNavSec("sec3");
 		} else {
-			// make sure nav bar is not fixed if we are at top of page
-			nav.css("position", "relative");
-			nav.css("background-color", "#EEEEEE");
+			// nav-bar background is not transparent at top of page
+			nav.css("background-color", "rgba(255, 255, 255, 0.0)");
 		}
 	});
 });
