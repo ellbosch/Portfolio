@@ -27,6 +27,19 @@ body {
 	font-weight: lighter;
 	padding-top: 75px;
 }
+#scroll-button {
+	position: absolute;
+	bottom: 0px;
+	font-family: 'Open Sans', sans-serif;
+	left: 50%;
+	margin-left: -50px;
+	border: none;
+	background-color: rgba(150, 173, 180, 0.7);
+	color: #EEEEEE;
+	height: 50px;
+	width: 140px;
+	font-size: 30px;
+}
 #content {
 	margin: 0 50px 0 50px;
 	z-index: 10;
