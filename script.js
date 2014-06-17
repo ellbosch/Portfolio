@@ -1,4 +1,7 @@
 $(document).ready(function() {
+	// bootstrap scroll-spy
+	$("#content").scrollspy({ target: "#navbar" });
+/*
 	var nav = $("#nav");
 	var coverPageMax = $("#cover-page").height();
 
@@ -22,9 +25,9 @@ $(document).ready(function() {
 			// nav-bar background is not transparent at top of page
 			nav.css("background-color", "rgba(255, 255, 255, 0.0)");
 		}
-	});
+	});*/
 });
-
+/*
 var activateNavSec = function(section) {
 	console.log(section);
 
@@ -38,4 +41,4 @@ var activateNavSec = function(section) {
 		else
 			$(secArray[i]).css("background-color", activatedColor);
 	}
-};
+};*/

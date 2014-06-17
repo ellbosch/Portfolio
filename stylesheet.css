@@ -32,13 +32,20 @@ body {
 	bottom: 0px;
 	font-family: 'Open Sans', sans-serif;
 	left: 50%;
-	margin-left: -50px;
+	margin-left: -70px;
+	margin-bottom: 30px;
 	border: none;
-	background-color: rgba(150, 173, 180, 0.7);
-	color: #EEEEEE;
-	height: 50px;
-	width: 140px;
+	background-color: rgba(238, 238, 238, 0.80);
+	color: white;
+	height: 120px;
+	width: 120px;
 	font-size: 30px;
+	text-align: center;
+	border-radius: 60px;
+}
+#scroll-button p {
+	display: block;
+	margin-top: 15px;
 }
 #content {
 	margin: 0 50px 0 50px;
@@ -52,7 +59,7 @@ h2 {
 	width: 100%;
 	text-align: center;
 }
-#nav {
+#navbar {
 	/*margin: -50px;*/
 	width: 100%;
 	/*background-color: #EEEEEE;*/
@@ -61,18 +68,18 @@ h2 {
 	position: fixed;
 	top: 0;
 }
-#nav ul {
+#navbar ul {
 	list-style-type: none;
 	margin: 0;
 	padding: 0;
 	text-align: center;
 }
-#nav li {
+#navbar li {
 	text-align: center;
 	vertical-align: center;
 	display: inline-block;
 }
-#nav a {
+#navbar a {
 	display: inline-block;
 	text-decoration: none;
 	padding: 15px 40px;
