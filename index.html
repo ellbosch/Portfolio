@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Fonts -->
   <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,700|Roboto:400,100,300|Oswald:400,700' rel='stylesheet' type='text/css'>
   <!-- Bootstrap -->
-  <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-  <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+  <link rel="stylesheet/less" href="bootstrap/less/bootstrap.less" media="all" />
   <!-- Custom CSS to override Bootstrap -->
   <link rel="stylesheet" type="text/css" href="stylesheet.css">
 </head>
-<body>
+<body data-spy="scroll" data-target="#navbar">
   <div id="cover-page" class="container-fluid">
     <h1>Elliot Boschwitz</h1>
     <div id="scroll-button">
@@ -25,14 +25,14 @@
       <li><a href="#contact">contact</a></li>
     </ul>
   </div>
-  <div data-spy="scroll" data-target="#navbar" id="content">
-    <div id="about">
+  <div class="container">
+    <section id="about">
       <h2>section 1</h2>
       <p>derp derp de derpity derpy derpy dumb derp derp de derpity derpy derpy dumbderp derp de derpity derpy derpy dumbderp derp de derpity derpy derpy dumbderp derp de derpity derpy derpy dumbderp derp de derpity derpy derpy dumbderp derp de derpity derpy derpy dumbderp derp de derpity derpy derpy dumbderp derp de derpity derpy derpy dumbderp derp de derpity derpy derpy dumbderp derp de derpity derpy derpy dumbderp derp de derpity derpy derpy dumbderp derp de derpity derpy derpy dumb</p>
       <p>derp derp de derpity derpy derpy dumbderp derp de derpity derpy derpy dumbderp derp de derpity derpy derpy dumbderp derp de derpity derpy derpy dumbderp derp de derpity derpy derpy dumbderp derp de derpity derpy derpy dumbderp derp de derpity derpy derpy dumbderp derp de derpity derpy derpy dumbderp derp de derpity derpy derpy dumbderp derp de derpity derpy derpy dumbderp derp de derpity derpy derpy dumbderp derp de derpity derpy derpy dumb</p>
       <p>derp.</p>
-    </div>
-    <div id="projects">
+    </section>
+    <section id="projects">
       <h2>section 2</h2>
       <p>derp</p>
       <p>derp</p>
@@ -54,8 +54,8 @@
       <p>derp</p>
       <p>derp</p>
       <p>derp</p>
-    </div>
-    <div id="skills">
+    </section>
+    <section id="skills">
       <h2>section 3</h2>
       <p>derp</p>
       <p>derp</p>
@@ -65,16 +65,16 @@
       <p>derp</p>
       <p>derp</p>
       <p>derp</p>
-    </div>
-    <div id="contact">
+    </section>
+    <section id="contact">
       <h2>section 4</h2>
       <p>I can be contacted herpa derp!</p>
-    </div>
+    </section>
   </div>
 
   <!-- scripts -->
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-  <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+  <script src="bootstrap/dist/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="script.js"></script>
 </body>
 </html>
