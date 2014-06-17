@@ -58,6 +58,8 @@ h2 {
 	font-family: helvetica;
 	width: 100%;
 	text-align: center;
+	padding-top: 100px;
+	padding-bottom: 70px;
 }
 #navbar {
 	/*margin: -50px;*/
@@ -86,6 +88,12 @@ h2 {
 	color: #EEEEEE;
 	vertical-align: middle;
 	font-family: 'Open Sans', sans-serif;
+}
+#navbar li.active a {
+	color: #333;
+}
+#navbar a:hover {
+	color: #000;
 }
 
 

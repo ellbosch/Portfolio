@@ -1,6 +1,10 @@
 $(document).ready(function() {
 	// bootstrap scroll-spy
 	$("#content").scrollspy({ target: "#navbar" });
+
+
+	// http://stackoverflow.com/questions/11421408/bootstrap-scrollspy-doesnt-work-inside-tabs
+
 /*
 	var nav = $("#nav");
 	var coverPageMax = $("#cover-page").height();
