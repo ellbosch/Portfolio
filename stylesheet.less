@@ -1,0 +1,110 @@
+/*@import "bootstrap/less/bootstrap.less";*/
+
+@coverPageColor: #EEEEEE;
+@titleFonts: 'Oswald', sans-serif, "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande";
+@bodyFonts: 'Open Sans', sans-serif, "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande";
+
+/*******************************
+			MIXINS
+*******************************/
+.Cover {
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+
+body {
+	margin: 0;
+	top: 0;
+}
+#cover-page {
+	/*background-color: #EEEEEE;*/
+	height: 100vh;
+	width: 100%;
+	top: 0;
+	overflow: hidden;
+	z-index: -10;
+	display: table;
+	position: relative;
+	background: url("sf.png") no-repeat center center fixed;
+	.Cover;
+}
+#cover-page h1 {
+	text-align: center;
+	/*color: #3A539B;*/
+	color: #EEEEEE;
+	font-family: @titleFonts;
+	font-size: 80px;
+	letter-spacing: 10px;
+	font-weight: lighter;
+	padding-top: 75px;
+}
+#scroll-button {
+	position: absolute;
+	bottom: 0px;
+	font-family: @bodyFonts;
+	left: 50%;
+	margin-left: -70px;
+	margin-bottom: 30px;
+	padding-top: 10px;
+	border: none;
+	background-color: rgba(238, 238, 238, 0.80);
+	color: white;
+	height: 120px;
+	width: 120px;
+	font-size: 30px;
+	text-align: center;
+	border-radius: 60px;
+}
+#scroll-button p {
+	display: block;
+	margin-top: 15px;
+}
+#navbar {
+	width: 100%;
+	z-index: 100;
+	height: 50px;
+	position: fixed;
+	top: 0;
+	ul {
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
+		text-align: center;
+		li {
+			text-align: center;
+			vertical-align: center;
+			display: inline-block;
+		}
+		li.active a {
+			color: blue;
+			background-color: red;
+		}
+		a {
+			display: inline-block;
+			text-decoration: none;
+			padding: 15px 40px;
+			color: #EEEEEE;
+			vertical-align: middle;
+			font-family: @bodyFonts;
+		}
+		a:hover {
+			color: #000;
+		}
+	}
+}
+#content {
+	div p {
+		font-family: @bodyFonts;
+	}
+	h2 {
+		text-align: center;
+		font-family: @bodyFonts;
+		width: 100%;
+		text-align: center;
+		padding-top: 80px;
+		padding-bottom: 70px;
+	}
+}
+

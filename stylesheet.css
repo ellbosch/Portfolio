@@ -1,93 +1,103 @@
+/*@import "bootstrap/less/bootstrap.less";*/
+/*******************************
+			MIXINS
+*******************************/
+.Cover {
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
 body {
-	margin: 0;
-	top: 0;
+  margin: 0;
+  top: 0;
 }
 #cover-page {
-	/*background-color: #EEEEEE;*/
-	height: 100vh;
-	width: 100%;
-	top: 0;
-	overflow: hidden;
-	z-index: -10;
-	display: table;
-	position: relative;
-	background: url("sf.png") no-repeat center center fixed;
-	-webkit-background-size: cover;
-	-moz-background-size: cover;
-	-o-background-size: cover;
-	background-size: cover;
+  /*background-color: #EEEEEE;*/
+  height: 100vh;
+  width: 100%;
+  top: 0;
+  overflow: hidden;
+  z-index: -10;
+  display: table;
+  position: relative;
+  background: url("sf.png") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
 #cover-page h1 {
-	text-align: center;
-	/*color: #3A539B;*/
-	color: #EEEEEE;
-	font-family: 'Oswald', sans-serif, "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande";
-	font-size: 80px;
-	letter-spacing: 10px;
-	font-weight: lighter;
-	padding-top: 75px;
+  text-align: center;
+  /*color: #3A539B;*/
+  color: #EEEEEE;
+  font-family: 'Oswald', sans-serif, "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande";
+  font-size: 80px;
+  letter-spacing: 10px;
+  font-weight: lighter;
+  padding-top: 75px;
 }
 #scroll-button {
-	position: absolute;
-	bottom: 0px;
-	font-family: 'Open Sans', sans-serif;
-	left: 50%;
-	margin-left: -70px;
-	margin-bottom: 30px;
-	border: none;
-	background-color: rgba(238, 238, 238, 0.80);
-	color: white;
-	height: 120px;
-	width: 120px;
-	font-size: 30px;
-	text-align: center;
-	border-radius: 60px;
+  position: absolute;
+  bottom: 0px;
+  font-family: 'Open Sans', sans-serif, "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande";
+  left: 50%;
+  margin-left: -70px;
+  margin-bottom: 30px;
+  padding-top: 10px;
+  border: none;
+  background-color: rgba(238, 238, 238, 0.8);
+  color: white;
+  height: 120px;
+  width: 120px;
+  font-size: 30px;
+  text-align: center;
+  border-radius: 60px;
 }
 #scroll-button p {
-	display: block;
-	margin-top: 15px;
-}
-h2 {
-	text-align: center;
-	font-family: helvetica;
-	width: 100%;
-	text-align: center;
-	padding-top: 100px;
-	padding-bottom: 70px;
+  display: block;
+  margin-top: 15px;
 }
 #navbar {
-	/*margin: -50px;*/
-	width: 100%;
-	/*background-color: #EEEEEE;*/
-	z-index: 100;
-	height: 50px;
-	position: fixed;
-	top: 0;
+  width: 100%;
+  z-index: 100;
+  height: 50px;
+  position: fixed;
+  top: 0;
 }
 #navbar ul {
-	list-style-type: none;
-	margin: 0;
-	padding: 0;
-	text-align: center;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  text-align: center;
 }
-#navbar li {
-	text-align: center;
-	vertical-align: center;
-	display: inline-block;
+#navbar ul li {
+  text-align: center;
+  vertical-align: center;
+  display: inline-block;
 }
-#navbar a {
-	display: inline-block;
-	text-decoration: none;
-	padding: 15px 40px;
-	color: #EEEEEE;
-	vertical-align: middle;
-	font-family: 'Open Sans', sans-serif;
+#navbar ul li.active a {
+  color: blue;
+  background-color: red;
 }
-#navbar li.active a {
-	color: #333;
+#navbar ul a {
+  display: inline-block;
+  text-decoration: none;
+  padding: 15px 40px;
+  color: #EEEEEE;
+  vertical-align: middle;
+  font-family: 'Open Sans', sans-serif, "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande";
 }
-#navbar a:hover {
-	color: #000;
+#navbar ul a:hover {
+  color: #000;
 }
-
-
+#content div p {
+  font-family: 'Open Sans', sans-serif, "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande";
+}
+#content h2 {
+  font-family: 'Open Sans', sans-serif, "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande";
+  width: 100%;
+  text-align: center;
+  padding-top: 80px;
+  padding-bottom: 70px;
+}

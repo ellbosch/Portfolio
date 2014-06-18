@@ -1,7 +1,15 @@
 $(document).ready(function() {
 	// bootstrap scroll-spy
-	$("#content").scrollspy({ target: "#navbar" });
+	$("body").scrollspy({ target: "#navbar" });
+	$('[data-spy="scroll"]').each(function () {
+  		var $spy = $(this).scrollspy('refresh');
+	});
+	$('#navbar').on('activate.bs.scrollspy', function () {
+  		console.log("YO MAMA");
 
+	});
+	$("#navbar").mousedown(alert("hellooo"));
+});
 
 	// http://stackoverflow.com/questions/11421408/bootstrap-scrollspy-doesnt-work-inside-tabs
 
@@ -29,9 +37,9 @@ $(document).ready(function() {
 			// nav-bar background is not transparent at top of page
 			nav.css("background-color", "rgba(255, 255, 255, 0.0)");
 		}
-	});*/
+	});
 });
-/*
+
 var activateNavSec = function(section) {
 	console.log(section);
 

@@ -5,7 +5,7 @@
   <!-- Fonts -->
   <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,700|Roboto:400,100,300|Oswald:400,700' rel='stylesheet' type='text/css'>
   <!-- Bootstrap -->
-  <link rel="stylesheet/less" href="bootstrap/less/bootstrap.less" media="all" />
+  <link rel="stylesheet" text="text/css" href="bootstrap/dist/css/bootstrap.css">
   <!-- Custom CSS to override Bootstrap -->
   <link rel="stylesheet" type="text/css" href="stylesheet.css">
 </head>
@@ -17,7 +17,7 @@
       <span class="glyphicon glyphicon-chevron-down"></span>
     </div>
   </div>
-  <div class="nav" id="navbar">
+  <div class="nav" id="navbar" data-spy="affix">
     <ul>
       <li><a href="#about">about</a></li>
       <li><a href="#projects">projects</a></li>
@@ -25,14 +25,14 @@
       <li><a href="#contact">contact</a></li>
     </ul>
   </div>
-  <div class="container">
-    <section id="about">
+  <div class="container" id="content">
+    <div id="about">
       <h2>section 1</h2>
       <p>derp derp de derpity derpy derpy dumb derp derp de derpity derpy derpy dumbderp derp de derpity derpy derpy dumbderp derp de derpity derpy derpy dumbderp derp de derpity derpy derpy dumbderp derp de derpity derpy derpy dumbderp derp de derpity derpy derpy dumbderp derp de derpity derpy derpy dumbderp derp de derpity derpy derpy dumbderp derp de derpity derpy derpy dumbderp derp de derpity derpy derpy dumbderp derp de derpity derpy derpy dumbderp derp de derpity derpy derpy dumb</p>
       <p>derp derp de derpity derpy derpy dumbderp derp de derpity derpy derpy dumbderp derp de derpity derpy derpy dumbderp derp de derpity derpy derpy dumbderp derp de derpity derpy derpy dumbderp derp de derpity derpy derpy dumbderp derp de derpity derpy derpy dumbderp derp de derpity derpy derpy dumbderp derp de derpity derpy derpy dumbderp derp de derpity derpy derpy dumbderp derp de derpity derpy derpy dumbderp derp de derpity derpy derpy dumb</p>
       <p>derp.</p>
-    </section>
-    <section id="projects">
+    </div>
+    <div id="projects">
       <h2>section 2</h2>
       <p>derp</p>
       <p>derp</p>
@@ -54,8 +54,8 @@
       <p>derp</p>
       <p>derp</p>
       <p>derp</p>
-    </section>
-    <section id="skills">
+    </div>
+    <div id="skills">
       <h2>section 3</h2>
       <p>derp</p>
       <p>derp</p>
@@ -65,11 +65,11 @@
       <p>derp</p>
       <p>derp</p>
       <p>derp</p>
-    </section>
-    <section id="contact">
+    </div>
+    <div id="contact">
       <h2>section 4</h2>
       <p>I can be contacted herpa derp!</p>
-    </section>
+    </div>
   </div>
 
   <!-- scripts -->
