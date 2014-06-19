@@ -17,8 +17,13 @@ $(document).ready(function() {
 	$(window).scroll(function() {
 		if ($(document).scrollTop() < 100) {
   			$("#aboutTab a").css('color', '#EEEEEE');
+  			window.moveTo($("#about").position());
   		} else {
   			$("#aboutTab.active > a").css('color', 'red');
   		}
 	});
+	// $("#scroll-button").click(function() {
+	// 	alert("AHA!");
+	// 	window.location=$(this).find("a").attr("href"); 
+	// });
 });
