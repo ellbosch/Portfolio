@@ -7,8 +7,18 @@ $(document).ready(function() {
 	$('#navbar').on('activate.bs.scrollspy', function () {
 		$(".nav li a").css('color', '#EEEEEE');
   		var currentItem = $(".nav li.active > a").text();
-  		$(".nav li.active > a").css('color', 'red');
 
-      	console.log(currentItem);
+  		console.log("window pos: " + $(document).scrollTop() + "; about pos: " + $("#about").position().top);
+  		//if ($(document).scrollTop() > $("#about").position().top) {
+  			$(".nav li.active > a").css('color', 'red');
+  		//}
+	});
+	// make sure all nav elements are deactive
+	$(window).scroll(function() {
+		if ($(document).scrollTop() < 100) {
+  			$("#aboutTab a").css('color', '#EEEEEE');
+  		} else {
+  			$("#aboutTab.active > a").css('color', 'red');
+  		}
 	});
 });
