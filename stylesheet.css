@@ -12,7 +12,6 @@ body {
   top: 0;
 }
 #cover-page {
-  /*background-color: #EEEEEE;*/
   height: 100vh;
   width: 100%;
   top: 0;
@@ -26,7 +25,8 @@ body {
   -o-background-size: cover;
   background-size: cover;
   background-attachment: fixed;
-  background-size: 110% 110%;
+  background-size: 110& auto;
+  background-position: center center;
 }
 #cover-page h1 {
   text-align: center;
@@ -43,6 +43,7 @@ body {
   bottom: 0px;
   font-family: 'Open Sans', sans-serif, "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande";
   left: 50%;
+  right: 50%;
   margin-left: -70px;
   margin-bottom: 30px;
   padding-top: 10px;
