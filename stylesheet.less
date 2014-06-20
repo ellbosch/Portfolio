@@ -28,22 +28,25 @@ body {
 	position: relative;
 	background: url("sf.png") no-repeat center center fixed;
 	.Cover;
+	background-attachment: fixed;
+	background-size: 110% 110%;
 }
 #cover-page h1 {
 	text-align: center;
-	/*color: #3A539B;*/
 	color: #EEEEEE;
 	font-family: @titleFonts;
 	font-size: 80px;
 	letter-spacing: 10px;
 	font-weight: lighter;
 	padding-top: 75px;
+	position: relative;
 }
 #scroll-button {
 	position: absolute;
 	bottom: 0px;
 	font-family: @bodyFonts;
 	left: 50%;
+	right: 50%;
 	margin-left: -70px;
 	margin-bottom: 30px;
 	padding-top: 10px;
@@ -109,10 +112,6 @@ body {
 		}
 	}
 }
-/*#navbar ul li a.active {
-	color: blue;
-	background-color: red;
-}*/
 #content {
 	div p {
 		font-family: @bodyFonts;
