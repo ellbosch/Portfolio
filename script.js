@@ -36,7 +36,7 @@ $(document).ready(function() {
 
 		if (didScroll) {
 			didScroll = false;
-
+/*
 			// animate to about div
 			if (posTop < ($("#cover-page").height() / 4)) {
 				$('html, body').animate({
@@ -49,7 +49,7 @@ $(document).ready(function() {
 					scrollTop: 0
 				}, 1000);
 			}
-
+*/
 /****************************************************
 	note to self: make rubber band effect with jquery animations by
 	animating window down when window doesn't scroll to certain height
@@ -66,9 +66,9 @@ $(document).ready(function() {
 	$.stellar();
 
 	// fix position of scroll div when window resizes
-	$(window).resize(function() {
-		$("#scroll-button").css('left','50%');
-		$("#scroll-button").css('right','50%');
-	});
+	// $(window).resize(function() {
+	// 	$("#scroll-button").css('left','50%');
+	// 	$("#scroll-button").css('right','50%');
+	// });
 
 });
