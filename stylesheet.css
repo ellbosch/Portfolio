@@ -27,10 +27,10 @@ body {
   background-attachment: fixed;
   background-size: 110& auto;
   background-position: center center;
+  color: #EEEEEE;
+  text-align: center;
 }
 #cover-page h1 {
-  text-align: center;
-  color: #EEEEEE;
   font-family: 'Oswald', sans-serif, "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande";
   font-size: 80px;
   letter-spacing: 10px;
@@ -38,25 +38,62 @@ body {
   padding-top: 75px;
   position: relative;
 }
-#scroll-button {
-  position: absolute;
-  bottom: 0px;
+#cover-page #scroll-div {
+  font-size: 90px;
+  -webkit-animation: pulse 5s;
+  animation: pulse 5s;
+  -moz-animation: pulse 5s;
+  -webkit-animation-iteration-count: infinite;
+  -animation-iteration-count: infinite;
+  -moz-animation-count: infinite;
   font-family: 'Open Sans', sans-serif, "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande";
+  position: absolute;
+  bottom: 50px;
   left: 50%;
-  /*margin-left: -70px;
-	margin-bottom: 30px;*/
-  margin: 0 -60px 30px;
-  padding-top: 10px;
-  border: none;
-  background-color: rgba(238, 238, 238, 0.8);
-  color: white;
-  height: 120px;
-  width: 120px;
-  font-size: 30px;
+  margin-left: -50px;
+  height: 100px;
+  width: 100px;
   text-align: center;
-  border-radius: 60px;
 }
-/*#scroll-button a {
+@-webkit-keyframes pulse {
+  0% {
+    color: #EEEEEE;
+  }
+  50% {
+    color: rgba(238, 238, 238, 0.5);
+  }
+  100% {
+    color: #EEEEEE;
+  }
+}
+@keyframes pulse {
+  0% {
+    color: #EEEEEE;
+  }
+  100% {
+    color: #94DBFF;
+  }
+  100% {
+    color: #EEEEEE;
+  }
+}
+/*#scroll-button {
+	position: absolute;
+	bottom: 0px;
+	font-family: @bodyFonts;
+	left: 50%;
+	margin: 0 -60px 30px;
+	padding-top: 10px;
+	border: none;
+	background-color: rgba(238, 238, 238, 0.80);
+	color: white;
+	height: 120px;
+	width: 120px;
+	font-size: 30px;
+	text-align: center;
+	.Border-radius(60px);
+}*/
+/*#scroll-link {
 	z-index: 5000;
 	display: block;
 	position: absolute;

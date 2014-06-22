@@ -1,5 +1,7 @@
 $(document).ready(function() {
 	var didScroll = false;
+	var isAtTop = true;
+
 
 	// bootstrap scroll-spy
 	$("body").scrollspy({ target: "#navbar" });
@@ -16,18 +18,18 @@ $(document).ready(function() {
 	// make sure all nav elements are deactive
 	$(window).scroll(function() {
 		didScroll = true;
-		// scroll to next page if at beginning
-		// if ($(document).scrollTop() < ($("#cover-page").height() / 2)) {
-		// 	$('html, body').animate({
-		// 		scrollTop: $("#about").offset().top
-		// 	}, 1000);
-		// }
+	// 	scroll to next page if at beginning
+	// 	if ($(document).scrollTop() < ($("#cover-page").height() / 2)) {
+	// 		$('html, body').animate({
+	// 			scrollTop: $("#about").offset().top
+	// 		}, 1000);
+	// 	}
 
-		// if ($(document).scrollTop() < 100) {
-  // 			$("#aboutTab a").css('color', '#EEEEEE');
-  // 		} else {
-  // 			$("#aboutTab.active > a").css('color', 'red');
-  // 		}
+	// 	if ($(document).scrollTop() < 100) {
+ //  			$("#aboutTab a").css('color', '#EEEEEE');
+ //  		} else {
+ //  			$("#aboutTab.active > a").css('color', 'red');
+ //  		}
 	});
 
 	// set delay to performing actions involving a scroll event
@@ -36,20 +38,24 @@ $(document).ready(function() {
 
 		if (didScroll) {
 			didScroll = false;
-/*
+
 			// animate to about div
-			if (posTop < ($("#cover-page").height() / 4)) {
+			if (posTop > 20 && isAtTop) {
 				$('html, body').animate({
 					scrollTop: $("#about").offset().top
-				}, 1000).delay(800);
+				}, 1000);
+				isAtTop = false;
+				$("#aboutTab.active > a").css('color', 'red');
 			// animate to top
-			} else if (posTop < $("#cover-page").height() * 0.75 &&
-				posTop > ($("cover-page").height() / 4)) {
+			} else if (posTop < $("#cover-page").offset() - 100 &&
+				(!isAtTop)) {
+				console.log("should scroll to top");
 				$('html, body').animate({
 					scrollTop: 0
 				}, 1000);
+				isAtTop = true;
 			}
-*/
+
 /****************************************************
 	note to self: make rubber band effect with jquery animations by
 	animating window down when window doesn't scroll to certain height
@@ -64,11 +70,5 @@ $(document).ready(function() {
 
 	// parallelx animations, dawg
 	$.stellar();
-
-	// fix position of scroll div when window resizes
-	// $(window).resize(function() {
-	// 	$("#scroll-button").css('left','50%');
-	// 	$("#scroll-button").css('right','50%');
-	// });
 
 });

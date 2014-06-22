@@ -12,6 +12,20 @@
 	-o-background-size: cover;
 	background-size: cover;
 }
+.Animate(@name; @length; @iteration) {
+	-webkit-animation: @name @length;
+	animation: @name @length;
+	-moz-animation: @name @length;
+
+	-webkit-animation-iteration-count: @iteration;
+	-animation-iteration-count: @iteration;
+	-moz-animation-count: @iteration;
+}
+.Border-radius(@radius) {
+ 	-webkit-border-radius: @radius;
+ 	-moz-border-radius: @radius;
+    border-radius: @radius;
+}
 
 body {
 	margin: 0;
@@ -30,24 +44,48 @@ body {
 	background-attachment: fixed;
 	background-size: 110& auto;
 	background-position: center center;
-}
-#cover-page h1 {
-	text-align: center;
 	color: #EEEEEE;
-	font-family: @titleFonts;
-	font-size: 80px;
-	letter-spacing: 10px;
-	font-weight: lighter;
-	padding-top: 75px;
-	position: relative;
+	text-align: center;
+	
+	h1 {
+		font-family: @titleFonts;
+		font-size: 80px;
+		letter-spacing: 10px;
+		font-weight: lighter;
+		padding-top: 75px;
+		position: relative;
+	}
+
+	#scroll-div {
+		font-size: 90px;
+		.Animate(pulse; 5s; infinite);
+		font-family: @bodyFonts;
+		position: absolute;
+		bottom: 50px;
+		left: 50%;
+		margin-left: -50px;
+		height: 100px;
+		width: 100px;
+		text-align: center;
+	}
 }
-#scroll-button {
+
+@-webkit-keyframes pulse {
+	0% {color: #EEEEEE;}
+	50% {color: rgba(238, 238, 238, 0.5);}
+	100% {color: #EEEEEE;}
+}
+@keyframes pulse {
+	0% {color: #EEEEEE;}
+	100% {color: #94DBFF;}
+	100% {color: #EEEEEE;}
+}
+
+/*#scroll-button {
 	position: absolute;
 	bottom: 0px;
 	font-family: @bodyFonts;
 	left: 50%;
-	/*margin-left: -70px;
-	margin-bottom: 30px;*/
 	margin: 0 -60px 30px;
 	padding-top: 10px;
 	border: none;
@@ -57,9 +95,9 @@ body {
 	width: 120px;
 	font-size: 30px;
 	text-align: center;
-	border-radius: 60px;
-}
-/*#scroll-button a {
+	.Border-radius(60px);
+}*/
+/*#scroll-link {
 	z-index: 5000;
 	display: block;
 	position: absolute;
