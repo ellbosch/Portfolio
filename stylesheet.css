@@ -141,7 +141,7 @@ body {
   background-color: rgba(0, 0, 0, 0);
 }
 #navbar ul a.active {
-  color: red;
+  color: ##2ecc71;
 }
 #content div p {
   font-family: 'Open Sans', sans-serif, "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande";

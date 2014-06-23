@@ -12,24 +12,12 @@ $(document).ready(function() {
 		$(".nav li a").css('color', '#EEEEEE');
   		var currentItem = $(".nav li.active > a").text();
 
-		$(".nav li.active > a").css('color', 'red');
+		$(".nav li.active > a").css('color', '#2ecc71');
 	});
 
 	// make sure all nav elements are deactive
 	$(window).scroll(function() {
 		didScroll = true;
-	// 	scroll to next page if at beginning
-	// 	if ($(document).scrollTop() < ($("#cover-page").height() / 2)) {
-	// 		$('html, body').animate({
-	// 			scrollTop: $("#about").offset().top
-	// 		}, 1000);
-	// 	}
-
-	// 	if ($(document).scrollTop() < 100) {
- //  			$("#aboutTab a").css('color', '#EEEEEE');
- //  		} else {
- //  			$("#aboutTab.active > a").css('color', 'red');
- //  		}
 	});
 
 	// set delay to performing actions involving a scroll event
@@ -40,21 +28,23 @@ $(document).ready(function() {
 			didScroll = false;
 
 			// animate to about div
-			if (posTop > 20 && isAtTop) {
+			if (posTop > 0 && isAtTop) {
 				$('html, body').animate({
 					scrollTop: $("#about").offset().top
-				}, 1000);
+				}, 1000).delay(1200);
 				isAtTop = false;
-				$("#aboutTab.active > a").css('color', 'red');
+				$("#aboutTab.active > a").css('color', '#2ecc71');
 			// animate to top
-			} else if (posTop < $("#cover-page").offset() - 100 &&
-				(!isAtTop)) {
-				console.log("should scroll to top");
+			} /*else if (posTop < $("#cover-page").height() &&
+				!isAtTop) {
+
+
+		console.log("pos: " + posTop + "; cov-page: " + $("#cover-page").height());
 				$('html, body').animate({
 					scrollTop: 0
-				}, 1000);
+				}, 1000).delay(1200);
 				isAtTop = true;
-			}
+			}*/
 
 /****************************************************
 	note to self: make rubber band effect with jquery animations by
@@ -68,7 +58,7 @@ $(document).ready(function() {
 		}
 	}, 250);
 
-	// parallelx animations, dawg
+	// parallex, dawg
 	$.stellar();
 
 });
