@@ -6158,7 +6158,7 @@ body {
   -o-background-size: cover;
   background-size: cover;
   background-attachment: fixed;
-  background-size: 110& auto;
+  background-size: 110%;
   background-position: center center;
   color: #EEEEEE;
   text-align: center;
@@ -6260,12 +6260,6 @@ body {
 #content div > h2 {
   padding: 60px 0 60px 0;
 }
-#content div p {
-  margin-left: auto;
-  margin-right: auto;
-  max-width: 600px;
-  padding: 0 10px 0 10px;
-}
 #content #about {
   background-color: #eeeeee;
   color: #000;
@@ -6273,23 +6267,43 @@ body {
   width: 100%;
   height: 100%;
 }
+#content #about p {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 600px;
+  padding: 0 10px 0 10px;
+}
 #content #projects {
-  background-color: #eeeeee;
+  background: url("italy.png") no-repeat center center fixed;
+  background-color: rgba(255, 255, 255, 0.7);
+  background-attachment: fixed;
+  background-size: 110%;
+  /*		background-color: @backgroundGrey;
+*/
   font-size: 18px;
   color: black;
 }
 #content #projects h2 {
-  background-color: #FFF;
+  /*background-color: #FFF;*/
+  color: #2ecc71;
 }
 #content #projects .row {
-  background-color: #FFF;
+  /*			background-color: #FFF;
+*/
   margin: 40px 40px 0 40px;
+  background-color: rgba(255, 255, 255, 0.5);
 }
-#content #projects .row #logo {
+#content #projects .row p {
+  margin: 0 20px 0 40px;
+}
+#content #projects #hal span {
+  font-family: 'Exo', sans-serif;
+  color: #3A539B;
+  font-size: 80px;
+  font-weight: bold;
+  width: 400px;
   display: block;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 47.5px 0 47.5px 30px;
+  text-align: center;
 }
 #content p {
   font-family: 'Open Sans', sans-serif, "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande";
