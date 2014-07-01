@@ -1,4 +1,7 @@
 $(document).ready(function() {
+	// parallax, dawg
+	var s = skrollr.init();
+
 	var didScroll = false;
 	var isAtTop = true;
 
@@ -86,8 +89,4 @@ $(document).ready(function() {
 			}
 		}
 	}, 250);
-
-	// parallex, dawg
-	$.stellar();
-
 });
