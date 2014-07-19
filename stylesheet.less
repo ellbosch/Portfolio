@@ -28,43 +28,46 @@
 	-moz-border-radius: @radius;
 	border-radius: @radius;
 }
-
-body {
-	margin: 0;
-	top: 0;
-}
 #transparency {
 	position: absolute;
 	top: 0;
 	height: 100%;
 	width: 100%;
-	background-color: rgba(238, 238, 238, 0.5);
-	z-index: 0;
+/*	background-color: rgba(238, 238, 238, 0.5);
+*/	z-index: 0;
+	#clouds {
+		border: 1px solid black;
+		position: fixed;
+		bottom: 0;
+		z-index: 1;
+	}
 }
 #cover-page {
 	height: 100vh;
 	width: 100%;
 	top: 0;
 	overflow: hidden;
-	z-index: -10;
+	z-index: -100;
 	background: url("sf.png") no-repeat center center fixed;
 	.Cover;
 	background-attachment: fixed;
 	color: #EEEEEE;
 	text-align: center;
-
+	padding-bottom: 200%;
 	h1 {
 		font-family: @titleFonts;
 		font-size: 80px;
 		letter-spacing: 10px;
 		padding-top: 75px;
-		position: relative;
+		position: fixed;
+		width: 100%;
+		text-align: center;
 	}
 	#scroll-div {
 		font-size: 90px;
 		.Animate(pulse; 5s; infinite);
 		font-family: @bodyFonts;
-		position: absolute;
+		position: fixed;
 		bottom: 50px;
 		left: 50%;
 		margin-left: -50px;
@@ -126,9 +129,12 @@ body {
 	top: 0;
 	width: 100%;
 	padding: 0 0 0 0;
+	z-index: 10;
+	position: relative;
 	p {
 		font-family: @bodyFonts;
 		font-size: 22px;
+		z-index: 20;
 	}
 	h2 {
 		text-align: center;
@@ -163,7 +169,9 @@ body {
 		}
 	}
 	#projects {
-		/*background: url("italy.png") no-repeat center center fixed;
+		/*	FOR STATIC PICTURE
+
+		background: url("italy.png") no-repeat center center fixed;
 		background-attachment: fixed;
 		.Cover;*/
 		font-size: 18px;
@@ -195,28 +203,32 @@ body {
 			display: block;
 			text-align: center;
 		}
-	}
-	#contact {
-		background-color: #22313F;
-		color: @backgroundGrey;
 		#resume {
-			height: 100px;
-			width: 200px;
-			padding: 10px 10px 10px 10px;
-			border-radius: 3px;
-			display: block;
-			margin: -130px auto 0 auto;
+			height: 150px;
+			width: 150px;
+/*			padding: 10px 10px 10px 10px;
+*/			display: block;
+			margin: 20px auto 0 auto;
 			background-color: #16A085;
-			img {
+			.Border-radius(1000px);
+/*			img {
 				height: 100%;
 				width: auto;
 				margin-right: 30px;
 				background-color: white;
-			}
-			span {
+			}*/
+			/*span {
 				text-align: center;
+			}*/
+			p {
+				vertical-align: middle;
+				line-height: 150px;
 			}
 		}
+	}
+	#contact {
+		background-color: #22313F;
+		color: @backgroundGrey;
 		.row {
 			text-align: center;
 			img {

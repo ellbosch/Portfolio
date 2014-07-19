@@ -6140,24 +6140,27 @@ button.close {
   -o-background-size: cover;
   background-size: cover;
 }
-body {
-  margin: 0;
-  top: 0;
-}
 #transparency {
   position: absolute;
   top: 0;
   height: 100%;
   width: 100%;
-  background-color: rgba(238, 238, 238, 0.5);
+  /*	background-color: rgba(238, 238, 238, 0.5);
+*/
   z-index: 0;
+}
+#transparency #clouds {
+  border: 1px solid black;
+  position: fixed;
+  bottom: 0;
+  z-index: 1;
 }
 #cover-page {
   height: 100vh;
   width: 100%;
   top: 0;
   overflow: hidden;
-  z-index: -10;
+  z-index: -100;
   background: url("sf.png") no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
@@ -6166,13 +6169,16 @@ body {
   background-attachment: fixed;
   color: #EEEEEE;
   text-align: center;
+  padding-bottom: 200%;
 }
 #cover-page h1 {
   font-family: 'Oswald', sans-serif, "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande";
   font-size: 80px;
   letter-spacing: 10px;
   padding-top: 75px;
-  position: relative;
+  position: fixed;
+  width: 100%;
+  text-align: center;
 }
 #cover-page #scroll-div {
   font-size: 90px;
@@ -6183,7 +6189,7 @@ body {
   -animation-iteration-count: infinite;
   -moz-animation-count: infinite;
   font-family: 'Open Sans', sans-serif, "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande";
-  position: absolute;
+  position: fixed;
   bottom: 50px;
   left: 50%;
   margin-left: -50px;
@@ -6255,10 +6261,13 @@ body {
   top: 0;
   width: 100%;
   padding: 0 0 0 0;
+  z-index: 10;
+  position: relative;
 }
 #content p {
   font-family: 'Open Sans', sans-serif, "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande";
   font-size: 22px;
+  z-index: 20;
 }
 #content h2 {
   font-weight: lighter;
@@ -6292,7 +6301,9 @@ body {
   padding: 0 10px 0 10px;
 }
 #content #projects {
-  /*background: url("italy.png") no-repeat center center fixed;
+  /*	FOR STATIC PICTURE
+
+		background: url("italy.png") no-repeat center center fixed;
 		background-attachment: fixed;
 		.Cover;*/
   font-size: 18px;
@@ -6325,27 +6336,34 @@ body {
   display: block;
   text-align: center;
 }
+#content #projects #resume {
+  height: 150px;
+  width: 150px;
+  /*			padding: 10px 10px 10px 10px;
+*/
+  display: block;
+  margin: 20px auto 0 auto;
+  background-color: #16A085;
+  -webkit-border-radius: 1000px;
+  -moz-border-radius: 1000px;
+  border-radius: 1000px;
+  /*			img {
+				height: 100%;
+				width: auto;
+				margin-right: 30px;
+				background-color: white;
+			}*/
+  /*span {
+				text-align: center;
+			}*/
+}
+#content #projects #resume p {
+  vertical-align: middle;
+  line-height: 150px;
+}
 #content #contact {
   background-color: #22313F;
   color: #eeeeee;
-}
-#content #contact #resume {
-  height: 100px;
-  width: 200px;
-  padding: 10px 10px 10px 10px;
-  border-radius: 3px;
-  display: block;
-  margin: -130px auto 0 auto;
-  background-color: #16A085;
-}
-#content #contact #resume img {
-  height: 100%;
-  width: auto;
-  margin-right: 30px;
-  background-color: white;
-}
-#content #contact #resume span {
-  text-align: center;
 }
 #content #contact .row {
   text-align: center;
