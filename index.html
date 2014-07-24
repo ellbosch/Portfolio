@@ -10,9 +10,7 @@
   <link rel="stylesheet" type="text/css" href="stylesheet.css">
 </head>
 <body data-spy="scroll" data-target="#navbar">
-  <div id="transparency">
-   <canvas id="clouds" height="2000px" width="2000px"></canvas>
-  </div>
+  <div id="clouds" height="2000px" width="2000px"></div>
   <div id="cover-page" class="container-fluid">
 
     <!-- <h1>Elliot Boschwitz</h1> -->
@@ -84,10 +82,11 @@
   </div>
 
   <!-- scripts -->
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script href="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script type="text/javascript" src="jquery.js"></script>
   <script type="text/javascript" src="skrollr.min.js"></script>
   <script src="bootstrap/dist/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="kinetic.js"></script>
-  <script type="text/javascript" src="script.js"></script>
+  <script type="text/javascript" src="script.js" defer="defer"></script>
 </body>
 </html>

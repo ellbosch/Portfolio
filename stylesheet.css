@@ -6140,20 +6140,12 @@ button.close {
   -o-background-size: cover;
   background-size: cover;
 }
-#transparency {
-  position: absolute;
-  top: 0;
-  height: 100%;
-  width: 100%;
-  /*	background-color: rgba(238, 238, 238, 0.5);
-*/
-  z-index: 0;
-}
-#transparency #clouds {
-  border: 1px solid black;
+#clouds {
   position: fixed;
   bottom: 0;
   z-index: 1;
+  background: rgba(0, 0, 0, 0);
+  overflow: hidden;
 }
 #cover-page {
   height: 100vh;
