@@ -1,9 +1,12 @@
 $(document).ready(function() {
 
-	// set kinetic stage
+	/*********************************************************************
+		-- INITIALIZE FOG SCENE --
+	*********************************************************************/
+
 	var fog_stage = new Kinetic.Stage({
 		container: 'clouds',
-		width: 2000,
+		width: $(window).width(),
 		height: $(window).height()
 	});
 
@@ -11,41 +14,61 @@ $(document).ready(function() {
 	initFogBackground();
 	initFog(fog_stage.getWidth(), fog_stage.getHeight(), 0.20);
 
+	// show/hide elements on page load
+	delayInitialElements();
+
+
+	/*********************************************************************
+		-- WINDOW SCROLL/RESIZE DEBOUNCERS --
+	*********************************************************************/
+
 	// handle window resizing events with smart resize
 	$(window).smartresize(function() {
 		fog_stage = new Kinetic.Stage({
 			container: 'clouds',
-			width: 2000,
+			width: $(window).width(),
 			height: $(window).height()
 		});
-
 		initFogBackground();
 		initFog(fog_stage.getWidth(), fog_stage.getHeight(), 0.20);
 	});
 
 	var didScroll = false;
 	var didClearFog = false;
+	var didClearSpanTitle = false;
 	$(window).scroll(function() {
 	    didScroll = true;
 	    scroll_debounce;
 	});
+
 	var scroll_debounce = setInterval(function() {
 		if (didScroll) {
 			didScroll = false;
+
+			// fade in span title in cover-page
+			if ($(window).scrollTop() <= 20 && didClearSpanTitle) {
+				didClearSpanTitle = false;
+				$("#spanTitle").fadeIn(500, "linear");
+			}
+
+			// fade out span title in cover-page
+			if ($(window).scrollTop() > 20 && !didClearSpanTitle) {
+				didClearSpanTitle = true;
+				$("#spanTitle").fadeOut(500, "linear");
+			}
+
 			// clear fog if user passes offset of content div
 		    if (!didClearFog &&	$(window).scrollTop() > $("#content").offset().top) {
 		    	didClearFog = true;
-
-		    	// set fog_stage to a new stage to clear it
-		    	fog_stage = new Kinetic.Stage({
-		    		container: 'clouds',
-		    		width: 0,
-		    		height: 0
-		    	});		        
+		    	$("#clouds").hide();
+				fog_stage.destroyChildren();
+		    	fog_stage.destroy();		        
 		    }
+
 		    // recreate fog scene if user scrolls back up to cover page area
-		    else if (didClearFog &&	$(window).scrollTop() < $("#content").offset().top) {
+		   	if (didClearFog &&	$(window).scrollTop() < $("#content").offset().top) {
 		    	didClearFog = false;
+		    	$("#clouds").show();
 
 		    	// recreate fog scene
 		    	fog_stage = new Kinetic.Stage({
@@ -59,6 +82,33 @@ $(document).ready(function() {
 		    }
 		}
 	}, 250);
+
+
+
+	/*********************************************************************
+		DELAY ELEMENTS FUNCTION CALL
+	*********************************************************************/
+
+	// funciton call that fades in initial elements
+	function delayInitialElements() {
+		$("#loadingPage h2").hide();
+
+		// fade out loading screen and fade in clouds
+		setTimeout(function () {
+			$("#loadingPage").fadeOut(3000, "linear");
+			$("#clouds").fadeIn("slow");
+
+			setTimeout(function() {
+				$("#scrollDiv").fadeIn(1000, "linear").css("display", "inline-block");
+				$("#spanTitle").fadeIn(1500, "linear");
+			}, 2000);
+		}, 500);
+	};
+
+
+	/*********************************************************************
+		-- FOG SCENE FUNCTION CALLS --
+	*********************************************************************/
 
 	// create background sunset gradient
 	function initFogBackground() {
@@ -83,7 +133,9 @@ $(document).ready(function() {
 		var anim = new Kinetic.Animation(function(frame) {
 			var scrollMax = $("#content").offset().top;
     		var scrollTop = $(window).scrollTop();
-    		rect_bg.setOpacity(Math.max((scrollMax - scrollTop - 800), 1) / scrollMax);
+    		rect_bg.setOpacity(Math.max((scrollMax - scrollTop - 1000), 1) / scrollMax);
+
+    		if (didClearFog) anim.stop();
     	}, layer_bg);
 
     	anim.start();		
@@ -98,9 +150,9 @@ $(document).ready(function() {
 		var radians = 0;
 		while (radians <= Math.PI / 2) {
 			var yStart = ctx_height - ($(window).height() * fog_height) - (100 * Math.sin(radians));		// y start of clouds
-			var speed = Math.max(50 * Math.sin((Math.PI / 2) - radians), 10);
+			var speed = Math.max(70 * Math.sin((Math.PI / 2) - radians), 10);
 			createRollingFog(ctx_width + 200, yStart, speed);
-			radians += Math.PI / 10;
+			radians += Math.PI / 6;
 		}
 	}
 
@@ -162,13 +214,13 @@ $(document).ready(function() {
     // draw cloud
     function drawCloud(x_begin, cloudPoints, layer) {
     	var ctx_height = fog_stage.getHeight();
-    	var ctx_width = fog_stage.getWidth();
     	var x_end = cloudPoints[cloudPoints.length - 1].end_x;
     	var cloud_length = x_begin - x_end;
+    	var color_rand = Math.floor(Math.random() * 20) + 228;
 
     	var cloud = new Kinetic.Shape({
     		x: x_begin,
-    		fill: "rgba(238, 238, 238, 0.8)",
+    		fill: "rgba(238, 238, 238, 0.4)",
 
     		sceneFunc: function(ctx) {
     			var x = this.x();
@@ -204,20 +256,30 @@ $(document).ready(function() {
     		if (dist - cloud_length + x_begin > -600 && !hasDrawnNewCloud) {
     			createRollingFog((x_begin + dist) - cloud_length + 300, y_begin, cloud_speed);
     			hasDrawnNewCloud = true;
-    		} else if (dist - cloud_length + x_begin > ctx_width + 5000 && hasDrawnNewCloud) {
+    		} else if ((dist - cloud_length + x_begin > ctx_width + 5000 && hasDrawnNewCloud) ||
+    					didClearFog) {
     			layer.remove(cloud);
     			fog_stage.remove(layer);
     			anim.stop();
     		}
     		cloud.setX(dist);
-    		cloud.setOpacity(Math.max((scrollMax - scrollTop - 1200), 500) / scrollMax);
+    		cloud.setOpacity(Math.max(((scrollMax - scrollTop) / (2/3 * scrollMax)), 0.4));
     	}, layer);
 
     	anim.start();
     }
 
+    /*********************************************************************
+		-- PARALLAX PLUGIN --
+	*********************************************************************/
+
 	// parallax, dawg
-	//var s = skrollr.init();
+	var s = skrollr.init({
+		render: function(data) {
+            //Debugging - Log the current scroll position.
+            //console.log(data.curTop);
+        }
+	});
 });
 
 (function($,sr){

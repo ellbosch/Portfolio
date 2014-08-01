@@ -2,23 +2,32 @@
 <html>
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Elliot Boschwitz</title>
   <!-- Fonts -->
-  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,700|Oswald:400,300|Exo:400,800' rel='stylesheet' type='text/css'> 
+  <link href='https://fonts.googleapis.com/css?family=Bubblegum+Sans|Open+Sans:400,300,700|Oswald:400,300|Exo:400,800' rel='stylesheet' type='text/css'> 
   <!-- Bootstrap -->
   <link rel="stylesheet" text="text/css" href="bootstrap/dist/css/bootstrap.css">
   <!-- Custom CSS to override Bootstrap -->
   <link rel="stylesheet" type="text/css" href="stylesheet.css">
 </head>
-<body data-spy="scroll" data-target="#navbar">
-  <div id="clouds"></div>
+<body>
+  <div id="loadingPage">
+    <h2>loading...</h2>
+  </div>
   <div id="cover-page" class="container-fluid">
+    <span id="spanTitle">Elliot Boschwitz's Portfolio</span>
+    <div id="scrollDiv" data-start="-webkit-translate(30%,0%);"
+                        data-1000-start="-webkit-translate(200%,0);">
+      <h2>scroll</h2>
+      <span class="glyphicon glyphicon-chevron-down"></span>
+    </div>
     <!-- <h1>Elliot Boschwitz</h1> -->
   </div>
-
+  <div id="clouds"></div>
   <div class="container" id="content">
     <div id="about">
       <h2>About Me</h2>
-      <p>I am a backend engineer, mobile app developer, and aspiring UI/UX designer. I am senior at the University of Pennsylvania, studying Cognitive Science and Computer Science.</p>
+      <p>I am a backend engineer, mobile app developer, and UI/UX designer. I am senior at the University of Pennsylvania, studying Cognitive Science and Computer Science.</p>
       <p>I am profoundly interested by the ways users interact with software. My goal is to minimize the gap between the two, as a means of creating a seamless, unobtrusive experience.</p>
     </div>
     <div id="projects">

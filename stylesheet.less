@@ -1,5 +1,3 @@
-@import "bootstrap/less/bootstrap.less";
-
 @coverPageColor: #EEEEEE;
 @backgroundGrey: #EEEEEE;
 @titleFonts: 'Oswald', sans-serif, "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande";
@@ -14,6 +12,12 @@
 	-o-background-size: cover;
 	background-size: cover;
 }
+
+.CoverIE(@file) {
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src=@file, sizingMethod='scale');
+	-ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src=@file, sizingMethod='scale')";
+}
+
 .Animate(@name; @length; @iteration) {
 	-webkit-animation: @name @length;
 	animation: @name @length;
@@ -29,26 +33,48 @@
 	border-radius: @radius;
 }
 
+#loadingPage {
+	position: fixed;
+	height: 100%;
+	width: 100%;
+	background-color: #000;
+	z-index: 100;
+	overflow: hidden;
+
+	h2 {
+		text-align: center;
+		font-weight: lighter;
+		font-family: @bodyFonts;
+		color: rgb(238, 238, 238);
+		margin-top: 20px;
+	}
+}
+
 #clouds {
+	display: none;
 	position: fixed;
 	bottom: 0;
 	z-index: 1;
 	background: rgba(0, 0, 0, 0.0);
 	overflow: hidden;
+	width: 100%;
+	height: 100%;
 }
 
 #cover-page {
-	height: 100vh;
+	height: 100%;
 	width: 100%;
 	top: 0;
 	overflow: hidden;
-	z-index: -100;
-	background: url("sf.png") no-repeat center center fixed;
+	z-index: 2;
+	background: url("sf-min.jpg") no-repeat center center fixed;
 	.Cover;
+	.CoverIE("sf.png");
 	background-attachment: fixed;
 	color: #EEEEEE;
 	text-align: center;
 	padding-bottom: 200%;
+	transition: all 5s ease-in;
 	h1 {
 		font-family: @titleFonts;
 		font-size: 80px;
@@ -58,17 +84,39 @@
 		width: 100%;
 		text-align: center;
 	}
-	#scroll-div {
-		font-size: 90px;
-		.Animate(pulse; 5s; infinite);
+
+	#spanTitle {
+		display: none;
 		font-family: @bodyFonts;
-		position: fixed;
-		bottom: 50px;
+		color: rgba(238, 238, 238, 0.8);
+		z-index: 3;
+		top: 20px;
 		left: 50%;
-		margin-left: -50px;
-		height: 100px;
-		width: 100px;
+		margin-left: -100px;
+		position: fixed;
+		font-weight: lighter;
+		font-size: 16px;
+		width: 200px;
+	}
+
+	#scrollDiv {
+		display: none;
+		z-index: 3;
+		font-family: @bodyFonts;
 		text-align: center;
+		position: absolute;
+		color: #eee;
+		width: 100%;
+		top: 30%;
+		left: 0;
+		h2 {
+			font-size: 70px;
+			font-family: 'Bubblegum Sans', cursive;
+		}
+		span {
+			font-size: 50px;
+			.Animate(pulse; 8s; infinite);
+		}
 	}
 }
 
@@ -77,54 +125,18 @@
 	50% {color: rgba(238, 238, 238, 0.5);}
 	100% {color: #EEEEEE;}
 }
+
 @keyframes pulse {
 	0% {color: #EEEEEE;}
-	100% {color: #94DBFF;}
+	50% {color: rgba(238, 238, 238, 0.5);}
 	100% {color: #EEEEEE;}
 }
-#scroll-button p {
-	display: block;
-	margin-top: 15px;
-}
-#navbar {
-	width: 100%;
-	z-index: 15;
-	height: 50px;
-	position: fixed;
-	top: 0;
-	ul {
-		list-style-type: none;
-		margin: 0;
-		padding: 0;
-		text-align: center;
-		li {
-			text-align: center;
-			vertical-align: center;
-			display: inline-block;
-			font-weight: bold;
-			a {
-				display: inline-block;
-				text-decoration: none;
-				padding: 15px 40px;
-				color: @coverPageColor;
-				vertical-align: middle;
-				font-family: @bodyFonts;
-			}
-			a:hover {
-				color: black;
-				background-color: rgba(0,0,0,0);
-			}
-			a.active {
-				color: ##2ecc71;
-			}
-		}
-	}
-}
+
 #content {
 	top: 0;
 	width: 100%;
 	padding: 0 0 0 0;
-	z-index: 10;
+	z-index: 20;
 	position: relative;
 	p {
 		font-family: @bodyFonts;
@@ -136,7 +148,6 @@
 		font-weight: lighter;
 		font-family: @bodyFonts;
 		width: 100%;
-		text-align: center;
 		padding-bottom: 40px;
 		font-size: 70px;
 		margin: 0 0 0 0;
