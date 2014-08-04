@@ -33,13 +33,16 @@
 	border-radius: @radius;
 }
 
+html, body {
+	overflow-x: hidden;
+}
+
 #loadingPage {
 	position: fixed;
 	height: 100%;
 	width: 100%;
 	background-color: #000;
 	z-index: 100;
-	overflow: hidden;
 
 	h2 {
 		text-align: center;
@@ -51,19 +54,16 @@
 }
 
 #canvas_fog {
-/*	display: none;
-*/	position: fixed;
+	position: fixed;
 	bottom: 0;
 	z-index: 1;
 	background: rgba(0, 0, 0, 0.0);
-	overflow: hidden;
 }
 
 #cover-page {
 	height: 100%;
 	width: 100%;
 	top: 0;
-	overflow: hidden;
 	z-index: 2;
 	background: url("sf-min.jpg") no-repeat center center fixed;
 	.Cover;

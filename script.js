@@ -1,301 +1,343 @@
 $(document).ready(function() {
+	// global variable namespace for fog creation
+	var Fog = {
+		canvas: null,
+		context: null,
+		WIDTH: 0,
+		HEIGHT: 0, 
+		y_content: 0,
+		clouds_arr: null,
+		animCounter: 1
+	};
 
-	/*********************************************************************
-		-- INITIALIZE FOG SCENE --
-		*********************************************************************/
+	// creates animation callback for browswer
+	window.requestAnimFrame = (function() {
+		return window.requestAnimationFrame 			||
+		window.webkitRequestAnimationFrame 				||
+		window.mozRequestAnimationFrame    				||
+		function(callback) {
+			window.setTimeout(callback, 1000 / 60);
+		};
+	})();
 
-	// create fog scene
-	//initFogBackground();
-	initFog(0.20);
+	window.cancelRequestAnimFrame = (function() {
+	    return window.cancelAnimationFrame          	||
+	        window.webkitCancelRequestAnimationFrame    ||
+	        window.mozCancelRequestAnimationFrame       ||
+	        window.oCancelRequestAnimationFrame    		||
+	        window.msCancelRequestAnimationFrame        ||
+	        clearTimeout
+	})();
 
-	// show/hide elements on page load
-	delayInitialElements();
-
+	delayInitialElements();				// show/hide elements on page load
+	createCanvas();						// create canvas with animating fog
+	
+	// function call for creating canvas
+	function createCanvas() {
+		init();								// initialize canvas
+		animate();							// inimates cloud objects
+	}
 
 	/*********************************************************************
 		-- WINDOW SCROLL/RESIZE DEBOUNCERS --
-	*********************************************************************/
+	********************************************************************/
 
 	// handle window resizing events with smart resize
-	/*
 	$(window).smartresize(function() {
-		fog_stage = new Kinetic.Stage({
-			container: 'clouds',
-			width: $(window).width(),
-			height: $(window).height()
-		});
-		initFogBackground();
-		initFog(fog_stage.getWidth(), fog_stage.getHeight(), 0.20);
+		var animRequest = Fog.animRequest;
+
+		if (animRequest != null && Fog.canvas != null) {
+			cancelAnimationFrame(animRequest);		// clear requestAnimFrame
+			createCanvas();							// recreate canvas and redraw fog with new dimensions
+		}
 	});
 
-	var didScroll = false;
-	var didClearFog = false;
-	var didClearSpanTitle = false;
 	$(window).scroll(function() {
 		didScroll = true;
-		scroll_debounce;
+		setInterval(scroll_debounce, 250);
 	});
 
-	var scroll_debounce = setInterval(function() {
+	function scroll_debounce() {
+		var didScroll = Fog.didScroll;
+		var didClearFog = Fog.didClearFog;
+		var didClearSpanTitle = Fog.didClearSpanTitle;
+
 		if (didScroll) {
 			didScroll = false;
+			var scrollTop = $(window).scrollTop();
+			var scrollMax = Fog.y_content;
 
 			// fade in span title in cover-page
-			if ($(window).scrollTop() <= 20 && didClearSpanTitle) {
+			if (scrollTop <= 20 && didClearSpanTitle) {
 				didClearSpanTitle = false;
 				$("#spanTitle").fadeIn(500, "linear");
 			}
 
 			// fade out span title in cover-page
-			if ($(window).scrollTop() > 20 && !didClearSpanTitle) {
+			if (scrollTop > 20 && !didClearSpanTitle) {
 				didClearSpanTitle = true;
 				$("#spanTitle").fadeOut(500, "linear");
 			}
 
 			// clear fog if user passes offset of content div
-			if (!didClearFog &&	$(window).scrollTop() > $("#content").offset().top) {
+			if (!didClearFog &&	scrollTop > scrollMax) {
+				console.log("clear at: " + scrollTop);
 				didClearFog = true;
-				$("#clouds").hide();
-				fog_stage.destroyChildren();
-				fog_stage.destroy();		        
+				cancelAnimationFrame(Fog.animRequest);		// clear requestAnimFrame
+				Fog.context.clearRect(0, 0, Fog.WIDTH, Fog.HEIGHT);   
 			}
 
 		    // recreate fog scene if user scrolls back up to cover page area
-		    if (didClearFog &&	$(window).scrollTop() < $("#content").offset().top) {
+		    if (didClearFog &&	scrollTop < scrollMax) {
 		    	didClearFog = false;
-		    	$("#clouds").show();
-
-		    	// recreate fog scene
-		    	fog_stage = new Kinetic.Stage({
-		    		container: 'clouds',
-		    		width: 2000,
-		    		height: $(window).height()
-		    	});
-
-		    	initFogBackground();
-		    	initFog(fog_stage.getWidth(), fog_stage.getHeight(), 0.20);
+		    	
+		    	cancelAnimationFrame(Fog.animRequest);		// clear requestAnimFrame
+				createCanvas();							// recreate canvas and redraw fog with new dimensions
 		    }
 		}
-	}, 250); */
-
+	}
 
 
 	/*********************************************************************
 		DELAY ELEMENTS FUNCTION CALL
 	*********************************************************************/
 
+	function delayScrollandTitle() {
+		$("#scrollDiv").fadeIn(1000, "linear").css("display", "inline-block");
+
+		// fade in span title in cover-page
+		if ($(window).scrollTop() <= 20) {
+			didClearSpanTitle = false;
+			$("#spanTitle").fadeIn(500, "linear");
+		}
+	}
+
+	function fadeToScene() {
+		$("#loadingPage").fadeOut(3000, "linear");
+	}
+
 	// funciton call that fades in initial elements
 	function delayInitialElements() {
 		$("#loadingPage h2").hide();
 
 		// fade out loading screen and fade in clouds
-		setTimeout(function () {
-			$("#loadingPage").fadeOut(3000, "linear");
-			$("#clouds").fadeIn("slow");
-
-			setTimeout(function() {
-				$("#scrollDiv").fadeIn(1000, "linear").css("display", "inline-block");
-				$("#spanTitle").fadeIn(1500, "linear");
-			}, 2000);
-		}, 500);
+		setTimeout(fadeToScene, 500);
+		setTimeout(delayScrollandTitle, 2000);
 	};
 
 
 	/*********************************************************************
-		-- FOG SCENE BACKGROUND FUNCTION CALL --
+		-- CANVAS CREATION --
+	*********************************************************************/
+
+	// initializes canvas scene
+	function init() {
+		//Fog.canvas = $("#canvas_fog")[0];
+		var canvas = $("#canvas_fog")[0];
+
+		// set globals for scrollable booleans
+		Fog.didScroll = false;
+		Fog.didClearFog = false;
+		Fog.didClearSpanTitle = false;
+
+		if (canvas != null) {
+			canvas.width = $(window).width();
+			canvas.height = $(window).height();
+
+			// assign global variables
+			Fog.context = canvas.getContext('2d');
+			Fog.HEIGHT = canvas.height;
+			Fog.WIDTH = canvas.width;
+			Fog.y_content = $("#content").offset().top;
+			Fog.clouds_arr = createClouds(0.25);			// creates cloud objects
+		}
+	}
+
+	function animate() {
+		// get rAF
+		Fog.animRequest = requestAnimFrame(animate);
+		// draw canvas frame
+		draw();
+		// increment global counter
+		Fog.animCounter++;
+	}
+
+	// draws canvas cloud shapes
+	function draw() {
+		var ctx_height = Fog.HEIGHT;
+		var ctx_width = Fog.WIDTH;
+		var counter = Fog.animCounter;
+		var clouds = Fog.clouds_arr;
+		var context = Fog.context;
+		var scrollMax = Fog.y_content;
+
+		// clear canvas
+		context.clearRect(0, 0, ctx_width, ctx_height);
+		// draw background
+		drawBG(ctx_width, ctx_height, scrollMax, context);
+		// draw fog
+		drawFog(clouds, ctx_width, ctx_height, scrollMax, counter, context);
+	}
+
+
+	/*********************************************************************
+		-- CANVAS FOG SCENE --
 	*********************************************************************/
 
 	// create background sunset gradient
-	function initFogBackground() {
+	function drawBG(ctx_width, ctx_height, scrollMax, context) {
+		// set opacity of rectangle
+		var scrollTop = $(window).scrollTop();
+		var opacity = (scrollMax - (scrollTop * 1.5)) * 0.9 / scrollMax;
 
-		// create sunrise background
-		var layer_bg = new Kinetic.Layer();
-		var rect_bg = new Kinetic.Rect({
-			x: 0,
-			y: 0,
-			width: fog_stage.getWidth(),
-			height: fog_stage.getHeight(),
-			fillLinearGradientStartPoint: { x: 0, y: fog_stage.getHeight() },
-			fillLinearGradientEndPoint: { x: 0, y: 0 },
-			fillLinearGradientColorStops: [0.00, 'rgb(255, 135, 51)',
-			0.20, 'rgb(255, 192, 65)',
-			0.30, 'rgb(255, 246, 158)',
-			0.50, 'rgb(101, 201, 228)',
-			1.00, 'rgb(80, 168, 249)']
-		});
-		layer_bg.add(rect_bg);
-		fog_stage.add(layer_bg);
+		context.beginPath();
 
-		var anim = new Kinetic.Animation(function(frame) {
-			var scrollMax = $("#content").offset().top;
-			var scrollTop = $(window).scrollTop();
-			rect_bg.setOpacity(Math.max((scrollMax - scrollTop - 1000), 1) / scrollMax);
+		// create gradient
+		var grd = context.createLinearGradient(0, ctx_height, 0, 0);
+		grd.addColorStop(0.00, 'rgba(255, 135, 51, ' + opacity + ')');
+		grd.addColorStop(0.15, 'rgba(255, 192, 65, ' + opacity + ')');
+		grd.addColorStop(0.25, 'rgba(255, 246, 158, ' + opacity + ')');
+		grd.addColorStop(0.70, 'rgba(101, 201, 228, ' + opacity + ')');
+		grd.addColorStop(1.00, 'rgba(80, 168, 249, ' + opacity + ')');
 
-			if (didClearFog) anim.stop();
-		}, layer_bg);
-
-		anim.start();		
+		// fill shape with gradient
+		context.closePath();
+		context.fillStyle = grd;
+		context.rect(0, 0, ctx_width, ctx_height);
+		context.fill();
 	}
 
+	// draw fog on canvas
+	function drawFog(clouds, ctx_width, ctx_height, scrollMax, counter, context) {
+		// set opacity of clouds
+		var scrollTop = $(window).scrollTop();
+		var opacity = 0.25; //Math.max(((scrollMax - (scrollTop * 0.2)) * 0.1 / scrollMax), 0.25);
+
+		// iterate through every cloud
+		for (var i = 0; i < clouds.length; i++) {
+			var cloud = clouds[i];
+			var x_begin = cloud.x;
+			var y_begin = cloud.y;
+			var cloudPoints = cloud.curvePoints;
+			var dx = cloud.dx;
+
+	    	var x_end = cloudPoints[cloudPoints.length - 1].end_x;
+	    	var cloud_length = x_begin - x_end;
+
+	    	// start shape draw
+	    	context.fillStyle = "rgba(200, 200, 200, " + opacity + ")";
+	    	context.beginPath();
+	    	context.moveTo(x_begin, y_begin);
+
+	    	// draw quadratic curve points, and update the x values
+			for (var j = 0; j < cloudPoints.length; j++) {
+				var curve = cloudPoints[j];
+				var end_x = curve.end_x;
+				var end_y = curve.end_y;
+				var control_x = curve.control_x;
+				var control_y = curve.control_y;
+
+				context.quadraticCurveTo(control_x, control_y, end_x, end_y);
+				curve.control_x += dx;
+				curve.end_x += dx;
+			}
+
+		    // fill rest of shape
+		    context.lineTo(x_end, ctx_height);
+		    context.lineTo(x_begin, ctx_height);
+		    context.closePath();
+		    context.fill();
+
+		    // increment x property of cloud object
+		    cloud.x += dx;
+
+		    // push new cloud points if end of cloud is approaching viewport
+		    if (x_end > -(ctx_width/1440) * 500) {
+		    	var newCloudPoints = createCloudPoints(x_end, cloud.y, ctx_width, ctx_height);
+		    	cloud.curvePoints = cloudPoints.concat(newCloudPoints);
+		    }
+
+		    // only check for every 10 iterations of counter
+		    if (counter % 50 == 0) {
+			    // shift and remove cloud points if past the viewport
+			    while (cloudPoints.length > 1 && cloudPoints[0].end_x > ctx_width + ctx_width/14) {
+			    	cloud.y = cloudPoints.shift().end_y;
+			    }
+			    // restart counter
+			   	counter = 1;
+			}
+			counter++;
+		}
+	}
 
 	/*********************************************************************
 		-- FOG CREATION FUNCTION CALLS --
 	*********************************************************************/
 
-	var canvas, context;
-
-	function initFog(fog_height) {
-
-		// animation
-		window.requestAnimFrame = (function() {
-			return  window.requestAnimationFrame    ||
-			window.webkitRequestAnimationFrame 		||
-			window.mozRequestAnimationFrame    		||
-			function(callback) {
-				window.setTimeout(callback, 1000 / 60);
-			};
-		})();
-
-		init();
+	function createClouds(fog_height) {
+		var ctx_width = Fog.WIDTH;
+		var ctx_height = Fog.HEIGHT;
+		var ratio_x = ctx_width/1440;
+		var ratio_y = ctx_height/768;
 
 		// instantiate cloud objects(cloud-points, speed)
 		var clouds = [];
 
 		var radians = 0;
-		while (radians <= Math.PI / 2) {
+		while (radians <= (4 * Math.PI) / 10) {
 			// y "start" of clouds
-			var yStart = canvas.height - ($(window).height() * fog_height) - (100 * Math.sin(radians));
+			var yStart = ctx_height - (ctx_height * fog_height * ratio_y) - (100 * Math.sin(radians));
 			// velocity of cloud
-			var velocity = Math.max(70 * Math.sin((Math.PI / 2) - radians), 10);
+			var velocity = Math.sin((Math.PI / 2) - radians) * ratio_x * 2;
 			// genereate random cloud points
-			var cloudPoints = createCloudPoints(canvas.width, yStart);
+			var cloudPoints = createCloudPoints(ctx_width, yStart, ctx_width, ctx_height);
+			
+			// create cloud object
 			var cloud = {
 				curvePoints: cloudPoints,
-				x: canvas.width,
+				x: ctx_width,
 				y: yStart,
-				dx: velocity / 90
+				dx: velocity
 			};
+
+			// add cloud to global array
 			clouds.push(cloud);	
 
-			radians += Math.PI / 6;
+			radians += Math.PI / 20;
 		}
 
-		animate();
-
-		function init() {
-			canvas = $("#canvas_fog")[0];
-			canvas.width = $(window).width();
-			canvas.height = $(window).height();
-			context = canvas.getContext('2d');
-		}
-
-		function animate() {
-			requestAnimFrame(animate);
-			draw();
-		}
-
-
-		// UPDATE TO TAKE CLOUD OBJECT
-		function draw() {
-			// clear canvas
-			context.clearRect(0, 0, canvas.width, canvas.height);
-
-			// iterate through every cloud
-			for (var i = 0; i < clouds.length; i++) {
-				var cloud = clouds[i];
-				var x_begin = cloud.x;
-				var y_begin = cloud.y
-				var cloudPoints = cloud.curvePoints;
-
-		    	var x_end = cloudPoints[cloudPoints.length - 1].end_x;
-		    	var cloud_length = x_begin - x_end;
-
-		    	// start shape draw
-		    	context.fillStyle = "rgba(238, 238, 238, 0.4)";
-		    	context.beginPath();
-		    	context.moveTo(x_begin, y_begin);
-
-		    	// draw quadratic curve points, and update the x values
-				for (var j = 0; j < cloudPoints.length; j++) {
-					var curve = cloudPoints[j];
-					context.quadraticCurveTo(curve.control_x, curve.control_y, curve.end_x, curve.end_y);
-					curve.control_x += cloud.dx;
-					curve.end_x += cloud.dx;
-				}
-
-			    // fill rest of shape
-			    context.lineTo(x_end, canvas.height);
-			    context.lineTo(x_begin, canvas.height);
-			    context.closePath();
-			    context.fill();
-
-			    // increment x property of cloud object
-			    cloud.x += cloud.dx;
-
-			    // push new cloud points if end of cloud is approaching viewport
-			    if (x_end > -121) {
-			    	var quadCurvePoints = newCloudPoints(x_end, cloud.y);
-			    	cloudPoints.push(quadCurvePoints);
-			    }
-
-			    // shift and remove cloud points if past the viewport
-			    if (cloudPoints.length > 1 && cloudPoints[0].end_x > canvas.width + 121) {
-			    	var oldCloudPoints = cloudPoints.shift();
-			    	cloud.y = oldCloudPoints.end_y;
-			    }
-			}
-		}
-
-	/*
-		// create layers of animating clouds
-		var radians = 0;
-		while (radians <= Math.PI / 2) {
-			var yStart = ctx_height - ($(window).height() * fog_height) - (100 * Math.sin(radians));		// y start of clouds
-			var speed = Math.max(70 * Math.sin((Math.PI / 2) - radians), 10);
-			createRollingFog(ctx_width + 200, yStart, speed);
-			radians += Math.PI / 6;
-		}*/
+		return clouds;
 	}
-
-	// creates entire rolling fog scene
-/*	function createRollingFog(x_begin, y_begin, cloud_speed) {
-		var layer = new Kinetic.Layer();
-		fog_stage.add(layer);
-
-		// create points
-		var cloudPoints = createCloudPoints(x_begin, y_begin);
-
-		// create shape
-		var cloud = drawCloud(x_begin, cloudPoints, layer);
-
-		// create animation
-		var cloud_length = x_begin - cloudPoints[cloudPoints.length - 1].end_x;
-		createCloudAnim(x_begin, y_begin, cloud_length, cloud_speed, cloud, layer);
-	} */
 	
 	// assign points for curvatures of cloud
-	function createCloudPoints(x_begin, y_begin) {
-		var ctx_height = canvas.height;
-		var cloudCurvePoints = [];
+	function createCloudPoints(x_begin, y_begin, ctx_width, ctx_height) {
+		var cloudCurvePoints = [];		// instantiate array of cloud points to return
+
 		var curve_x = x_begin;
-		var cloud_length = canvas.width + 500;
+		var cloud_length = ctx_width + 500;
 
 		while (curve_x > x_begin - cloud_length) {
-			quadCurvePoints = newCloudPoints(curve_x, y_begin);		// creates object of points used for draw()
+			quadCurvePoints = newCloudPoints(curve_x, y_begin, ctx_width, ctx_height);		// creates object of points used for draw()
 			cloudCurvePoints.push(quadCurvePoints);
 			curve_x = quadCurvePoints.end_x;
 		}
 
+		//cloudCurvePoints[cloudCurvePoints.length-1].end_y = y_begin;
+
 		return cloudCurvePoints;
 	}
 
-	function newCloudPoints(curve_x, y_begin) {
-		// change in x between 60 and 120
-		var x_rand = Math.ceil(Math.random() * 60) + 100;
-		// change in y bewtween 0 and 10
-		var y_rand = Math.ceil(Math.random() * 40) + y_begin;
-		// curve height between 15 and 25
-		var curveHeight = Math.ceil(Math.random() * 10) + (y_begin - 15);
+	// assign one set of points
+	function newCloudPoints(curve_x, y_begin, ctx_width, ctx_height) {
+		var ratio_w = ctx_width/1440;
+		var ratio_y = ctx_height/1000;
+		// change in x
+		var x_rand = (Math.ceil(Math.random() * 60) + 100) * ratio_w;
+		// change in y
+		var y_rand = y_begin + ((Math.ceil(Math.random() * 30) - 20) * ratio_w);
+		// curve height
+		var curveHeight = y_rand - (Math.ceil(Math.random() * 30) * ratio_w);
+		
 		var x_new = curve_x - x_rand;
 
 		// create object of quadratric curve points
@@ -309,68 +351,10 @@ $(document).ready(function() {
 		return quadCurvePoints;
 	}
 
-/*
-    // draw cloud
-    function drawCloud(x_begin, cloudPoints, layer) {
-    	var ctx_height = fog_stage.getHeight();
-    	var x_end = cloudPoints[cloudPoints.length - 1].end_x;
-    	var cloud_length = x_begin - x_end;
-    	var color_rand = Math.floor(Math.random() * 20) + 228;
 
-    	var cloud = new Kinetic.Shape({
-    		x: x_begin,
-    		fill: "rgba(238, 238, 238, 0.4)",
-
-    		sceneFunc: function(ctx) {
-    			var x = this.x();
-    			ctx.beginPath();
-    			ctx.moveTo(x_begin + 100, ctx_height);
-
-    			for (var i = 0; i < cloudPoints.length; i++) {
-    				var curve = cloudPoints[i];
-    				ctx.quadraticCurveTo(curve.control_x, curve.control_y, curve.end_x, curve.end_y);
-    			}
-
-			    // fill rest of shape
-			    ctx.lineTo(x_begin, ctx_height);
-			    ctx.closePath();
-			    ctx.fillStrokeShape(this);
-			},
-		});
-    	layer.add(cloud);
-    	return cloud;
-    }
-
-    function createCloudAnim(x_begin, y_begin, cloud_length, cloud_speed, cloud, layer) {
-    	var ctx_height = fog_stage.getHeight();
-    	var ctx_width = fog_stage.getWidth();
-    	var velocity = cloud_speed;
-    	var hasDrawnNewCloud = false;
-    	var scrollMax = $("#content").offset().top;
-
-    	var anim = new Kinetic.Animation(function(frame) {
-    		var dist = velocity * (frame.time / 1000);
-    		var scrollTop = $(window).scrollTop();
-
-    		if (dist - cloud_length + x_begin > -600 && !hasDrawnNewCloud) {
-    			createRollingFog((x_begin + dist) - cloud_length + 300, y_begin, cloud_speed);
-    			hasDrawnNewCloud = true;
-    		} else if ((dist - cloud_length + x_begin > ctx_width + 5000 && hasDrawnNewCloud) ||
-    			didClearFog) {
-    			layer.remove(cloud);
-    			fog_stage.remove(layer);
-    			anim.stop();
-    		}
-    		cloud.setX(dist);
-    		cloud.setOpacity(Math.max(((scrollMax - scrollTop) / (2/3 * scrollMax)), 0.4));
-    	}, layer);
-
-    	anim.start();
-    }
-*/
     /*********************************************************************
 		-- PARALLAX PLUGIN --
-		*********************************************************************/
+	*********************************************************************/
 
 	// parallax, dawg
 	var s = skrollr.init({
