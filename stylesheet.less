@@ -34,7 +34,7 @@
 }
 
 html, body {
-	overflow-x: hidden;
+	width: 100%;
 }
 
 #loadingPage {
@@ -71,8 +71,9 @@ html, body {
 	background-attachment: fixed;
 	color: #EEEEEE;
 	text-align: center;
-	padding-bottom: 200%;
+	/*padding-bottom: 10%;*/
 	transition: all 5s ease-in;
+
 	h1 {
 		font-family: @titleFonts;
 		font-size: 80px;
@@ -107,11 +108,14 @@ html, body {
 		width: 100%;
 		top: 30%;
 		left: 0;
+		
 		h2 {
 			font-size: 70px;
 			font-family: 'Bubblegum Sans', cursive;
 		}
+		
 		span {
+			display: block;
 			font-size: 50px;
 			.Animate(pulse; 8s; infinite);
 		}

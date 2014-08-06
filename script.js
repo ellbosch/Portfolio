@@ -5,9 +5,12 @@ $(document).ready(function() {
 		context: null,
 		WIDTH: 0,
 		HEIGHT: 0, 
-		y_content: 0,
 		clouds_arr: null,
-		animCounter: 1
+		animCounter: 1,
+		// scrollable booleans
+		didScroll: false,
+		didClearFog: true,
+		didClearSpanTitle: true
 	};
 
 	// creates animation callback for browswer
@@ -53,7 +56,7 @@ $(document).ready(function() {
 	});
 
 	$(window).scroll(function() {
-		didScroll = true;
+		Fog.didScroll = true;
 		setInterval(scroll_debounce, 250);
 	});
 
@@ -63,34 +66,36 @@ $(document).ready(function() {
 		var didClearSpanTitle = Fog.didClearSpanTitle;
 
 		if (didScroll) {
-			didScroll = false;
+			Fog.didScroll = false;
 			var scrollTop = $(window).scrollTop();
-			var scrollMax = Fog.y_content;
+			var scrollMax = $("#content").offset().top;
 
 			// fade in span title in cover-page
 			if (scrollTop <= 20 && didClearSpanTitle) {
-				didClearSpanTitle = false;
+				Fog.didClearSpanTitle = false;
 				$("#spanTitle").fadeIn(500, "linear");
 			}
 
 			// fade out span title in cover-page
 			if (scrollTop > 20 && !didClearSpanTitle) {
-				didClearSpanTitle = true;
+				Fog.didClearSpanTitle = true;
 				$("#spanTitle").fadeOut(500, "linear");
 			}
 
 			// clear fog if user passes offset of content div
 			if (!didClearFog &&	scrollTop > scrollMax) {
-				console.log("clear at: " + scrollTop);
-				didClearFog = true;
+				Fog.didClearFog = true;
+				var width = Fog.WIDTH;
+				var height = Fog.HEIGHT;
+
 				cancelAnimationFrame(Fog.animRequest);		// clear requestAnimFrame
-				Fog.context.clearRect(0, 0, Fog.WIDTH, Fog.HEIGHT);   
+				Fog.context.clearRect(-width, -height, width * 2, height * 2);   
 			}
 
 		    // recreate fog scene if user scrolls back up to cover page area
 		    if (didClearFog &&	scrollTop < scrollMax) {
-		    	didClearFog = false;
-		    	
+		    	Fog.didClearFog = false;
+		   	
 		    	cancelAnimationFrame(Fog.animRequest);		// clear requestAnimFrame
 				createCanvas();							// recreate canvas and redraw fog with new dimensions
 		    }
@@ -104,10 +109,11 @@ $(document).ready(function() {
 
 	function delayScrollandTitle() {
 		$("#scrollDiv").fadeIn(1000, "linear").css("display", "inline-block");
+		Fog.didClearFog = false;
 
 		// fade in span title in cover-page
 		if ($(window).scrollTop() <= 20) {
-			didClearSpanTitle = false;
+			Fog.didClearSpanTitle = false;
 			$("#spanTitle").fadeIn(500, "linear");
 		}
 	}
@@ -132,13 +138,8 @@ $(document).ready(function() {
 
 	// initializes canvas scene
 	function init() {
-		//Fog.canvas = $("#canvas_fog")[0];
-		var canvas = $("#canvas_fog")[0];
-
-		// set globals for scrollable booleans
-		Fog.didScroll = false;
-		Fog.didClearFog = false;
-		Fog.didClearSpanTitle = false;
+		Fog.canvas = $("#canvas_fog")[0];
+		var canvas = Fog.canvas;
 
 		if (canvas != null) {
 			canvas.width = $(window).width();
@@ -148,8 +149,7 @@ $(document).ready(function() {
 			Fog.context = canvas.getContext('2d');
 			Fog.HEIGHT = canvas.height;
 			Fog.WIDTH = canvas.width;
-			Fog.y_content = $("#content").offset().top;
-			Fog.clouds_arr = createClouds(0.25);			// creates cloud objects
+			Fog.clouds_arr = createClouds(0.17);	// create cloud objects
 		}
 	}
 
@@ -169,14 +169,13 @@ $(document).ready(function() {
 		var counter = Fog.animCounter;
 		var clouds = Fog.clouds_arr;
 		var context = Fog.context;
-		var scrollMax = Fog.y_content;
 
 		// clear canvas
 		context.clearRect(0, 0, ctx_width, ctx_height);
-		// draw background
-		drawBG(ctx_width, ctx_height, scrollMax, context);
+		// draw background DISABLED RIGHT NOW
+		// drawBG(ctx_width, ctx_height, scrollMax, context);
 		// draw fog
-		drawFog(clouds, ctx_width, ctx_height, scrollMax, counter, context);
+		drawFog(clouds, ctx_width, ctx_height, counter, context);
 	}
 
 
@@ -186,9 +185,9 @@ $(document).ready(function() {
 
 	// create background sunset gradient
 	function drawBG(ctx_width, ctx_height, scrollMax, context) {
-		// set opacity of rectangle
+		/*// set opacity of rectangle
 		var scrollTop = $(window).scrollTop();
-		var opacity = (scrollMax - (scrollTop * 1.5)) * 0.9 / scrollMax;
+		var opacity = (scrollMax - (scrollTop * 1.5)) * 0.6 / scrollMax;
 
 		context.beginPath();
 
@@ -197,21 +196,23 @@ $(document).ready(function() {
 		grd.addColorStop(0.00, 'rgba(255, 135, 51, ' + opacity + ')');
 		grd.addColorStop(0.15, 'rgba(255, 192, 65, ' + opacity + ')');
 		grd.addColorStop(0.25, 'rgba(255, 246, 158, ' + opacity + ')');
-		grd.addColorStop(0.70, 'rgba(101, 201, 228, ' + opacity + ')');
+		grd.addColorStop(1.00, 'rgba(101, 201, 228, ' + opacity + ')');
 		grd.addColorStop(1.00, 'rgba(80, 168, 249, ' + opacity + ')');
 
 		// fill shape with gradient
 		context.closePath();
 		context.fillStyle = grd;
 		context.rect(0, 0, ctx_width, ctx_height);
-		context.fill();
+		context.fill();*/
 	}
 
 	// draw fog on canvas
-	function drawFog(clouds, ctx_width, ctx_height, scrollMax, counter, context) {
+	function drawFog(clouds, ctx_width, ctx_height, counter, context) {
 		// set opacity of clouds
 		var scrollTop = $(window).scrollTop();
-		var opacity = 0.25; //Math.max(((scrollMax - (scrollTop * 0.2)) * 0.1 / scrollMax), 0.25);
+		var scrollMax = $("#content").offset().top;
+		var colorFog = 238;
+		var opacity = Math.max(((1 - (0.5 * (scrollTop/scrollMax))) * 0.25), 0.15); //Math.max(((scrollMax - (scrollTop * 0.2)) * 0.1 / scrollMax), 0.25);
 
 		// iterate through every cloud
 		for (var i = 0; i < clouds.length; i++) {
@@ -225,7 +226,7 @@ $(document).ready(function() {
 	    	var cloud_length = x_begin - x_end;
 
 	    	// start shape draw
-	    	context.fillStyle = "rgba(200, 200, 200, " + opacity + ")";
+	    	context.fillStyle = "rgba(" + colorFog + ", " + colorFog + ", " + colorFog + ", " + opacity + ")";
 	    	context.beginPath();
 	    	context.moveTo(x_begin, y_begin);
 
@@ -284,9 +285,9 @@ $(document).ready(function() {
 		var clouds = [];
 
 		var radians = 0;
-		while (radians <= (4 * Math.PI) / 10) {
+		while (radians < Math.PI/2) {
 			// y "start" of clouds
-			var yStart = ctx_height - (ctx_height * fog_height * ratio_y) - (100 * Math.sin(radians));
+			var yStart = ctx_height - (ctx_height * fog_height) - (100 * Math.sin(radians) * ratio_y);
 			// velocity of cloud
 			var velocity = Math.sin((Math.PI / 2) - radians) * ratio_x * 2;
 			// genereate random cloud points
@@ -334,9 +335,9 @@ $(document).ready(function() {
 		// change in x
 		var x_rand = (Math.ceil(Math.random() * 60) + 100) * ratio_w;
 		// change in y
-		var y_rand = y_begin + ((Math.ceil(Math.random() * 30) - 20) * ratio_w);
+		var y_rand = y_begin + ((Math.ceil(Math.random() * 30) - 15) * ratio_w);
 		// curve height
-		var curveHeight = y_rand - (Math.ceil(Math.random() * 30) * ratio_w);
+		var curveHeight = y_rand - (Math.ceil(Math.random() * 50) * ratio_w);
 		
 		var x_new = curve_x - x_rand;
 
