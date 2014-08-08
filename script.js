@@ -1,4 +1,6 @@
 $(document).ready(function() {
+	// turn off overflow and hide the loading animation
+
 	// global variable namespace for fog creation
 	var Fog = {
 		canvas: null,
@@ -7,11 +9,20 @@ $(document).ready(function() {
 		HEIGHT: 0, 
 		clouds_arr: null,
 		animCounter: 1,
+		windowHeight: 0,
+		contentTop: 0,
 		// scrollable booleans
 		didScroll: false,
 		didClearFog: true,
-		didClearSpanTitle: true
+		didClearHeader: true,
+		didClearScrollDiv: true
 	};
+
+	// calculate certain globals
+	function initGlobals() {
+		Fog.windowHeight = $(window).height();
+		Fog.contentTop = $("#content").offset().top - Fog.windowHeight;
+	}
 
 	// creates animation callback for browswer
 	window.requestAnimFrame = (function() {
@@ -32,6 +43,7 @@ $(document).ready(function() {
 	        clearTimeout
 	})();
 
+	initGlobals();						// calculate global variables
 	delayInitialElements();				// show/hide elements on page load
 	createCanvas();						// create canvas with animating fog
 	
@@ -53,6 +65,9 @@ $(document).ready(function() {
 			cancelAnimationFrame(animRequest);		// clear requestAnimFrame
 			createCanvas();							// recreate canvas and redraw fog with new dimensions
 		}
+
+		// recalculate globals
+		initGlobals();
 	});
 
 	$(window).scroll(function() {
@@ -63,23 +78,29 @@ $(document).ready(function() {
 	function scroll_debounce() {
 		var didScroll = Fog.didScroll;
 		var didClearFog = Fog.didClearFog;
-		var didClearSpanTitle = Fog.didClearSpanTitle;
+		var didClearHeader = Fog.didClearHeader;
+		var didClearScrollDiv = Fog.didClearScrollDiv;
 
 		if (didScroll) {
 			Fog.didScroll = false;
 			var scrollTop = $(window).scrollTop();
-			var scrollMax = $("#content").offset().top;
+			var windowHeight = Fog.windowHeight
+			var contentTop = Fog.contentTop;
+			var scrollMax = contentTop + (windowHeight * 0.5);
 
-			// fade in span title in cover-page
-			if (scrollTop <= 20 && didClearSpanTitle) {
-				Fog.didClearSpanTitle = false;
-				$("#spanTitle").fadeIn(500, "linear");
-			}
+			// while fog is not cleared
+			if (!didClearFog) {
+				// fade in span title in cover-page
+				if (scrollTop <= 20 && didClearScrollDiv) {
+					Fog.didClearScrollDiv = false;
+					$("#scrollDiv").fadeIn(500, "linear");
+				}
 
-			// fade out span title in cover-page
-			if (scrollTop > 20 && !didClearSpanTitle) {
-				Fog.didClearSpanTitle = true;
-				$("#spanTitle").fadeOut(500, "linear");
+				// fade out span title in cover-page
+				if (scrollTop > 20 && !didClearScrollDiv) {
+					Fog.didClearScrollDiv = true;
+					$("#scrollDiv").fadeOut(500, "linear");
+				}
 			}
 
 			// clear fog if user passes offset of content div
@@ -88,16 +109,27 @@ $(document).ready(function() {
 				var width = Fog.WIDTH;
 				var height = Fog.HEIGHT;
 
+				// clear canvas scene
+				$("#canvas_fog").hide();
 				cancelAnimationFrame(Fog.animRequest);		// clear requestAnimFrame
-				Fog.context.clearRect(-width, -height, width * 2, height * 2);   
+				Fog.context.clearRect(-width, -height, width * 2, height * 2);
+
+				// remove clouds from heap
+				delete Fog.clouds_arr;
 			}
 
 		    // recreate fog scene if user scrolls back up to cover page area
-		    if (didClearFog &&	scrollTop < scrollMax) {
+		    if (didClearFog && scrollTop < scrollMax) {
 		    	Fog.didClearFog = false;
 		   	
 		    	cancelAnimationFrame(Fog.animRequest);		// clear requestAnimFrame
 				createCanvas();							// recreate canvas and redraw fog with new dimensions
+		    	$("#canvas_fog").fadeIn('slow');
+		    }
+
+		    // fade in content below cover-page
+		    if (scrollTop > contentTop && scrollTop < contentTop + 500) {
+		    	var opacity = (scrollTop - contentTop) / 500;
 		    }
 		}
 	}
@@ -107,14 +139,25 @@ $(document).ready(function() {
 		DELAY ELEMENTS FUNCTION CALL
 	*********************************************************************/
 
+	// funciton call that fades in initial elements
+	function delayInitialElements() {
+		$("html, body").css('overflow', 'auto');	// turn off overflow
+		$(".signal").hide();						// hide loading animation
+
+		// fade out loading screen and fade in clouds
+		setTimeout(fadeToScene, 500);
+		setTimeout(delayScrollandTitle, 2000);
+	};
+
 	function delayScrollandTitle() {
 		$("#scrollDiv").fadeIn(1000, "linear").css("display", "inline-block");
 		Fog.didClearFog = false;
+		Fog.didClearScrollDiv = false;
 
 		// fade in span title in cover-page
 		if ($(window).scrollTop() <= 20) {
-			Fog.didClearSpanTitle = false;
-			$("#spanTitle").fadeIn(500, "linear");
+			Fog.didClearHeader = false; 
+			$("#coverPageHeader").fadeIn(500, "linear");
 		}
 	}
 
@@ -122,14 +165,6 @@ $(document).ready(function() {
 		$("#loadingPage").fadeOut(3000, "linear");
 	}
 
-	// funciton call that fades in initial elements
-	function delayInitialElements() {
-		$("#loadingPage h2").hide();
-
-		// fade out loading screen and fade in clouds
-		setTimeout(fadeToScene, 500);
-		setTimeout(delayScrollandTitle, 2000);
-	};
 
 
 	/*********************************************************************
@@ -143,7 +178,7 @@ $(document).ready(function() {
 
 		if (canvas != null) {
 			canvas.width = $(window).width();
-			canvas.height = $(window).height();
+			canvas.height = $(window).height();  
 
 			// assign global variables
 			Fog.context = canvas.getContext('2d');
@@ -172,8 +207,7 @@ $(document).ready(function() {
 
 		// clear canvas
 		context.clearRect(0, 0, ctx_width, ctx_height);
-		// draw background DISABLED RIGHT NOW
-		// drawBG(ctx_width, ctx_height, scrollMax, context);
+	
 		// draw fog
 		drawFog(clouds, ctx_width, ctx_height, counter, context);
 	}
@@ -183,36 +217,13 @@ $(document).ready(function() {
 		-- CANVAS FOG SCENE --
 	*********************************************************************/
 
-	// create background sunset gradient
-	function drawBG(ctx_width, ctx_height, scrollMax, context) {
-		/*// set opacity of rectangle
-		var scrollTop = $(window).scrollTop();
-		var opacity = (scrollMax - (scrollTop * 1.5)) * 0.6 / scrollMax;
-
-		context.beginPath();
-
-		// create gradient
-		var grd = context.createLinearGradient(0, ctx_height, 0, 0);
-		grd.addColorStop(0.00, 'rgba(255, 135, 51, ' + opacity + ')');
-		grd.addColorStop(0.15, 'rgba(255, 192, 65, ' + opacity + ')');
-		grd.addColorStop(0.25, 'rgba(255, 246, 158, ' + opacity + ')');
-		grd.addColorStop(1.00, 'rgba(101, 201, 228, ' + opacity + ')');
-		grd.addColorStop(1.00, 'rgba(80, 168, 249, ' + opacity + ')');
-
-		// fill shape with gradient
-		context.closePath();
-		context.fillStyle = grd;
-		context.rect(0, 0, ctx_width, ctx_height);
-		context.fill();*/
-	}
-
 	// draw fog on canvas
 	function drawFog(clouds, ctx_width, ctx_height, counter, context) {
 		// set opacity of clouds
 		var scrollTop = $(window).scrollTop();
-		var scrollMax = $("#content").offset().top;
+		var scrollMax = Fog.contentTop;
 		var colorFog = 238;
-		var opacity = Math.max(((1 - (0.5 * (scrollTop/scrollMax))) * 0.25), 0.15); //Math.max(((scrollMax - (scrollTop * 0.2)) * 0.1 / scrollMax), 0.25);
+		var opacity = Math.max(0.25 * (1 - scrollTop/scrollMax), 0.10); //Math.max(((scrollMax - (scrollTop * 0.2)) * 0.1 / scrollMax), 0.25);
 
 		// iterate through every cloud
 		for (var i = 0; i < clouds.length; i++) {
@@ -335,7 +346,7 @@ $(document).ready(function() {
 		// change in x
 		var x_rand = (Math.ceil(Math.random() * 60) + 100) * ratio_w;
 		// change in y
-		var y_rand = y_begin + ((Math.ceil(Math.random() * 30) - 15) * ratio_w);
+		var y_rand = y_begin + ((Math.ceil(Math.random() * 30) - 15) * ratio_y);
 		// curve height
 		var curveHeight = y_rand - (Math.ceil(Math.random() * 50) * ratio_w);
 		
