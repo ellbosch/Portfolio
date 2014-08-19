@@ -1,6 +1,4 @@
 $(document).ready(function() {
-	// turn off overflow and hide the loading animation
-
 	// global variable namespace for fog creation
 	var Fog = {
 		canvas: null,
@@ -15,14 +13,9 @@ $(document).ready(function() {
 		didScroll: false,
 		didClearFog: true,
 		didClearHeader: true,
-		didClearScrollDiv: true
+		didClearScrollDiv: true,
+		areProjectsTop: false
 	};
-
-	// calculate certain globals
-	function initGlobals() {
-		Fog.windowHeight = $(window).height();
-		Fog.contentTop = $("#content").offset().top - Fog.windowHeight;
-	}
 
 	// creates animation callback for browswer
 	window.requestAnimFrame = (function() {
@@ -34,6 +27,7 @@ $(document).ready(function() {
 		};
 	})();
 
+	// cancels animation callback
 	window.cancelRequestAnimFrame = (function() {
 	    return window.cancelAnimationFrame          	||
 	        window.webkitCancelRequestAnimationFrame    ||
@@ -46,7 +40,24 @@ $(document).ready(function() {
 	initGlobals();						// calculate global variables
 	delayInitialElements();				// show/hide elements on page load
 	createCanvas();						// create canvas with animating fog
+
 	
+	/*********************************************************************
+		-- FUNCTIONS TO INITIALIZE SCENE --
+	********************************************************************/
+
+	// calculate certain globals
+	function initGlobals() {
+		Fog.windowHeight = $(window).height();
+		Fog.contentTop = $("#projects").offset().top;
+		setContentOpacity();
+	}
+
+	// adds opacity to projects div based on scroll
+	function setContentOpacity() {
+		$("#projects").css('opacity', Math.min(1 - (Fog.contentTop - $(window).scrollTop()) / (Fog.windowHeight), 1));
+	}
+
 	// function call for creating canvas
 	function createCanvas() {
 		init();								// initialize canvas
@@ -54,39 +65,98 @@ $(document).ready(function() {
 	}
 
 	/*********************************************************************
-		-- WINDOW SCROLL/RESIZE DEBOUNCERS --
+		-- NAV --
 	********************************************************************/
+
+	$("nav li a").on('click', function(event) {
+		if ($(this).html() != "Resume") {
+			event.preventDefault();
+		}
+
+		switch($(this).attr("href")) {
+			case "#cover-page":
+				$("html, body").animate({ scrollTop: 0 }, 1000);
+				break;
+			case "#about":
+				$("html, body").animate({ scrollTop: 30 }, 1000);
+				break;
+			case "#projects":
+				$("html, body").animate({ scrollTop: $("#projects").offset().top }, 1000);
+				break;
+			case "#contact":
+				$("html, body").animate({ scrollTop: $("#contact").offset().top }, 1000);
+				break;
+		}
+
+	});
+
+
+	/*********************************************************************
+		-- WINDOW EVENT HANDLERS --
+	********************************************************************/
+
+	$("#socialLinks img").hover(
+		// mouseover
+		function() {
+			var img_hover = $(this).attr("alt");
+			switch (img_hover) {
+				case "GitHub":
+					$(this).attr("src", "images/githubHover.png");
+					break;
+				case "LinkedIn":
+					$(this).attr("src", "images/linkedinHover.png");				
+					break;
+				case "Facebook":
+					$(this).attr("src", "images/facebookHover.png");
+			}
+		},
+		// mouseleave
+		function() {
+			var img_hover = $(this).attr("alt");
+			switch (img_hover) {
+				case "GitHub":
+					$(this).attr("src", "images/github.png");
+					break;
+				case "LinkedIn":
+					$(this).attr("src", "images/linkedin.png");				
+					break;
+				case "Facebook":
+					$(this).attr("src", "images/facebook.png");
+			}
+		}
+	);
 
 	// handle window resizing events with smart resize
 	$(window).smartresize(function() {
 		var animRequest = Fog.animRequest;
+
+		// recalculate globals
+		initGlobals();
 
 		if (animRequest != null && Fog.canvas != null) {
 			cancelAnimationFrame(animRequest);		// clear requestAnimFrame
 			createCanvas();							// recreate canvas and redraw fog with new dimensions
 		}
 
-		// recalculate globals
-		initGlobals();
 	});
 
 	$(window).scroll(function() {
 		Fog.didScroll = true;
-		setInterval(scroll_debounce, 250);
+		setInterval(scroll_debounce, 100);
 	});
 
 	function scroll_debounce() {
-		var didScroll = Fog.didScroll;
-		var didClearFog = Fog.didClearFog;
-		var didClearHeader = Fog.didClearHeader;
-		var didClearScrollDiv = Fog.didClearScrollDiv;
-
-		if (didScroll) {
+		if (Fog.didScroll) {
 			Fog.didScroll = false;
 			var scrollTop = $(window).scrollTop();
 			var windowHeight = Fog.windowHeight
 			var contentTop = Fog.contentTop;
-			var scrollMax = contentTop + (windowHeight * 0.5);
+
+			var didScroll = Fog.didScroll;
+			var didClearFog = Fog.didClearFog;
+			var didClearHeader = Fog.didClearHeader;
+			var didClearScrollDiv = Fog.didClearScrollDiv;
+			var areProjectsTop = Fog.areProjectsTop;
 
 			// while fog is not cleared
 			if (!didClearFog) {
@@ -94,32 +164,43 @@ $(document).ready(function() {
 				if (scrollTop <= 20 && didClearScrollDiv) {
 					Fog.didClearScrollDiv = false;
 					$("#scrollDiv").fadeIn(500, "linear");
+					$("nav li:first-child").fadeOut(500, "linear");
+					$("#about").fadeOut(500, "linear");
+					$("#coverPageHeader").fadeIn(500, "linear");
 				}
 
 				// fade out span title in cover-page
 				if (scrollTop > 20 && !didClearScrollDiv) {
 					Fog.didClearScrollDiv = true;
 					$("#scrollDiv").fadeOut(500, "linear");
+					$("nav li:first-child").fadeIn(500, "linear");
+					$("#about").fadeIn(500, "linear");
+					$("#coverPageHeader").fadeOut(500, "linear");
+				}
+
+				// clear fog and add translucent background to nav if user passes offset of content div
+				if (scrollTop > contentTop) {
+					Fog.didClearFog = true;
+					var width = Fog.WIDTH;
+					var height = Fog.HEIGHT;
+
+					// clear canvas scene
+					$("#canvas_fog").hide();
+					cancelAnimationFrame(Fog.animRequest);		// clear requestAnimFrame
+					Fog.context.clearRect(-width, -height, width * 2, height * 2);
+					// remove clouds from heap
+					delete Fog.clouds_arr;
+
+					// add translucent background to nav
+					$("nav ul").css('background-color', 'rgba(238, 238, 238, 0.9');
+				} else {
+					// remove translucency to nav
+					$("nav ul").css('background-color', 'rgba(238, 238, 238, 0');
 				}
 			}
 
-			// clear fog if user passes offset of content div
-			if (!didClearFog &&	scrollTop > scrollMax) {
-				Fog.didClearFog = true;
-				var width = Fog.WIDTH;
-				var height = Fog.HEIGHT;
-
-				// clear canvas scene
-				$("#canvas_fog").hide();
-				cancelAnimationFrame(Fog.animRequest);		// clear requestAnimFrame
-				Fog.context.clearRect(-width, -height, width * 2, height * 2);
-
-				// remove clouds from heap
-				delete Fog.clouds_arr;
-			}
-
 		    // recreate fog scene if user scrolls back up to cover page area
-		    if (didClearFog && scrollTop < scrollMax) {
+		    if (didClearFog && scrollTop < contentTop) {
 		    	Fog.didClearFog = false;
 		   	
 		    	cancelAnimationFrame(Fog.animRequest);		// clear requestAnimFrame
@@ -127,10 +208,18 @@ $(document).ready(function() {
 		    	$("#canvas_fog").fadeIn('slow');
 		    }
 
+		    if (areProjectsTop && scrollTop < contentTop)
+		    	Fog.areProjectsTop = false;
+
 		    // fade in content below cover-page
-		    if (scrollTop > contentTop && scrollTop < contentTop + 500) {
-		    	var opacity = (scrollTop - contentTop) / 500;
-		    }
+		    if (!areProjectsTop && scrollTop > contentTop - windowHeight - 200) {
+			    if (scrollTop < contentTop) {
+					setContentOpacity();
+			    } else {
+			    	Fog.areProjectsTop = true;
+			    	$("#projects").css("opacity", "1");
+			    }
+			}
 		}
 	}
 
@@ -141,7 +230,24 @@ $(document).ready(function() {
 
 	// funciton call that fades in initial elements
 	function delayInitialElements() {
-		$("html, body").css('overflow', 'auto');	// turn off overflow
+		var scrollTop = $(window).scrollTop();
+
+		// show "Elliot Boschwitz" in nav if scrolled to top
+		if (scrollTop > 20) {
+			$("nav li:first-child").show();
+			$("#about").show();
+		}
+
+		// set areProjectsTop to true if at top of screen and set nav bg color
+		if (scrollTop > $("#projects").offset().top) {
+			Fog.areProjectsTop = true;
+			$("nav ul").css('background-color', 'rgba(238, 238, 238, 0.8');
+		} else {
+			// remove translucency to nav
+			$("nav ul").css('background-color', 'rgba(238, 238, 238, 0');
+		}
+
+		$("html").css('overflow', 'auto');			// turn off overflow
 		$(".signal").hide();						// hide loading animation
 
 		// fade out loading screen and fade in clouds
@@ -154,7 +260,7 @@ $(document).ready(function() {
 		Fog.didClearFog = false;
 		Fog.didClearScrollDiv = false;
 
-		// fade in span title in cover-page
+		// fade in title in cover-page
 		if ($(window).scrollTop() <= 20) {
 			Fog.didClearHeader = false; 
 			$("#coverPageHeader").fadeIn(500, "linear");
@@ -162,9 +268,8 @@ $(document).ready(function() {
 	}
 
 	function fadeToScene() {
-		$("#loadingPage").fadeOut(3000, "linear");
+		$("#loadingPage").fadeOut(1000, "linear");
 	}
-
 
 
 	/*********************************************************************
@@ -184,7 +289,7 @@ $(document).ready(function() {
 			Fog.context = canvas.getContext('2d');
 			Fog.HEIGHT = canvas.height;
 			Fog.WIDTH = canvas.width;
-			Fog.clouds_arr = createClouds(0.17);	// create cloud objects
+			Fog.clouds_arr = createClouds(0.30);	// create cloud objects
 		}
 	}
 
@@ -298,7 +403,7 @@ $(document).ready(function() {
 		var radians = 0;
 		while (radians < Math.PI/2) {
 			// y "start" of clouds
-			var yStart = ctx_height - (ctx_height * fog_height) - (100 * Math.sin(radians) * ratio_y);
+			var yStart = ctx_height - (ctx_height * fog_height * (1-ratio_x*0.5)) - (100 * Math.sin(radians) * ratio_y);
 			// velocity of cloud
 			var velocity = Math.sin((Math.PI / 2) - radians) * ratio_x * 2;
 			// genereate random cloud points
@@ -362,19 +467,6 @@ $(document).ready(function() {
 
 		return quadCurvePoints;
 	}
-
-
-    /*********************************************************************
-		-- PARALLAX PLUGIN --
-	*********************************************************************/
-
-	// parallax, dawg
-	var s = skrollr.init({
-		render: function(data) {
-            //Debugging - Log the current scroll position.
-            //console.log(data.curTop);
-        }
-    });
 });
 
 (function($,sr){

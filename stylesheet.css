@@ -7,15 +7,27 @@
   -o-background-size: cover;
   background-size: cover;
 }
+html,
+body {
+  width: 100%;
+  overflow-x: hidden;
+  margin: 0;
+}
 #wrapper-body {
   overflow-x: hidden;
   padding: 0;
   margin: 0;
-}
-html,
-body {
+  background: url("images/sf-min.jpg") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="images/sf-min.png", sizingMethod='scale');
+  -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src=@file, sizingMethod='scale')";
   width: 100%;
-  overflow: hidden;
+}
+.container {
+  width: 100%;
 }
 #loadingPage {
   position: fixed;
@@ -61,25 +73,48 @@ body {
   color: #aaa;
   line-height: 100vh;
 }
+nav ul {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  list-style-type: none;
+  font-family: 'Open Sans', sans-serif, "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande";
+  height: 40px;
+  line-height: 40px;
+  padding-left: 30px;
+  padding-right: 30px;
+  z-index: 90;
+  font-size: 16px;
+}
+nav ul li:first-child {
+  float: left;
+  display: none;
+}
+nav ul li:not(:first-child) {
+  float: right;
+  padding-right: 30px;
+}
+nav ul li a {
+  text-decoration: none;
+  color: #3F4995;
+}
+nav ul li a:hover {
+  text-decoration: none;
+  color: #05A5FB;
+}
 #canvas_fog {
   position: fixed;
   bottom: 0;
   z-index: 1;
-  background: rgba(0, 0, 0, 0);
+  overflow: hidden;
 }
 #cover-page {
-  height: 100%;
+  height: 100vh;
+  min-height: 300px;
   width: 100%;
   bottom: 0;
+  margin-bottom: 50%;
   z-index: 2;
-  background: url("sf-min.jpg") no-repeat center center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-  filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="sf.png", sizingMethod='scale');
-  -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src=@file, sizingMethod='scale')";
-  background-attachment: fixed;
   color: #EEEEEE;
   text-align: center;
   transition: all 5s ease-in;
@@ -87,13 +122,14 @@ body {
 #cover-page h1 {
   display: none;
   font-family: 'Oswald', sans-serif, "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande";
+  font-weight: bold;
   font-size: 80px;
-  letter-spacing: 10px;
+  letter-spacing: 5px;
   position: fixed;
   width: 100%;
   text-align: center;
-  color: #eee;
-  margin-top: 8%;
+  color: #FFD194;
+  margin-top: 16%;
 }
 #cover-page #scrollDiv {
   display: none;
@@ -102,7 +138,7 @@ body {
   position: fixed;
   color: #B5DBEF;
   width: 100%;
-  top: 40%;
+  bottom: 5%;
   left: 0;
   opacity: 0.7;
   -webkit-animation: pulse 8s;
@@ -115,19 +151,19 @@ body {
 #cover-page #scrollDiv h2 {
   font-size: 50px;
   font-family: 'Bubblegum Sans', cursive;
-  letter-psacing: 2px;
+  letter-spacing: 2px;
 }
 #cover-page #scrollDiv span {
   display: block;
   font-size: 30px;
 }
 #cover-page #about {
-  margin-top: 100%;
-  margin-bottom: 40%;
+  display: none;
+  position: fixed;
+  z-index: 3;
   color: #000;
-  top: 0;
+  top: 60px;
   width: 100%;
-  height: 100%;
   font-family: 'Open Sans', sans-serif, "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande";
   color: #eee;
 }
@@ -168,58 +204,96 @@ body {
     color: #B5DBEF;
   }
 }
+.contentWrap {
+  max-width: 800px;
+  margin: 0 auto;
+}
+.contentWrap > div:not(.project-sectionHeader) {
+  display: block;
+  margin-bottom: 60px;
+}
 #content {
-  top: 0;
+  position: absolute;
   width: 100%;
   padding: 0 0 0 0;
   z-index: 20;
-  position: relative;
   background-color: rgba(238, 238, 238, 0);
 }
 #content p {
   font-family: 'Open Sans', sans-serif, "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande";
-  font-size: 22px;
+  font-weight: lighter;
+  font-size: 18px;
   z-index: 20;
+}
+#content p a {
+  text-decoration: underline;
+  color: #3f4995;
+}
+#content p a:hover {
+  color: #05a5fb;
 }
 #content h2 {
   text-align: center;
-  font-weight: lighter;
+  font-weight: bold;
   font-family: 'Open Sans', sans-serif, "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande";
   width: 100%;
-  padding-bottom: 40px;
-  font-size: 70px;
+  font-size: 60px;
   margin: 0 0 0 0;
 }
 #content > div {
   padding: 80px 0 80px 0;
 }
-#content > div > h2 {
-  padding-bottom: 60px;
-}
 #content #projects {
   background-color: #eee;
   font-size: 18px;
   color: black;
+  opacity: 0;
+}
+#content #projects .project-sectionHeader {
+  border-bottom: 1px solid #ccc;
+  color: #888;
+  font-family: 'Open Sans', sans-serif, "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande";
+  padding-bottom: 3px;
+  margin-top: 80px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+#content #projects .project-links {
+  width: 100%;
+  height: 50px;
+  margin-top: 30px;
+  font-family: 'Open Sans', sans-serif, "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande";
+  font-weight: bold;
+  list-style-type: none;
+  padding: 0;
+  text-align: center;
+}
+#content #projects .project-links li {
+  display: inline-block;
+  margin: 0 10px;
+}
+#content #projects .project-links a {
+  margin: 0 auto;
+  line-height: 50px;
+  width: 200px;
+  border: 1px solid #3f4995;
+  color: #3f4995;
+  display: block;
+}
+#content #projects .project-links a:hover {
+  color: #fff;
+  background-color: #3f4995;
+  text-decoration: none;
 }
 #content #projects h2 {
   color: #22313F;
 }
-#content #projects .row {
-  display: block;
-  margin: 40px auto 0 auto;
-  border-radius: 3px;
-  max-width: 1000px;
+#content #projects .logo {
+  max-width: 300px;
+  padding-bottom: 20px;
+  margin: 0 auto;
 }
-#content #projects .row > div {
-  padding: 20px 0 20px;
-}
-#content #projects .row > div p {
-  margin-left: 20px;
-}
-#content #projects .row #logo {
-  padding: 20px 20px 0 20px;
-}
-#content #projects #hal span {
+#content #projects #halDiv span {
   font-family: 'Exo', sans-serif;
   color: #3A539B;
   font-size: 80px;
@@ -227,39 +301,75 @@ body {
   display: block;
   text-align: center;
 }
-#content #projects #resume {
-  height: 150px;
-  width: 150px;
-  /*			padding: 10px 10px 10px 10px;
-*/
-  display: block;
-  margin: 20px auto 0 auto;
-  background-color: #16A085;
-  -webkit-border-radius: 1000px;
-  -moz-border-radius: 1000px;
-  border-radius: 1000px;
-  /*			img {
-				height: 100%;
-				width: auto;
-				margin-right: 30px;
-				background-color: white;
-			}*/
-  /*span {
-				text-align: center;
-			}*/
+#content #projects .project-misc h3 {
+  text-align: center;
+  font-family: 'Open Sans', sans-serif, "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande";
 }
-#content #projects #resume p {
-  vertical-align: middle;
-  line-height: 150px;
+#content #projects #fogComingSoon {
+  text-align: center;
+  font-size: 14px;
+  font-style: italic;
+  font-family: 'Open Sans', sans-serif, "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande";
+  font-weight: lighter;
+  color: #444;
+  margin-top: 20px;
 }
 #content #contact {
-  background-color: #22313F;
+  background-color: #2a2a2a;
   color: #eeeeee;
+  font-family: 'Open Sans', sans-serif, "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande";
 }
-#content #contact .row {
+#content #contact #contactWrap {
   text-align: center;
 }
-#content #contact .row img {
+#content #contact #contactHeader {
+  font-weight: lighter;
+  font-size: 40px;
+  margin-bottom: 20px;
+}
+#content #contact #email {
+  display: inline-block;
+  color: #05a5fb;
+  font-size: 18px;
+  margin-bottom: 80px;
+}
+#content #contact #email:hover {
+  text-decoration: underline;
+  color: #47BFFF;
+}
+#content #contact #email:hover {
+  text-decoration: none;
+}
+#content #contact #resumeBtn {
   display: block;
-  margin: 0 auto 0 auto;
+  height: 70px;
+  width: 67%;
+  min-width: 200px;
+  line-height: 70px;
+  font-family: 'Open Sans', sans-serif, "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande";
+  border: 1px solid #05a5fb;
+  color: #05a5fb;
+  text-align: center;
+  font-weight: bold;
+  font-size: 18px;
+  margin: 0 auto;
+}
+#content #contact #resumeBtn:hover {
+  color: #2a2a2a;
+  background-color: #05a5fb;
+  text-decoration: none;
+}
+#content #contact #socialLinks {
+  display: block;
+  text-align: center;
+  margin-top: 40px;
+  margin-bottom: 0;
+}
+#content #contact #socialLinks > div {
+  display: inline-block;
+}
+#content #contact #socialLinks img {
+  display: inline-block;
+  height: 100px;
+  margin: 0 auto;
 }
