@@ -27,6 +27,7 @@ body {
   width: 100%;
 }
 .container {
+  display: block;
   width: 100%;
 }
 #loadingPage {
@@ -137,9 +138,8 @@ nav ul li a:hover {
   text-align: center;
   position: fixed;
   color: #B5DBEF;
-  width: 100%;
+  width: 150px;
   bottom: 5%;
-  left: 0;
   opacity: 0.7;
   -webkit-animation: pulse 8s;
   animation: pulse 8s;
@@ -147,6 +147,8 @@ nav ul li a:hover {
   -webkit-animation-iteration-count: infinite;
   -animation-iteration-count: infinite;
   -moz-animation-count: infinite;
+  left: 50%;
+  margin-left: -75px;
 }
 #cover-page #scrollDiv h2 {
   font-size: 50px;
@@ -156,6 +158,13 @@ nav ul li a:hover {
 #cover-page #scrollDiv span {
   display: block;
   font-size: 30px;
+}
+#cover-page #scrollDiv:hover {
+  cursor: pointer;
+}
+#cover-page #scrollDiv:hover h2,
+#cover-page #scrollDiv:hover span {
+  color: #3f4995;
 }
 #cover-page #about {
   display: none;

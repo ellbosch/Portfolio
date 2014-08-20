@@ -95,6 +95,12 @@ $(document).ready(function() {
 		-- WINDOW EVENT HANDLERS --
 	********************************************************************/
 
+	// move window if scroll is pressed
+	$("#scrollDiv").mousedown(function() {
+		$("html, body").animate({ scrollTop: 727 }, 1000);
+	});
+
+	// change images when hovering over contact links
 	$("#socialLinks img").hover(
 		// mouseover
 		function() {
@@ -163,7 +169,7 @@ $(document).ready(function() {
 				// fade in span title in cover-page
 				if (scrollTop <= 20 && didClearScrollDiv) {
 					Fog.didClearScrollDiv = false;
-					$("#scrollDiv").fadeIn(500, "linear");
+					$("#scrollDiv").fadeIn(1000, "linear").css("display", "inline-block");
 					$("nav li:first-child").fadeOut(500, "linear");
 					$("#about").fadeOut(500, "linear");
 					$("#coverPageHeader").fadeIn(500, "linear");

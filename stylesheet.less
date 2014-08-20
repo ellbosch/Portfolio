@@ -53,6 +53,7 @@ html, body {
 }
 
 .container {
+	display: block;
 	width: 100%;
 }
 
@@ -178,11 +179,12 @@ nav ul {
 		text-align: center;
 		position: fixed;
 		color: #B5DBEF;
-		width: 100%;
+		width: 150px;
 		bottom: 5%;
-		left: 0;
 		opacity: 0.7;
 		.Animate(pulse; 8s; infinite);
+		left: 50%;
+		margin-left: -75px;
 		
 		h2 {
 			font-size: 50px;
@@ -193,6 +195,14 @@ nav ul {
 		span {
 			display: block;
 			font-size: 30px;
+		}
+	}
+
+	#scrollDiv:hover {
+		cursor: pointer;
+
+		h2, span {
+			color: @linkColor;
 		}
 	}
 
