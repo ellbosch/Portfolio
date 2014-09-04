@@ -68,7 +68,7 @@ $(document).ready(function() {
 		-- NAV --
 	********************************************************************/
 
-	$("nav li a").on('click', function(event) {
+	$("nav #navDesktop li a").on('click', function(event) {
 		if ($(this).html() != "Resume") {
 			event.preventDefault();
 		}
@@ -87,8 +87,19 @@ $(document).ready(function() {
 				$("html, body").animate({ scrollTop: $("#contact").offset().top }, 1000);
 				break;
 		}
-
 	});
+
+	// mobile nav
+	$("#navicon li a").on('click', function(event) {
+		$("#navDesktop").slideToggle();
+		event.preventDefault();
+	});
+
+	$("#navDesktop li a").on('click', function() {
+		if ($(window).width() <= 562) {
+			$("#navDesktop").slideToggle();
+		}
+	})
 
 
 	/*********************************************************************
@@ -135,6 +146,8 @@ $(document).ready(function() {
 	// handle window resizing events with smart resize
 	$(window).smartresize(function() {
 		var animRequest = Fog.animRequest;
+		var scrollTop = $(window).scrollTop();
+		var contentTop = Fog.contentTop;
 
 		// recalculate globals
 		initGlobals();
@@ -144,6 +157,19 @@ $(document).ready(function() {
 			createCanvas();							// recreate canvas and redraw fog with new dimensions
 		}
 
+		// change nav background
+		if ($(window).width() > 562) {
+			if (scrollTop > 20)
+				$("#topPageLink").css('display', 'inline-block');
+
+			if (scrollTop > contentTop)
+				$("nav").css('background-color', 'rgba(238, 238, 238, 0.8');
+			else
+				$("nav").css('background-color', 'rgba(238, 238, 238, 0');
+		} else {
+			$("nav").css('background-color', '#3F4995');
+			$("#topPageLink").hide();
+		}
 	});
 
 	$(window).scroll(function() {
@@ -170,16 +196,17 @@ $(document).ready(function() {
 				if (scrollTop <= 20 && didClearScrollDiv) {
 					Fog.didClearScrollDiv = false;
 					$("#scrollDiv").fadeIn(1000, "linear").css("display", "inline-block");
-					$("nav li:first-child").fadeOut(500, "linear");
+					$("#topPageLink").fadeOut(500, "linear");
 					$("#about").fadeOut(500, "linear");
 					$("#coverPageHeader").fadeIn(500, "linear");
 				}
 
 				// fade out span title in cover-page
 				if (scrollTop > 20 && !didClearScrollDiv) {
+					if ($(window).width() > 562)
+						$("#topPageLink").fadeIn(500, "linear");
 					Fog.didClearScrollDiv = true;
 					$("#scrollDiv").fadeOut(500, "linear");
-					$("nav li:first-child").fadeIn(500, "linear");
 					$("#about").fadeIn(500, "linear");
 					$("#coverPageHeader").fadeOut(500, "linear");
 				}
@@ -198,10 +225,16 @@ $(document).ready(function() {
 					delete Fog.clouds_arr;
 
 					// add translucent background to nav
-					$("nav ul").css('background-color', 'rgba(238, 238, 238, 0.9');
+					if ($(window).width() > 562)
+						$("nav").css('background-color', 'rgba(238, 238, 238, 0.9');
+					else
+						$("nav").css('background-color', '#3F4995');
 				} else {
-					// remove translucency to nav
-					$("nav ul").css('background-color', 'rgba(238, 238, 238, 0');
+					if ($(window).width() > 562)
+						// remove translucency to nav
+						$("nav").css('background-color', 'rgba(238, 238, 238, 0');
+					else
+						$("nav").css('background-color', '#3F4995');
 				}
 			}
 
@@ -240,17 +273,26 @@ $(document).ready(function() {
 
 		// show "Elliot Boschwitz" in nav if scrolled to top
 		if (scrollTop > 20) {
-			$("nav li:first-child").show();
 			$("#about").show();
+
+			if ($(window).width() > 562)
+				$("#topPageLink").show();
 		}
 
 		// set areProjectsTop to true if at top of screen and set nav bg color
 		if (scrollTop > $("#projects").offset().top) {
 			Fog.areProjectsTop = true;
-			$("nav ul").css('background-color', 'rgba(238, 238, 238, 0.8');
+
+			if ($(window).width() > 562)
+				$("nav").css('background-color', 'rgba(238, 238, 238, 0.9');
+			else
+				$("nav").css('background-color', '#3F4995');
 		} else {
-			// remove translucency to nav
-			$("nav ul").css('background-color', 'rgba(238, 238, 238, 0');
+			if ($(window).width() > 562)
+				// remove translucency to nav
+				$("nav").css('background-color', 'rgba(238, 238, 238, 0');
+			else
+				$("nav").css('background-color', '#3F4995');
 		}
 
 		$("html").css('overflow', 'auto');			// turn off overflow
