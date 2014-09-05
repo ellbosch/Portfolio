@@ -162,6 +162,7 @@ nav #navicon li:hover img {
   -moz-animation-count: infinite;
   left: 50%;
   margin-left: -75px;
+  padding-right: 10px;
 }
 #cover-page #scrollDiv h2 {
   font-size: 50px;
@@ -399,18 +400,32 @@ nav #navicon li:hover img {
 }
 /* iOS support */
 @media only screen and (orientation: portrait) and (device-width: 320px), (device-width: 768px) {
+  canvas {
+    display: none;
+  }
   nav {
     height: 60px;
     line-height: 60px;
   }
   #wrapper-body {
     background: transparent;
-    background-color: #05A5FB;
+    background-color: #eee;
+  }
+  #cover-page {
+    margin-bottom: 0;
+  }
+  #cover-page h1 {
+    color: #05A5FB;
+    font-size: 40px;
+    margin-top: 25%;
   }
   #cover-page #about {
+    margin-top: 35%;
     width: 100%;
+    position: absolute;
   }
   #cover-page #about p {
+    color: #000;
     width: 100%;
     font-size: 16px;
     margin: 10px auto 0 auto;
@@ -419,18 +434,33 @@ nav #navicon li:hover img {
   }
 }
 @media only screen and (orientation: landscape) and (device-width: 320px), (device-width: 768px) {
+  canvas {
+    display: none;
+  }
   nav {
     height: 60px;
     line-height: 60px;
   }
   #wrapper-body {
     background: transparent;
-    background-color: #05A5FB;
+    background-color: #eee;
+    /*#05A5FB;*/
+  }
+  #cover-page {
+    margin-bottom: 0;
+  }
+  #cover-page h1 {
+    color: #05A5FB;
+    margin-top: 25%;
+    font-size: 40px;
   }
   #cover-page #about {
+    margin-top: 35%;
     width: 100%;
+    position: absolute;
   }
   #cover-page #about p {
+    color: #000;
     max-width: 100%;
     font-size: 16px;
     margin: 0;
