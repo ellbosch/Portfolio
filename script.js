@@ -37,10 +37,18 @@ $(document).ready(function() {
 	        clearTimeout
 	})();
 
-	initGlobals();						// calculate global variables
-	delayInitialElements();				// show/hide elements on page load
-	createCanvas();						// create canvas with animating fog
+	// mobile browser check
+	var isMobile = window.matchMedia("only screen and (min-device-width : 320px) and (max-device-width : 568px)");
+	var isTablet = window.matchMedia("only screen and (min-device-width : 768px) and (max-device-width : 1024px)");
 
+	
+	if (!isMobile.matches && !isTablet.matches) {
+		initGlobals();						// calculate global variables
+		delayInitialElements();				// show/hide elements on page load
+		createCanvas();						// create canvas with animating fog
+	} else {
+		fadeToScene();
+	}
 	
 	/*********************************************************************
 		-- FUNCTIONS TO INITIALIZE SCENE --
@@ -174,7 +182,11 @@ $(document).ready(function() {
 
 	$(window).scroll(function() {
 		Fog.didScroll = true;
-		setInterval(scroll_debounce, 100);
+
+		console.log("mobile: " + isMobile.matches + "; table: " + isTablet.matches);
+
+		if (!isMobile.matches && !isTablet.matches)
+			setInterval(scroll_debounce, 100);
 	});
 
 	function scroll_debounce() {

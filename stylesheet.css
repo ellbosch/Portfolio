@@ -264,7 +264,6 @@ nav #navicon li:hover img {
   background-color: #eee;
   font-size: 18px;
   color: black;
-  opacity: 0;
 }
 #content #projects .project-sectionHeader {
   border-bottom: 1px solid #ccc;
@@ -398,8 +397,11 @@ nav #navicon li:hover img {
     -webkit-background-size: 640px 426px;
   }
 }
-/* iOS support */
-@media only screen and (orientation: portrait) and (device-width: 320px), (device-width: 768px) {
+/* both iPhone and iPad support */
+@media only screen and (min-device-width: 320px) and (max-device-width: 568px), only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+  body {
+    background-color: #eee;
+  }
   canvas {
     display: none;
   }
@@ -412,17 +414,33 @@ nav #navicon li:hover img {
     background-color: #eee;
   }
   #cover-page {
+    display: block;
+    position: relative;
     margin-bottom: 0;
+    height: auto;
   }
-  #cover-page h1 {
+  #cover-page #container-cp {
+    height: auto;
+  }
+  #cover-page #container-cp #scrollDiv * {
+    display: none;
+  }
+  #cover-page #container-cp h1 {
+    display: block;
+    position: relative;
     color: #05A5FB;
-    font-size: 40px;
+    font-size: 50px;
     margin-top: 25%;
+    letter-spacing: 0;
+    font-family: 'Open Sans', sans-serif, "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande";
   }
   #cover-page #about {
-    margin-top: 35%;
+    top: auto;
+    margin-top: 0;
     width: 100%;
-    position: absolute;
+    position: relative;
+    display: block;
+    height: auto;
   }
   #cover-page #about p {
     color: #000;
@@ -432,40 +450,24 @@ nav #navicon li:hover img {
     padding: 0 10px;
     text-align: left;
   }
+  #content {
+    opacity: 1;
+    position: relative;
+  }
+  #content #projects {
+    opacity: 1;
+  }
 }
-@media only screen and (orientation: landscape) and (device-width: 320px), (device-width: 768px) {
-  canvas {
-    display: none;
+/* iPhone support */
+@media only screen and (min-device-width: 320px) and (max-device-width: 568px) {
+  #cover-page #container-cp h1 {
+    font-size: 50px;
   }
-  nav {
-    height: 60px;
-    line-height: 60px;
-  }
-  #wrapper-body {
-    background: transparent;
-    background-color: #eee;
-    /*#05A5FB;*/
-  }
-  #cover-page {
-    margin-bottom: 0;
-  }
-  #cover-page h1 {
-    color: #05A5FB;
-    margin-top: 25%;
-    font-size: 40px;
-  }
-  #cover-page #about {
-    margin-top: 35%;
-    width: 100%;
-    position: absolute;
-  }
-  #cover-page #about p {
-    color: #000;
-    max-width: 100%;
-    font-size: 16px;
-    margin: 0;
-    padding: 0 10px;
-    text-align: left;
+}
+/* iPad support */
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+  #cover-page #container-cp h1 {
+    font-size: 70px;
   }
 }
 @media only screen and (max-width: 562px) {
