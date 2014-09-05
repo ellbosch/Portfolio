@@ -26,9 +26,9 @@ body {
   -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src=@file, sizingMethod='scale')";
   width: 100%;
 }
-.container {
+#container-cp {
   display: block;
-  width: 100%;
+  padding: 0 10px;
 }
 #loadingPage {
   position: fixed;
@@ -125,7 +125,6 @@ nav #navicon li:hover img {
 }
 #cover-page {
   height: 100vh;
-  width: 100%;
   bottom: 0;
   margin-bottom: 50%;
   z-index: 2;
@@ -140,10 +139,11 @@ nav #navicon li:hover img {
   font-size: 80px;
   letter-spacing: 5px;
   position: fixed;
-  width: 100%;
   text-align: center;
   color: #FFD194;
   margin-top: 16%;
+  padding-right: 10px;
+  width: 100%;
 }
 #cover-page #scrollDiv {
   display: none;
@@ -189,20 +189,11 @@ nav #navicon li:hover img {
   font-family: 'Open Sans', sans-serif, "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande";
   color: #eee;
 }
-#cover-page #about h2 {
-  text-align: center;
-  font-weight: lighter;
-  width: 100%;
-  padding-bottom: 40px;
-  font-size: 70px;
-  margin: 0 0 0 0;
-}
 #cover-page #about p {
-  margin-left: auto;
-  margin-right: auto;
   max-width: 600px;
-  padding: 0 10px 0 10px;
+  margin: 20px auto;
   font-size: 22px;
+  padding-right: 10px;
 }
 @-webkit-keyframes pulse {
   0% {
@@ -400,6 +391,7 @@ nav #navicon li:hover img {
 }
 @media only all and (max-width: 640px) and (max-height: 426px) {
   #wrapper-body {
+    background: url("images/sf-min.jpg");
     background-size: 640px 426px;
     -moz-background-size: 640px 426px;
     -webkit-background-size: 640px 426px;
@@ -407,15 +399,43 @@ nav #navicon li:hover img {
 }
 /* iOS support */
 @media only screen and (orientation: portrait) and (device-width: 320px), (device-width: 768px) {
+  nav {
+    height: 60px;
+    line-height: 60px;
+  }
   #wrapper-body {
-    -webkit-background-size: auto 100%;
-    background-attachment: scroll;
+    background: transparent;
+    background-color: #05A5FB;
+  }
+  #cover-page #about {
+    width: 100%;
+  }
+  #cover-page #about p {
+    width: 100%;
+    font-size: 16px;
+    margin: 10px auto 0 auto;
+    padding: 0 10px;
+    text-align: left;
   }
 }
 @media only screen and (orientation: landscape) and (device-width: 320px), (device-width: 768px) {
+  nav {
+    height: 60px;
+    line-height: 60px;
+  }
   #wrapper-body {
-    -webkit-background-size: 100% auto;
-    background-attachment: scroll;
+    background: transparent;
+    background-color: #05A5FB;
+  }
+  #cover-page #about {
+    width: 100%;
+  }
+  #cover-page #about p {
+    max-width: 100%;
+    font-size: 16px;
+    margin: 0;
+    padding: 0 10px;
+    text-align: left;
   }
 }
 @media only screen and (max-width: 562px) {
