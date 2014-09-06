@@ -226,9 +226,6 @@ nav #navicon li:hover img {
   display: block;
   margin-bottom: 60px;
 }
-.contentWrap div {
-  margin: 0 10px;
-}
 #content {
   position: absolute;
   width: 100%;
@@ -453,6 +450,7 @@ nav #navicon li:hover img {
   #content {
     opacity: 1;
     position: relative;
+    padding: 0 10px;
   }
   #content #projects {
     opacity: 1;
