@@ -306,6 +306,28 @@ nav #navicon li:hover img {
   padding-bottom: 20px;
   margin: 0 auto;
 }
+#content #projects #socratesDiv #socratesHeader {
+  margin: 0 auto;
+  text-align: center;
+}
+#content #projects #socratesDiv #socratesHeader img {
+  display: inline-block;
+  width: 50px;
+  height: auto;
+  margin: 0 5px 0 auto;
+}
+@font-face {
+  font-family: Cinzel;
+  src: url(attachments/Cinzel-Regular.otf);
+}
+#content #projects #socratesDiv #socratesHeader span {
+  margin-left: 5px;
+  color: #5783C2;
+  margin: 0 auto;
+  display: inline-block;
+  font-family: Cinzel;
+  font-size: 60px;
+}
 #content #projects #halDiv span {
   font-family: 'Exo', sans-serif;
   color: #3A539B;
