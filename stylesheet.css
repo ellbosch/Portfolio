@@ -309,6 +309,7 @@ nav #navicon li:hover img {
 #content #projects #socratesDiv #socratesHeader {
   margin: 0 auto;
   text-align: center;
+  margin-bottom: 20px;
 }
 #content #projects #socratesDiv #socratesHeader img {
   display: inline-block;
@@ -327,6 +328,7 @@ nav #navicon li:hover img {
   display: inline-block;
   font-family: Cinzel;
   font-size: 60px;
+  vertical-align: middle;
 }
 #content #projects #halDiv span {
   font-family: 'Exo', sans-serif;
