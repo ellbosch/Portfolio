@@ -183,8 +183,6 @@ $(document).ready(function() {
 	$(window).scroll(function() {
 		Fog.didScroll = true;
 
-		console.log("mobile: " + isMobile.matches + "; table: " + isTablet.matches);
-
 		if (!isMobile.matches && !isTablet.matches)
 			setInterval(scroll_debounce, 100);
 	});
