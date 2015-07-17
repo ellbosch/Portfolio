@@ -41,7 +41,8 @@ $(document).ready(function() {
 	
 	if (!isMobile.matches && !isTablet.matches) {
 		initGlobals();						// calculate global variables
-		delayInitialElements();				// show/hide elements on page load
+		// delayInitialElements();				// show/hide elements on page load
+		fadeToScene();
 		createCanvas();						// create canvas with animating fog
 	} else {
 		fadeToScene();
@@ -228,37 +229,37 @@ $(document).ready(function() {
 	*********************************************************************/
 
 	// funciton call that fades in initial elements
-	function delayInitialElements() {
-		var scrollTop = $(window).scrollTop();
+	// function delayInitialElements() {
+	// 	var scrollTop = $(window).scrollTop();
 
-		// set nav color
-		// if (scrollTop > $("#projects").offset().top) {
-		// 	if ($(window).width() > 562)
-		// 		$("nav").css('background-color', 'rgba(238, 238, 238, 0.9');
-		// 	else
-		// 		$("nav").css('background-color', '#3F4995');
-		// } else {
-		// 	if ($(window).width() > 562)
-		// 		// remove translucency to nav
-		// 		$("nav").css('background-color', 'rgba(238, 238, 238, 0');
-		// 	else
-		// 		$("nav").css('background-color', '#3F4995');
-		// }
+	// 	// set nav color
+	// 	// if (scrollTop > $("#projects").offset().top) {
+	// 	// 	if ($(window).width() > 562)
+	// 	// 		$("nav").css('background-color', 'rgba(238, 238, 238, 0.9');
+	// 	// 	else
+	// 	// 		$("nav").css('background-color', '#3F4995');
+	// 	// } else {
+	// 	// 	if ($(window).width() > 562)
+	// 	// 		// remove translucency to nav
+	// 	// 		$("nav").css('background-color', 'rgba(238, 238, 238, 0');
+	// 	// 	else
+	// 	// 		$("nav").css('background-color', '#3F4995');
+	// 	// }
 
-		$("html").css('overflow', 'auto');			// turn off overflow
-		$(".signal").hide();						// hide loading animation
+	// 	$("html").css('overflow', 'auto');			// turn off overflow
+	// 	$(".signal").hide();						// hide loading animation
 
-		// fade out loading screen and fade in clouds
-		setTimeout(fadeToScene, 500);
-		setTimeout(delayScrollandTitle, 2000);
-	};
+	// 	// fade out loading screen and fade in clouds
+	// 	setTimeout(fadeToScene, 500);
+	// 	setTimeout(delayScrollandTitle, 2000);
+	// };
 
-	function delayScrollandTitle() {
-		Fog.didClearFog = false;
+	// function delayScrollandTitle() {
+	// 	Fog.didClearFog = false;
 		
-		$("#scrollDiv").fadeIn(1000, "linear").css("display", "inline-block");
-		$("#coverPageHeader").fadeIn(500, "linear");
-	}
+	// 	$("#scrollDiv").fadeIn(1000, "linear").css("display", "inline-block");
+	// 	$("#coverPageHeader").fadeIn(500, "linear");
+	// }
 
 	function fadeToScene() {
 		$("#loadingPage").fadeOut(1000, "linear");
