@@ -7,7 +7,7 @@
 
 
 /*******************************
-			MIXINS
+		MIXINS
 *******************************/
 .Cover {
 	-webkit-background-size: cover;
@@ -36,6 +36,10 @@
 	border-radius: @radius;
 }
 
+/*******************************
+		BODY/CONTAINERS
+*******************************/
+
 html, body {
 	width: 100%;
 	overflow-x: hidden;
@@ -56,6 +60,11 @@ html, body {
 	display: block;
 	padding: 0 10px;
 }
+
+
+/*******************************
+		LOADING PAGE
+*******************************/
 
 #loadingPage {
 	position: fixed;
@@ -106,6 +115,11 @@ html, body {
 	}
 }
 
+
+/*******************************
+		NAV
+*******************************/
+/*
 nav {
 	position: fixed;
 	top: 0;
@@ -115,7 +129,6 @@ nav {
 	line-height: 40px;
 
 	#topPageLink {
-		/*display: none;*/
 		margin-left: 10px;
 		float: left;
 	}
@@ -150,13 +163,27 @@ nav {
 
 	#navicon {
 		display: none;
+		margin: 0;
+		margin-bottom: 2px;
 		padding-left: 10px;
+
+		li {
+			display: block;
+			a {
+				display: block;
+			}
+		}
 
 		li:hover img  {
 			content: url("attachments/navicon-active.svg");
 		}			
 	}
-}
+}*/
+
+
+/*******************************
+		COVER PAGE/CANVAS
+*******************************/
 
 #canvas_fog {
 	position: fixed;
@@ -234,6 +261,11 @@ nav {
 	50% {color: #05A5FB;}
 	100% {color: #B5DBEF;}
 }
+
+
+/*******************************
+		PROJECTS
+*******************************/
 
 .contentWrap {
 	max-width: 800px;
@@ -466,7 +498,14 @@ nav {
 	}
 }
 
-@media only all and (max-width: 640px) and (max-height: 426px) {
+
+/*******************************
+		MEDIA QUERIES
+*******************************/
+
+
+/* TO-DO: remove */
+@media (max-width: 640px) and (max-height: 426px) {
 	#wrapper-body {
 		background: url("images/sf-min.jpg");
 		background-size: 640px 426px;
@@ -477,8 +516,8 @@ nav {
 }
 
 /* both iPhone and iPad support */
-@media only screen and (min-device-width : 320px) and (max-device-width : 568px),
-	   only screen and (min-device-width : 768px) and (max-device-width : 1024px) {
+@media (min-device-width : 320px) and (max-device-width : 568px),
+	   (min-device-width : 768px) and (max-device-width : 1024px) {
 
 	body {
 		background-color: #eee;
@@ -488,10 +527,10 @@ nav {
 		display: none;
 	}
 
-	nav {
+/*	nav {
 		height: 60px;
 		line-height: 60px;
-	}
+	}*/
 
 	#wrapper-body {
 		background: transparent;
@@ -530,35 +569,8 @@ nav {
 
 
 }
-
-/* iPhone support */
-@media only screen and (min-device-width : 320px) and (max-device-width : 568px) {
-	#cover-page	#container-cp h1 {
-		font-size: 50px;
-	}
-}
-
-/* iPad support */
-@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) {
-	#cover-page #container-cp h1 {
-		margin: 15% 0 5% 0;
-		font-size: 70px;
-	}
-
-	nav {
-		background-color: #3F4995;
-
-		#topPageLink {
-			display: none;
-		}
-
-		#navDesktop li a{
-			color: #eee;
-		}
-	}
-}
- 
-@media only screen and (max-width: 562px) {
+/* 
+@media (max-width: 562px) {
 	nav {
 		height: auto;
 		background-color: #3F4995;
@@ -595,17 +607,33 @@ nav {
 
 		#navicon {
 			display: block;
-			margin: 0;
-			margin-bottom: 2px;
-
-			li {
-				display: block;
-
-				a {
-					display: block;
-				}
-			}
 		}
 	}
+}*/
+
+/* iPad support */
+@media (min-device-width : 768px) and (max-device-width : 1024px) {
+	#cover-page #container-cp h1 {
+		margin: 15% 0 5% 0;
+		font-size: 70px;
+	}
+
+/*	nav {
+		background-color: #3F4995;
+
+		#topPageLink {
+			display: none;
+		}
+
+		#navDesktop li a{
+			color: #eee;
+		}
+	}*/
 }
 
+/* iPhone support */
+@media (min-device-width : 320px) and (max-device-width : 568px) {
+	#cover-page	#container-cp h1 {
+		font-size: 50px;
+	}
+}

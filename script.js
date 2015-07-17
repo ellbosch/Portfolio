@@ -12,8 +12,6 @@ $(document).ready(function() {
 		// scrollable booleans
 		didScroll: false,
 		didClearFog: true,
-		didClearHeader: true,
-		didClearScrollDiv: true,
 	};
 
 	// creates animation callback for browswer
@@ -69,35 +67,37 @@ $(document).ready(function() {
 		-- NAV --
 	********************************************************************/
 
-	$("nav #navDesktop li a").on('click', function(event) {
-		if ($(this).html() != "Resume") {
-			event.preventDefault();
-		}
+// 	$("nav #navDesktop li a").on('click', function(event) {
+// 		if ($(this).html() != "Resume") {
+// 			event.preventDefault();
+// 		}
 
-		switch($(this).attr("href")) {
-			case "#cover-page":
-				$("html, body").animate({ scrollTop: 0 }, 1000);
-				break;
-			case "#projects":
-				$("html, body").animate({ scrollTop: $("#projects").offset().top }, 1000);
-				break;
-			case "#contact":
-				$("html, body").animate({ scrollTop: $("#contact").offset().top }, 1000);
-				break;
-		}
-	});
+// 		switch($(this).attr("href")) {
+// 			case "#cover-page":
+// // TO-DO: make new transition
 
-	// mobile nav
-	$("#navicon li a").on('click', function(event) {
-		$("#navDesktop").slideToggle();
-		event.preventDefault();
-	});
+// 				$("html, body").animate({ scrollTop: 0 }, 1000);
+// 				break;
+// 			case "#projects":
+// 				$("html, body").animate({ scrollTop: $("#projects").offset().top }, 1000);
+// 				break;
+// 			case "#contact":
+// 				$("html, body").animate({ scrollTop: $("#contact").offset().top }, 1000);
+// 				break;
+// 		}
+// 	});
 
-	$("#navDesktop li a").on('click', function() {
-		if ($(window).width() <= 562) {
-			$("#navDesktop").slideToggle();
-		}
-	})
+	// // mobile nav
+	// $("#navicon li a").on('click', function(event) {
+	// 	$("#navDesktop").slideToggle();
+	// 	event.preventDefault();
+	// });
+
+	// $("#navDesktop li a").on('click', function() {
+	// 	if ($(window).width() <= 562) {
+	// 		$("#navDesktop").slideToggle();
+	// 	}
+	// })
 
 
 	/*********************************************************************
@@ -156,18 +156,14 @@ $(document).ready(function() {
 		}
 
 		// change nav background
-		if ($(window).width() > 562) {
-			if (scrollTop > 20)
-				$("#topPageLink").css('display', 'inline-block');
-
-			if (scrollTop > contentTop)
-				$("nav").css('background-color', 'rgba(238, 238, 238, 0.8');
-			else
-				$("nav").css('background-color', 'rgba(238, 238, 238, 0');
-		} else {
-			$("nav").css('background-color', '#3F4995');
-			$("#topPageLink").hide();
-		}
+		// if ($(window).width() > 562) {
+		// 	if (scrollTop > contentTop)
+		// 		$("nav").css('background-color', 'rgba(238, 238, 238, 0.8');
+		// 	else
+		// 		$("nav").css('background-color', 'rgba(238, 238, 238, 0');
+		// } else {
+		// 	$("nav").css('background-color', '#3F4995');
+		// }
 	});
 
 	$(window).scroll(function() {
@@ -183,31 +179,11 @@ $(document).ready(function() {
 			var scrollTop = $(window).scrollTop();
 			var windowHeight = Fog.windowHeight
 			var contentTop = Fog.contentTop;
-
 			var didScroll = Fog.didScroll;
 			var didClearFog = Fog.didClearFog;
-			var didClearHeader = Fog.didClearHeader;
-			var didClearScrollDiv = Fog.didClearScrollDiv;
 
 			// while fog is not cleared
 			if (!didClearFog) {
-				// fade in span title in cover-page
-				if (scrollTop <= 20 && didClearScrollDiv) {
-					Fog.didClearScrollDiv = false;
-					$("#scrollDiv").fadeIn(1000, "linear").css("display", "inline-block");
-					$("#topPageLink").fadeOut(500, "linear");
-					$("#coverPageHeader").fadeIn(500, "linear");
-				}
-
-				// fade out span title in cover-page
-				if (scrollTop > 20 && !didClearScrollDiv) {
-					if ($(window).width() > 562)
-						$("#topPageLink").fadeIn(500, "linear");
-					Fog.didClearScrollDiv = true;
-					$("#scrollDiv").fadeOut(500, "linear");
-					$("#coverPageHeader").fadeOut(500, "linear");
-				}
-
 				// clear fog and add translucent background to nav if user passes offset of content div
 				if (scrollTop > contentTop) {
 					Fog.didClearFog = true;
@@ -222,16 +198,16 @@ $(document).ready(function() {
 					delete Fog.clouds_arr;
 
 					// add translucent background to nav
-					if ($(window).width() > 562)
-						$("nav").css('background-color', 'rgba(238, 238, 238, 0.9');
-					else
-						$("nav").css('background-color', '#3F4995');
+					// if ($(window).width() > 562)
+					// 	$("nav").css('background-color', 'rgba(238, 238, 238, 0.9');
+					// else
+					// 	$("nav").css('background-color', '#3F4995');
 				} else {
-					if ($(window).width() > 562)
-						// remove translucency to nav
-						$("nav").css('background-color', 'rgba(238, 238, 238, 0');
-					else
-						$("nav").css('background-color', '#3F4995');
+					// if ($(window).width() > 562)
+					// 	// remove translucency to nav
+					// 	$("nav").css('background-color', 'rgba(238, 238, 238, 0');
+					// else
+					// 	$("nav").css('background-color', '#3F4995');
 				}
 			}
 
@@ -255,24 +231,19 @@ $(document).ready(function() {
 	function delayInitialElements() {
 		var scrollTop = $(window).scrollTop();
 
-		// show "Elliot Boschwitz" in nav if scrolled to top
-		if (scrollTop > 20 && $(window).width() > 562) {
-			$("#topPageLink").show();
-		}
-
 		// set nav color
-		if (scrollTop > $("#projects").offset().top) {
-			if ($(window).width() > 562)
-				$("nav").css('background-color', 'rgba(238, 238, 238, 0.9');
-			else
-				$("nav").css('background-color', '#3F4995');
-		} else {
-			if ($(window).width() > 562)
-				// remove translucency to nav
-				$("nav").css('background-color', 'rgba(238, 238, 238, 0');
-			else
-				$("nav").css('background-color', '#3F4995');
-		}
+		// if (scrollTop > $("#projects").offset().top) {
+		// 	if ($(window).width() > 562)
+		// 		$("nav").css('background-color', 'rgba(238, 238, 238, 0.9');
+		// 	else
+		// 		$("nav").css('background-color', '#3F4995');
+		// } else {
+		// 	if ($(window).width() > 562)
+		// 		// remove translucency to nav
+		// 		$("nav").css('background-color', 'rgba(238, 238, 238, 0');
+		// 	else
+		// 		$("nav").css('background-color', '#3F4995');
+		// }
 
 		$("html").css('overflow', 'auto');			// turn off overflow
 		$(".signal").hide();						// hide loading animation
@@ -283,15 +254,10 @@ $(document).ready(function() {
 	};
 
 	function delayScrollandTitle() {
-		$("#scrollDiv").fadeIn(1000, "linear").css("display", "inline-block");
 		Fog.didClearFog = false;
-		Fog.didClearScrollDiv = false;
-
-		// fade in title in cover-page
-		if ($(window).scrollTop() <= 20) {
-			Fog.didClearHeader = false; 
-			$("#coverPageHeader").fadeIn(500, "linear");
-		}
+		
+		$("#scrollDiv").fadeIn(1000, "linear").css("display", "inline-block");
+		$("#coverPageHeader").fadeIn(500, "linear");
 	}
 
 	function fadeToScene() {

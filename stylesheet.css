@@ -1,5 +1,5 @@
 /*******************************
-			MIXINS
+		MIXINS
 *******************************/
 .Cover {
   -webkit-background-size: cover;
@@ -7,6 +7,9 @@
   -o-background-size: cover;
   background-size: cover;
 }
+/*******************************
+		BODY/CONTAINERS
+*******************************/
 html,
 body {
   width: 100%;
@@ -30,6 +33,9 @@ body {
   display: block;
   padding: 0 10px;
 }
+/*******************************
+		LOADING PAGE
+*******************************/
 #loadingPage {
   position: fixed;
   height: 100%;
@@ -74,49 +80,72 @@ body {
   color: #aaa;
   line-height: 100vh;
 }
+/*******************************
+		NAV
+*******************************/
+/*
 nav {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 90;
-  height: 40px;
-  line-height: 40px;
-}
-nav #topPageLink {
-  /*display: none;*/
-  margin-left: 10px;
-  float: left;
-}
-nav ul {
-  list-style-type: none;
-}
-nav a {
-  text-decoration: none;
-  color: #3F4995;
-  font-size: 16px;
-  font-family: 'Open Sans', sans-serif, "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande";
-}
-nav a:hover {
-  text-decoration: none;
-  color: #05A5FB;
-}
-nav #navDesktop {
-  display: inline-block;
-  padding-right: 10px;
-  float: right;
-}
-nav #navDesktop li {
-  float: left;
-  padding-left: 30px;
-  display: inline-block;
-}
-nav #navicon {
-  display: none;
-  padding-left: 10px;
-}
-nav #navicon li:hover img {
-  content: url("attachments/navicon-active.svg");
-}
+	position: fixed;
+	top: 0;
+	width: 100%;
+	z-index: 90;
+	height: 40px;
+	line-height: 40px;
+
+	#topPageLink {
+		margin-left: 10px;
+		float: left;
+	}
+
+	ul {
+		list-style-type: none;
+	}
+
+	a {
+		text-decoration: none;
+		color: #3F4995;
+		font-size: 16px;
+		font-family: @bodyFonts;
+	}
+
+	a:hover {
+		text-decoration: none;
+		color: #05A5FB;
+	}
+
+	#navDesktop {
+		display: inline-block;
+		padding-right: 10px;
+		float: right;
+
+		li {
+			float: left;
+			padding-left: 30px;
+			display: inline-block;
+		}
+	}
+
+	#navicon {
+		display: none;
+		margin: 0;
+		margin-bottom: 2px;
+		padding-left: 10px;
+
+		li {
+			display: block;
+			a {
+				display: block;
+			}
+		}
+
+		li:hover img  {
+			content: url("attachments/navicon-active.svg");
+		}			
+	}
+}*/
+/*******************************
+		COVER PAGE/CANVAS
+*******************************/
 #canvas_fog {
   position: fixed;
   bottom: 0;
@@ -202,6 +231,9 @@ nav #navicon li:hover img {
     color: #B5DBEF;
   }
 }
+/*******************************
+		PROJECTS
+*******************************/
 .contentWrap {
   max-width: 800px;
   margin: 0 auto;
@@ -398,7 +430,11 @@ nav #navicon li:hover img {
   height: 100px;
   margin: 0 auto;
 }
-@media only all and (max-width: 640px) and (max-height: 426px) {
+/*******************************
+		MEDIA QUERIES
+*******************************/
+/* TO-DO: remove */
+@media (max-width: 640px) and (max-height: 426px) {
   #wrapper-body {
     background: url("images/sf-min.jpg");
     background-size: 640px 426px;
@@ -407,17 +443,17 @@ nav #navicon li:hover img {
   }
 }
 /* both iPhone and iPad support */
-@media only screen and (min-device-width: 320px) and (max-device-width: 568px), only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+@media (min-device-width: 320px) and (max-device-width: 568px), (min-device-width: 768px) and (max-device-width: 1024px) {
   body {
     background-color: #eee;
   }
   canvas {
     display: none;
   }
-  nav {
-    height: 60px;
-    line-height: 60px;
-  }
+  /*	nav {
+		height: 60px;
+		line-height: 60px;
+	}*/
   #wrapper-body {
     background: transparent;
     background-color: #eee;
@@ -448,66 +484,68 @@ nav #navicon li:hover img {
     padding: 0 10px;
   }
 }
-/* iPhone support */
-@media only screen and (min-device-width: 320px) and (max-device-width: 568px) {
-  #cover-page #container-cp h1 {
-    font-size: 50px;
-  }
-}
+/* 
+@media (max-width: 562px) {
+	nav {
+		height: auto;
+		background-color: #3F4995;
+
+		#topPageLink {
+			display: none;
+		}
+
+		#navDesktop {
+			display: none;
+			padding: 0;
+			float: left;
+			width: 100%;
+
+			li {
+				display: block;
+				width: 100%;
+				padding: 5px 0 5px 10px;
+
+				a {
+					color: #fff;
+					display: block;
+				}
+			}
+
+			li:hover {
+				background-color: #05A5FB;
+
+				a {
+					color: #fff;
+				}
+			}
+		}
+
+		#navicon {
+			display: block;
+		}
+	}
+}*/
 /* iPad support */
-@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+@media (min-device-width: 768px) and (max-device-width: 1024px) {
   #cover-page #container-cp h1 {
     margin: 15% 0 5% 0;
     font-size: 70px;
   }
-  nav {
-    background-color: #3F4995;
-  }
-  nav #topPageLink {
-    display: none;
-  }
-  nav #navDesktop li a {
-    color: #eee;
-  }
+  /*	nav {
+		background-color: #3F4995;
+
+		#topPageLink {
+			display: none;
+		}
+
+		#navDesktop li a{
+			color: #eee;
+		}
+	}*/
 }
-@media only screen and (max-width: 562px) {
-  nav {
-    height: auto;
-    background-color: #3F4995;
-  }
-  nav #topPageLink {
-    display: none;
-  }
-  nav #navDesktop {
-    display: none;
-    padding: 0;
-    float: left;
-    width: 100%;
-  }
-  nav #navDesktop li {
-    display: block;
-    width: 100%;
-    padding: 5px 0 5px 10px;
-  }
-  nav #navDesktop li a {
-    color: #fff;
-    display: block;
-  }
-  nav #navDesktop li:hover {
-    background-color: #05A5FB;
-  }
-  nav #navDesktop li:hover a {
-    color: #fff;
-  }
-  nav #navicon {
-    display: block;
-    margin: 0;
-    margin-bottom: 2px;
-  }
-  nav #navicon li {
-    display: block;
-  }
-  nav #navicon li a {
-    display: block;
+/* iPhone support */
+@media (min-device-width: 320px) and (max-device-width: 568px) {
+  #cover-page #container-cp h1 {
+    font-size: 50px;
   }
 }
