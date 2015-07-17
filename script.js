@@ -105,9 +105,9 @@ $(document).ready(function() {
 	********************************************************************/
 
 	// move window if scroll is pressed
-	$("#scrollDiv").mousedown(function() {
-		$("html, body").animate({ scrollTop: 727 }, 1000);
-	});
+	// $("#scrollDiv").mousedown(function() {
+	// 	$("html, body").animate({ scrollTop: 727 }, 1000);
+	// });
 
 	// change images when hovering over contact links
 	$("#socialLinks img").hover(

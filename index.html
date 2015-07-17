@@ -7,6 +7,10 @@
   <link href='https://fonts.googleapis.com/css?family=Bubblegum+Sans|Open+Sans:400,300,700|Oswald:400,300|Exo:400,800' rel='stylesheet' type='text/css'> 
   <!-- Bootstrap -->
   <link rel="stylesheet" text="text/css" href="bootstrap/dist/css/bootstrap.css">
+  <!-- PageTransitions -->
+  <link rel="stylesheet" type="text/css" href="PageTransitions/css/multilevelmenu.css" />
+  <link rel="stylesheet" type="text/css" href="PageTransitions/css/component.css" />
+  <link rel="stylesheet" type="text/css" href="PageTransitions/css/animations.css" />
   <!-- Custom CSS to override Bootstrap -->
   <link rel="stylesheet" type="text/css" href="stylesheet.css">
   <!-- Google Analytics -->
@@ -19,6 +23,7 @@
     ga('create', 'UA-54022705-1', 'auto');
     ga('send', 'pageview');
   </script>
+  <script src="PageTransitions/js/modernizr.custom.js"></script>
 </head>
 <body>
   <!-- LOADING PAGE -->
@@ -27,7 +32,7 @@
   </div>
 
   <!-- CONTENT WRAP -->
-  <div class="container-fluid" id="wrapper-body">
+  <div class="container-fluid pt-perspective" id="wrapper-body">
     <!-- NAV BAR -->
     <!-- <nav>
       <a href="#cover-page" id="topPageLink">Elliot Boschwitz</a>
@@ -41,11 +46,8 @@
       </ul>
     </nav> -->
 
-    <!-- CLOUDS -->
-    <canvas id="canvas_fog" width="2000" height="600"></canvas>
-
     <!-- COVER PAGE -->
-    <div id="cover-page">
+    <div id="cover-page" class="pt-page">
       <div id="container-cp">
         <div id="scrollDiv">
           <h2>scroll</h2>
@@ -53,9 +55,12 @@
         </div>
         <h1 id="coverPageHeader">ELLIOT BOSCHWITZ</h1>
       </div>
+      
+      <!-- CLOUDS -->
+      <canvas id="canvas_fog" width="2000" height="600"></canvas>
     </div>
 
-    <div class="container" id="content">
+    <div class="container pt-page" id="content">
       <div id="projects">
         <div class="contentWrap">
           <h2>PROJECTS</h2>
@@ -174,9 +179,10 @@
   </div>  
 
   <!-- scripts -->
-  <!--script src="jquery.js"></script-->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
   <script src="bootstrap/dist/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="script.js" defer="defer"></script>
+  <script src="PageTransitions/js/jquery.dlmenu.js"></script>
+  <script src="PageTransitions/js/pagetransitions.js"></script>
 </body>
 </html>

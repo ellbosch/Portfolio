@@ -15,18 +15,15 @@ body {
   width: 100%;
   overflow-x: hidden;
   margin: 0;
+  background-color: #333;
 }
 #wrapper-body {
   overflow-x: hidden;
   padding: 0;
   margin: 0;
-  background: url("images/sf-min.jpg") no-repeat center center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-  filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="images/sf-min.png", sizingMethod='scale');
-  -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src=@file, sizingMethod='scale')";
+  /*background: url("images/sf-min.jpg") no-repeat center center fixed;
+	.Cover;
+	.CoverIE("images/sf-min.png");*/
   width: 100%;
 }
 #container-cp {
@@ -151,11 +148,19 @@ nav {
   bottom: 0;
   z-index: 1;
   overflow: hidden;
+  left: 0;
 }
 #cover-page {
+  background: url("images/sf-min.jpg") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="images/sf-min.png", sizingMethod='scale');
+  -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src=@file, sizingMethod='scale')";
+  width: 100%;
   height: 100vh;
   bottom: 0;
-  margin-bottom: 50%;
   z-index: 2;
   color: #EEEEEE;
   text-align: center;
@@ -243,11 +248,11 @@ nav {
   margin-bottom: 60px;
 }
 #content {
-  position: absolute;
   width: 100%;
   padding: 0 0 0 0;
   z-index: 20;
   background-color: #eeeeee;
+  overflow: auto;
 }
 #content p {
   font-family: 'Open Sans', sans-serif, "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande";

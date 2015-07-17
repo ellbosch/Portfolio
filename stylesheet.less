@@ -44,15 +44,16 @@ html, body {
 	width: 100%;
 	overflow-x: hidden;
 	margin: 0;
+	background-color: #333;
 }
 
 #wrapper-body {
 	overflow-x: hidden;
 	padding: 0;
 	margin: 0;
-	background: url("images/sf-min.jpg") no-repeat center center fixed;
+	/*background: url("images/sf-min.jpg") no-repeat center center fixed;
 	.Cover;
-	.CoverIE("images/sf-min.png");
+	.CoverIE("images/sf-min.png");*/
 	width: 100%;
 }
 
@@ -190,12 +191,16 @@ nav {
 	bottom: 0;
 	z-index: 1;
 	overflow: hidden;
+	left: 0;
 }
 
 #cover-page {
+	background: url("images/sf-min.jpg") no-repeat center center fixed;
+	.Cover;
+	.CoverIE("images/sf-min.png");
+	width: 100%;
 	height: 100vh;
 	bottom: 0;
-	margin-bottom: 50%;
 	z-index: 2;
 	color: #EEEEEE;
 	text-align: center;
@@ -278,11 +283,11 @@ nav {
 }
 
 #content {
-	position: absolute;
 	width: 100%;
 	padding: 0 0 0 0;
 	z-index: 20;
 	background-color: rgb(238, 238, 238);
+	overflow: auto;
 
 	p {
 		font-family: @bodyFonts;
