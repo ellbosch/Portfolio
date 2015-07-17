@@ -14,7 +14,6 @@ $(document).ready(function() {
 		didClearFog: true,
 		didClearHeader: true,
 		didClearScrollDiv: true,
-		areProjectsTop: false
 	};
 
 	// creates animation callback for browswer
@@ -58,12 +57,6 @@ $(document).ready(function() {
 	function initGlobals() {
 		Fog.windowHeight = $(window).height();
 		Fog.contentTop = $("#projects").offset().top;
-		setContentOpacity();
-	}
-
-	// adds opacity to projects div based on scroll
-	function setContentOpacity() {
-		$("#projects").css('opacity', Math.min(1 - (Fog.contentTop - $(window).scrollTop()) / (Fog.windowHeight), 1));
 	}
 
 	// function call for creating canvas
@@ -84,9 +77,6 @@ $(document).ready(function() {
 		switch($(this).attr("href")) {
 			case "#cover-page":
 				$("html, body").animate({ scrollTop: 0 }, 1000);
-				break;
-			case "#about":
-				$("html, body").animate({ scrollTop: 30 }, 1000);
 				break;
 			case "#projects":
 				$("html, body").animate({ scrollTop: $("#projects").offset().top }, 1000);
@@ -198,7 +188,6 @@ $(document).ready(function() {
 			var didClearFog = Fog.didClearFog;
 			var didClearHeader = Fog.didClearHeader;
 			var didClearScrollDiv = Fog.didClearScrollDiv;
-			var areProjectsTop = Fog.areProjectsTop;
 
 			// while fog is not cleared
 			if (!didClearFog) {
@@ -207,7 +196,6 @@ $(document).ready(function() {
 					Fog.didClearScrollDiv = false;
 					$("#scrollDiv").fadeIn(1000, "linear").css("display", "inline-block");
 					$("#topPageLink").fadeOut(500, "linear");
-					$("#about").fadeOut(500, "linear");
 					$("#coverPageHeader").fadeIn(500, "linear");
 				}
 
@@ -217,7 +205,6 @@ $(document).ready(function() {
 						$("#topPageLink").fadeIn(500, "linear");
 					Fog.didClearScrollDiv = true;
 					$("#scrollDiv").fadeOut(500, "linear");
-					$("#about").fadeIn(500, "linear");
 					$("#coverPageHeader").fadeOut(500, "linear");
 				}
 
@@ -256,19 +243,6 @@ $(document).ready(function() {
 				createCanvas();							// recreate canvas and redraw fog with new dimensions
 		    	$("#canvas_fog").fadeIn('slow');
 		    }
-
-		    if (areProjectsTop && scrollTop < contentTop)
-		    	Fog.areProjectsTop = false;
-
-		    // fade in content below cover-page
-		    if (!areProjectsTop && scrollTop > contentTop - windowHeight - 200) {
-			    if (scrollTop < contentTop) {
-					setContentOpacity();
-			    } else {
-			    	Fog.areProjectsTop = true;
-			    	$("#projects").css("opacity", "1");
-			    }
-			}
 		}
 	}
 
@@ -282,17 +256,12 @@ $(document).ready(function() {
 		var scrollTop = $(window).scrollTop();
 
 		// show "Elliot Boschwitz" in nav if scrolled to top
-		if (scrollTop > 20) {
-			$("#about").show();
-
-			if ($(window).width() > 562)
-				$("#topPageLink").show();
+		if (scrollTop > 20 && $(window).width() > 562) {
+			$("#topPageLink").show();
 		}
 
-		// set areProjectsTop to true if at top of screen and set nav bg color
+		// set nav color
 		if (scrollTop > $("#projects").offset().top) {
-			Fog.areProjectsTop = true;
-
 			if ($(window).width() > 562)
 				$("nav").css('background-color', 'rgba(238, 238, 238, 0.9');
 			else
@@ -382,11 +351,9 @@ $(document).ready(function() {
 
 	// draw fog on canvas
 	function drawFog(clouds, ctx_width, ctx_height, counter, context) {
-		// set opacity of clouds
-		var scrollTop = $(window).scrollTop();
-		var scrollMax = Fog.contentTop;
+		// set opacity and color of clouds
 		var colorFog = 238;
-		var opacity = Math.max(0.25 * (1 - scrollTop/scrollMax), 0.10); //Math.max(((scrollMax - (scrollTop * 0.2)) * 0.1 / scrollMax), 0.25);
+		var opacity = 0.25;
 
 		// iterate through every cloud
 		for (var i = 0; i < clouds.length; i++) {
