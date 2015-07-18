@@ -167,61 +167,106 @@ $(document).ready(function() {
 		// }
 	});
 
-	$(window).scroll(function() {
-		Fog.didScroll = true;
+	// SCROLL HANDLERS
+	var on_scroll = false;
+	var is_on_cover_page = $("#cover-page").is(":visible");
 
-		if (!isMobile.matches && !isTablet.matches)
-			setInterval(scroll_debounce, 100);
+	$("#content").scroll(function() {
+		on_scroll = true;
+		setInterval(scroll_debounce($(this), "content"), 100);
 	});
 
-	function scroll_debounce() {
-		if (Fog.didScroll) {
-			Fog.didScroll = false;
-			var scrollTop = $(window).scrollTop();
-			var windowHeight = Fog.windowHeight
-			var contentTop = Fog.contentTop;
-			var didScroll = Fog.didScroll;
-			var didClearFog = Fog.didClearFog;
+	$("#wrapper-body").scroll(function() {
+		on_scroll = true;
+		setInterval(scroll_debounce($(this), "cover-page"), 100);
+	});
 
-			// while fog is not cleared
-			if (!didClearFog) {
-				// clear fog and add translucent background to nav if user passes offset of content div
-				if (scrollTop > contentTop) {
-					Fog.didClearFog = true;
-					var width = Fog.WIDTH;
-					var height = Fog.HEIGHT;
+	function scroll_debounce($dom, current_div_name) {
+		if (on_scroll) {
+			on_scroll = false;
+			var scrollTop = $dom.scrollTop();
 
-					// clear canvas scene
-					$("#canvas_fog").hide();
-					cancelAnimationFrame(Fog.animRequest);		// clear requestAnimFrame
-					Fog.context.clearRect(-width, -height, width * 2, height * 2);
-					// remove clouds from heap
-					delete Fog.clouds_arr;
+			// go back to cover page if user scrolls up all the way
+			if (current_div_name == "content" && scrollTop == 0 && !is_on_cover_page) {
+				is_on_cover_page = true;
+				PageTransitions.nextPage(22);
 
-					// add translucent background to nav
-					// if ($(window).width() > 562)
-					// 	$("nav").css('background-color', 'rgba(238, 238, 238, 0.9');
-					// else
-					// 	$("nav").css('background-color', '#3F4995');
-				} else {
-					// if ($(window).width() > 562)
-					// 	// remove translucency to nav
-					// 	$("nav").css('background-color', 'rgba(238, 238, 238, 0');
-					// else
-					// 	$("nav").css('background-color', '#3F4995');
-				}
+				// recreate fog
+				cancelAnimationFrame(Fog.animRequest);		// clear requestAnimFrame
+				createCanvas();							// recreate canvas and redraw fog with new dimensions
 			}
 
-		    // recreate fog scene if user scrolls back up to cover page area
-		    if (didClearFog && scrollTop < contentTop) {
-		    	Fog.didClearFog = false;
-		   	
-		    	cancelAnimationFrame(Fog.animRequest);		// clear requestAnimFrame
-				createCanvas();							// recreate canvas and redraw fog with new dimensions
-		    	$("#canvas_fog").fadeIn('slow');
-		    }
+			// go to content
+			if (current_div_name == "cover-page" && scrollTop >= 9 && is_on_cover_page) {
+				is_on_cover_page = false;
+				PageTransitions.nextPage(20);
+
+				// clear canvas scene
+				cancelAnimationFrame(Fog.animRequest);		// clear requestAnimFrame
+				Fog.context.clearRect(-width, -height, width * 2, height * 2);
+				// remove clouds from heap
+				delete Fog.clouds_arr;
+			}
 		}
 	}
+
+	// $(window).scroll(function() {
+	// 	Fog.didScroll = true;
+
+	// 	if (!isMobile.matches && !isTablet.matches)
+	// 		setInterval(scroll_debounce, 100);
+	// });
+
+	// function scroll_debounce() {
+
+
+		// if (Fog.didScroll) {
+		// 	Fog.didScroll = false;
+		// 	var scrollTop = $(window).scrollTop();
+		// 	var windowHeight = Fog.windowHeight
+		// 	var contentTop = Fog.contentTop;
+		// 	var didScroll = Fog.didScroll;
+		// 	var didClearFog = Fog.didClearFog;
+
+		// 	// while fog is not cleared
+		// 	if (!didClearFog) {
+		// 		// clear fog and add translucent background to nav if user passes offset of content div
+		// 		if (scrollTop > contentTop) {
+		// 			Fog.didClearFog = true;
+		// 			var width = Fog.WIDTH;
+		// 			var height = Fog.HEIGHT;
+
+		// 			// clear canvas scene
+		// 			$("#canvas_fog").hide();
+		// 			cancelAnimationFrame(Fog.animRequest);		// clear requestAnimFrame
+		// 			Fog.context.clearRect(-width, -height, width * 2, height * 2);
+		// 			// remove clouds from heap
+		// 			delete Fog.clouds_arr;
+
+		// 			// add translucent background to nav
+		// 			// if ($(window).width() > 562)
+		// 			// 	$("nav").css('background-color', 'rgba(238, 238, 238, 0.9');
+		// 			// else
+		// 			// 	$("nav").css('background-color', '#3F4995');
+		// 		} else {
+		// 			// if ($(window).width() > 562)
+		// 			// 	// remove translucency to nav
+		// 			// 	$("nav").css('background-color', 'rgba(238, 238, 238, 0');
+		// 			// else
+		// 			// 	$("nav").css('background-color', '#3F4995');
+		// 		}
+		// 	}
+
+		//     // recreate fog scene if user scrolls back up to cover page area
+		//     if (didClearFog && scrollTop < contentTop) {
+		//     	Fog.didClearFog = false;
+		   	
+		//     	cancelAnimationFrame(Fog.animRequest);		// clear requestAnimFrame
+		// 		createCanvas();							// recreate canvas and redraw fog with new dimensions
+		//     	$("#canvas_fog").fadeIn('slow');
+		//     }
+		// }
+	// }
 
 
 	/*********************************************************************

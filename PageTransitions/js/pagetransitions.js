@@ -41,18 +41,21 @@ var PageTransitions = (function() {
 			if( isAnimating ) {
 				return false;
 			}
-			if( animcursor > 67 ) {
-				animcursor = 1;
-			}
+			// if( animcursor > 67 ) {
+			// 	animcursor = 1;
+			// }
+
+			animcursor = 20;		// my line
+
 			nextPage( animcursor );
-			++animcursor;
+			// ++animcursor;
 		} );
 
 	}
 
 	function nextPage(options ) {
-		// var animation = (options.animation) ? options.animation : options;
-		var animation = 20;
+		var animation = (options.animation) ? options.animation : options;
+		// var animation = 20;
 
 		if( isAnimating ) {
 			return false;
