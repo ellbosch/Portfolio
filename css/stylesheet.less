@@ -82,9 +82,6 @@ html, body {
 	overflow-x: hidden;
 	padding: 0;
 	margin: 0;
-	/*background: url("images/sf-min.jpg") no-repeat center center fixed;
-	.Cover;
-	.CoverIE("images/sf-min.png");*/
 	width: 100%;
 }
 
@@ -352,6 +349,8 @@ nav {
 	padding: 0;
 	z-index: 20;
 	overflow: auto;
+	overflow-y: scroll; /* has to be scroll, not auto */
+  	-webkit-overflow-scrolling: touch;
 }
 
 #projects {
