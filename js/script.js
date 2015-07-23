@@ -37,15 +37,18 @@ $(document).ready(function() {
 	var isMobile = window.matchMedia("only screen and (min-device-width : 320px) and (max-device-width : 568px)");
 	var isTablet = window.matchMedia("only screen and (min-device-width : 768px) and (max-device-width : 1024px)");
 
+	initGlobals();						// calculate global variables
+	fadeToScene();
+	createCanvas();						// create canvas with animating fog
 	
-	if (!isMobile.matches && !isTablet.matches) {
-		initGlobals();						// calculate global variables
-		// delayInitialElements();				// show/hide elements on page load
-		fadeToScene();
-		createCanvas();						// create canvas with animating fog
-	} else {
-		fadeToScene();
-	}
+	// if (!isMobile.matches && !isTablet.matches) {
+	// 	initGlobals();						// calculate global variables
+	// 	// delayInitialElements();				// show/hide elements on page load
+	// 	fadeToScene();
+	// 	createCanvas();						// create canvas with animating fog
+	// } else {
+	// 	fadeToScene();
+	// }
 
 	// pause bootstrap carousel
 	$("#safetypenn-carousel").carousel('pause');
@@ -111,7 +114,7 @@ $(document).ready(function() {
 	$(".menu .icon-list a").on('click', function(e) {
 		var clicked_item = $(this).attr("href");
 
-		if (clicked_item != "resume") {
+		if (clicked_item != "attachments/BoschwitzElliot_resume.pdf") {
 			e.preventDefault();
 			var is_on_cover_page = Fog.is_on_cover_page;
 			switch (clicked_item) {

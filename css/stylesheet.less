@@ -119,7 +119,7 @@ html, body {
 	position: static;
 	text-shadow: none;
 	color: #333;
-	width: 400px;
+	max-width: 400px;
 	margin: 0 auto;
 }
 
@@ -280,7 +280,7 @@ nav {
 	text-align: center;
 	transition: all 5s ease-in;
 
-	h1 {
+	#coverPageHeader {
 		/*font-family: @titleFonts;*/
 		font-family: @cover_page_title;
 		/*font-weight: bold;*/
@@ -311,7 +311,7 @@ nav {
 		h2 {
 			font-size: 40px;
 			font-family: @SF-Regular;
-			/*letter-spacing: 2px;*/
+			letter-spacing: -2px;
 		}
 
 		span {
@@ -331,13 +331,13 @@ nav {
 
 @-webkit-keyframes pulse {
 	0% {color: #B5DBEF;}
-	50% {color: #05A5FB;}
+	50% {color: #85A1AF;}
 	100% {color: #B5DBEF;}
 }
 
 @keyframes pulse {
 	0% {color: #B5DBEF;}
-	50% {color: #05A5FB;}
+	50% {color: #85A1AF;}
 	100% {color: #B5DBEF;}
 }
 
@@ -367,7 +367,7 @@ nav {
 	}
 
 	.project_item {
-		padding: 80px 0;
+		padding: 80px 5px;
 		text-align: center;
 
 		h3 {
@@ -380,7 +380,7 @@ nav {
 			font-family: @SF-Light;
 			font-size: 18px;
 			z-index: 20;
-			width: 600px;
+			max-width: 600px;
 			margin: 0 auto;
 			line-height: 1.8;
 
@@ -426,8 +426,6 @@ nav {
 		}
 
 		#safetypenn-carousel {
-			/*padding-bottom: 100px;*/
-
 			img {
 				height: 500px;
 				margin: 0 auto;
@@ -521,6 +519,36 @@ nav {
 /*******************************
 		MEDIA QUERIES
 *******************************/
+
+@media only screen and (max-width: 600px) {
+	#projects {
+		#projects_header {
+			font-size: 50px;
+			padding: 100px 0 0;
+		}
+
+		.project_item {
+			padding: 40px 5px;
+
+			h3 {
+				font-size: 40px;
+			}
+			p {
+				font-size: 16px;
+			}
+
+			#safetypenn-carousel img {
+				height: 300px;
+			}
+		}
+	}
+}
+
+@media only screen and (max-width: 450px) {
+	#cover-page #coverPageHeader {
+		font-size: 50px;
+	}
+}
 
 
 /* TO-DO: remove */
