@@ -3,16 +3,17 @@
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Elliot Boschwitz</title>
-  <!-- Fonts -->
-  <link href='https://fonts.googleapis.com/css?family=Bubblegum+Sans|Open+Sans:400,300,700|Oswald:400,300|Exo:400,800' rel='stylesheet' type='text/css'> 
   <!-- Bootstrap -->
-  <link rel="stylesheet" text="text/css" href="bootstrap/dist/css/bootstrap.css">
+  <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
   <!-- PageTransitions -->
   <link rel="stylesheet" type="text/css" href="PageTransitions/css/multilevelmenu.css" />
   <link rel="stylesheet" type="text/css" href="PageTransitions/css/component.css" />
   <link rel="stylesheet" type="text/css" href="PageTransitions/css/animations.css" />
+  <link rel="stylesheet" type="text/css" href="OffCanvasMenuEffects/css/menu_sideslide.css" />
+  <!-- OffCanvasMenuEffects -->
+  <link rel="stylesheet" type="text/css" href="OffCanvasMenuEffects/fonts/font-awesome-4.2.0/css/font-awesome.min.css" />
   <!-- Custom CSS to override Bootstrap -->
-  <link rel="stylesheet" type="text/css" href="stylesheet.css">
+  <link rel="stylesheet" type="text/css" href="css/stylesheet.css">
   <!-- Google Analytics -->
   <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -33,18 +34,20 @@
 
   <!-- CONTENT WRAP -->
   <div class="container-fluid pt-perspective" id="wrapper-body">
-    <!-- NAV BAR -->
-    <!-- <nav>
-      <a href="#cover-page" id="topPageLink">Elliot Boschwitz</a>
-      <ul id="navDesktop">
-        <li><a href="#projects">Projects</a></li>
-        <li><a href="#contact">Contact</a></li>
-        <li><a href="attachments/BoschwitzElliot_resume.pdf">Resume</a></li>
-      </ul>
-      <ul id="navicon">
-        <li><a href="#"><img src="attachments/navicon.svg" alt="menu"></a></li>
-      </ul>
-    </nav> -->
+
+    <!-- MENU -->
+    <div class="menu-wrap">
+      <nav class="menu">
+        <div class="icon-list">
+          <a href="#"><i class="fa fa-fw fa-home"></i><span>Home</span></a>
+          <a href="#projects_header"><i class="fa fa-fw fa-laptop"></i><span>Projects</span></a>
+          <a href="#"><i class="fa fa-fw fa-file-text-o"></i><span>Resume</span></a>
+          <a href="#contact"><i class="fa fa-fw fa-envelope-o"></i><span>Contact</span></a>
+        </div>
+      </nav>
+      <button class="close-button" id="close-button">Close Menu</button>
+    </div>
+    <button class="menu-button" id="open-button">Open Menu</button>
 
     <!-- COVER PAGE -->
     <div id="cover-page" class="pt-page">
@@ -53,98 +56,122 @@
           <h2>scroll</h2>
           <span class="glyphicon glyphicon-chevron-down"></span>
         </div>
-        <h1 id="coverPageHeader">ELLIOT BOSCHWITZ</h1>
+        <h1 id="coverPageHeader">Elliot Boschwitz</h1>
       </div>
 
       <!-- CLOUDS -->
       <canvas id="canvas_fog" width="2000" height="600"></canvas>
     </div>
 
-    <div class="container pt-page" id="content">
+    <div class="pt-page" id="content">
       <div id="projects">
-        <div class="contentWrap">
-          <h2>PROJECTS</h2>
+        <h2 id="projects_header">PROJECTS</h2>
 
-          <!-- TEAM PROJECTS -->
-          <div class="project-sectionHeader">Team Projects</div>
-          <div id="socratesDiv">
-            <div id="socratesHeader">
-              <img class="img-responsive" src="images/socrates.png">
-              <span id="socratesSpan">Socrates</span>
+        <div id="readit_div" class="project_item">
+          <h3>READit</h3>
+          <p>READit is a news aggregator powered by reddit. It's a Flask application that pulls results from various subreddits and ranks these posts using reddit's 'hot' ranking algorithm. Article content is stripped from each post for convenient access on READit's page. For each article, an automated summary using NLP is displayed in the form of "TLDR", which stands for "Too Long, Didn't Read". <a href="https://github.com/ellbosch/READit">Click here to view the GitHub repository.</a></p>
+          <ul class="project-links">
+            <li><a href="http://readit.elliotboschwitz.com">Go To READit</a></li>
+          </ul>
+        </div>
+
+        <div id="socratesDiv" class="project_item">
+          <h3>Socrates</h3>
+          <p>Socrates is a Chrome extension that provides quick, detailed information in a convenient sidebar. Socrates works by immediately displaying a Wikipedia article or list of YouTube videos based on highlighted text from the user. The project was conceptualized at a PennApps hackathon in the fall of 2014 and we are still working on providing a wider breadth of online resources. <a href="http://challengepost.com/software/socrates-pufif">Click here to view the hackathon submission.</a></p>
+          <ul class="project-links">
+            <li>
+              <a href="https://github.com/ellbosch/Socrates">View Project</a>
+            </li>
+          </ul>
+        </div>
+
+        <div id="safetyPennDiv" class="project_item">
+          <h3>SafetyPenn</h3>
+          <p>SafetyPenn is an Android application for Penn students. This is a map-based application that supports security features by Penn Public Safety to help students walk about campus safely. This includes a user-set timer which, upon expiration, will send a distress signal to Penn Police, as well as a request for a Penn escort to walk the user home. For this app, I built support for all map-based features and helped design the UI. <a href="attachments/SafetyPennDocumentation.pdf">View the documentation here.</a></p>
+
+          <div id="safetypenn-carousel" class="carousel slide" data-ride="carousel">
+            <span class="carousel-title">How SafetyPenn Works</span>
+            <!-- Indicators -->
+            <ol class="carousel-indicators">
+              <li data-target="#safetypenn-carousel" data-slide-to="0" class="active"></li>
+              <li data-target="#safetypenn-carousel" data-slide-to="1"></li>
+              <li data-target="#safetypenn-carousel" data-slide-to="2"></li>
+              <li data-target="#safetypenn-carousel" data-slide-to="3"></li>
+              <li data-target="#safetypenn-carousel" data-slide-to="4"></li>
+            </ol>
+
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner" role="listbox">
+              <div class="item active">
+                <img src="images/project_screenshots/sp_1.png">
+                <div class="carousel-caption">The home screen contains a map on Penn's campus that prompts the user to initiate the timer
+</div>
+              </div>
+              <div class="item">
+                <img src="images/project_screenshots/sp_2.png">
+                <div class="carousel-caption">The timer can be set either by manually entering a desired time or by automatically calculated walking time</div>
+              </div>
+               <div class="item">
+                <img src="images/project_screenshots/sp_3.png">
+                <div class="carousel-caption">The user is directed to enter a destination for automatic timer calculation</div>
+              </div>
+              <div class="item">
+                <img src="images/project_screenshots/sp_4.png">
+                <div class="carousel-caption">The app calculates a time and prompts the user to initiate the timer</div>
+              </div>
+              <div class="item">
+                <img src="images/project_screenshots/sp_5.png">
+                <div class="carousel-caption">Penn Police gets directly notified in the event that the timer expires without the user disabling it</div>
+              </div>
             </div>
-            <div>
-              <p>Socrates is a Chrome extension that provides quick, detailed information in a convenient sidebar. Socrates works by immediately displaying a Wikipedia article or list of YouTube videos based on highlighted text from the user. The project was conceptualized at a PennApps hackathon in the fall of 2014 and we are still working on providing a wider breadth of online resources. <a href="http://challengepost.com/software/socrates-pufif">Click here to view the hackathon submission.</a></p>
-            </div>
-            <ul class="project-links">
-              <li>
-                <a href="https://github.com/ellbosch/Socrates">View Project</a>
-              </li>
-            </ul>
-          </div>
-          <div id="safetyPennDiv">
-            <div class="logo">
-              <img class="img-responsive" src="images/safetypenn.png" alt="SafetyPenn">
-            </div>
-            <div>
-              <p>SafetyPenn is an Android application for Penn students. This is a map-based application that supports security features by Penn Public Safety to help students walk about campus safely. This includes a user-set timer which, upon expiration, will send a distress signal to Penn Police, as well as a request for a Penn escort to walk the user home. For this app, I built support for all map-based features and helped design the UI. <a href="attachments/SafetyPennDocumentation.pdf">View the documentation here.</a></p>
-            </div>
-            <ul class="project-links">
-              <li>
-                <a href="https://github.com/alialtaf9/SafetyPenn">View Project</a>
-              </li>
-            </ul>
-          </div>
-          <div id="samaritanDiv">
-            <div class="logo">
-              <img class="img-responsive" src="images/samaritan.png" alt="Samaritan">
-            </div>
-            <div>
-              <p>Samaritan is a product of PennApps, a hackathon at Penn. It is a discovery tool for finding the most likely candidates in your community to assist you. It is a web app that uses data from your Facebook, LinkedIn, and Shop Your Way accounts to give you the best suggestions for who to contact in many different relevant situations. I was involved in the front-end development of this web app. <a href="http://pennapps.challengepost.com/submissions/17128-samaritan">Click here to view our hackathon submission.</a></p>
-            </div>
-            <ul class="project-links">
-              <li>
-                <a href="http://samaritan.rohunbansal.com/">View Project</a>
-              </li>
-            </ul>
-          </div>
-          <div id="halDiv">
-            <div class="logo">
-              <span>Hal</span>
-            </div>
-            <div>
-              <p>Hal is a personal assistant for iPhone. It is an alarm clock that narrates detailed information about the weather (and soon the news) as the user wakes up. Hal was conceptualized in early 2014 and is currently put on hold.</p>
-            </div>
-            <ul class="project-links">
-              <li>
-                <a href="https://github.com/ellbosch/Planner">View Project</a>
-              </li>
-            </ul>
+
+            <!-- Controls -->
+            <a class="left carousel-control" href="#safetypenn-carousel" role="button" data-slide="prev">
+              <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+              <span class="sr-only">Previous</span>
+            </a>
+            <a class="right carousel-control" href="#safetypenn-carousel" role="button" data-slide="next">
+              <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+              <span class="sr-only">Next</span>
+            </a>
           </div>
 
-          <!-- PERSONAL PROJECTS -->
-          <div class="project-sectionHeader">Personal Projects</div>
-          <div id="readit_div">
-            <div class="logo">
-              <img class="img-responsive" src="images/readit.png" alt="READit" id="readit-img">
-            </div>
-            <div>
-              <p>READit is a news aggregator powered by reddit. It's a Flask application that pulls results from various subreddits and ranks these posts using reddit's 'hot' ranking algorithm. Article content is stripped from each post for convenient access on READit's page. For each article, an automated summary using NLP is displayed in the form of "TLDR", which stands for "Too Long, Didn't Read". <a href="https://github.com/ellbosch/READit">Click here to view the GitHub repository.</a></p>
-            </div>
-            <ul class="project-links">
-              <li><a href="http://readit.elliotboschwitz.com">Go To READit</a></li>
-            </ul>
-          </div>
-          <div class="project-misc">
-            <h3>Rolling Fog</h3>
-            <p>This is an HTML Canvas project that animates a series of shapes designed to look like fog. It was designed to be used for overlaying on top of the image I took of San Francisco, seen on this site. This program creates a series of translucent, randomly generated shapes stacked upon one another. To create a sense of depth, shapes in the front animate faster than ones in the back. The fog program is optimized to utilize fastest graphics performance while minimizing memory usage.</p>
-            <ul class="project-links">
-              <li>
-                <a href="https://github.com/ellbosch/Portfolio">View Project</a>
-              </li>
-            </ul>
-            <h5 id="fogComingSoon">Individual Git Repo Coming Soon</h5>
-          </div>
-          <div class="project-misc">
+          <ul class="project-links">
+            <li>
+              <a href="https://github.com/alialtaf9/SafetyPenn">View Project</a>
+            </li>
+          </ul>
+        </div>
+
+        <div id="samaritanDiv" class="project_item">
+          <h3>Samaritan</h3>
+          <p>Samaritan is a product of PennApps, a hackathon at Penn. It is a discovery tool for finding the most likely candidates in your community to assist you. It is a web app that uses data from your Facebook, LinkedIn, and Shop Your Way accounts to give you the best suggestions for who to contact in many different relevant situations. I was involved in the front-end development of this web app. <a href="http://pennapps.challengepost.com/submissions/17128-samaritan">Click here to view our hackathon submission.</a></p>
+          <ul class="project-links">
+            <li>
+              <a href="http://samaritan.rohunbansal.com/">View Project</a>
+            </li>
+          </ul>
+        </div>
+<!--         <div id="halDiv" class="project_item">
+          <h3>Hal</h3>
+          <p>Hal is a personal assistant for iPhone. It is an alarm clock that narrates detailed information about the weather (and soon the news) as the user wakes up. Hal was conceptualized in early 2014 and is currently put on hold.</p>
+          <ul class="project-links">
+            <li>
+              <a href="https://github.com/ellbosch/Planner">View Project</a>
+            </li>
+          </ul>
+        </div> -->
+        <div class="project_item">
+          <h3>Rolling Fog</h3>
+          <p>This is an HTML Canvas project that animates a series of shapes designed to look like fog. It was designed to be used for overlaying on top of the image I took of San Francisco, seen on this site. This program creates a series of translucent, randomly generated shapes stacked upon one another. To create a sense of depth, shapes in the front animate faster than ones in the back. The fog program is optimized to utilize fastest graphics performance while minimizing memory usage.</p>
+          <ul class="project-links">
+            <li>
+              <a href="https://github.com/ellbosch/Portfolio">View Project</a>
+            </li>
+          </ul>
+        </div>
+        <div class="project_item">
+          <div>
             <h3>Helicopter Game</h3>
             <p>I recreated the classic helicopter game, in Java, as my first programming project. To play, <a href="attachments/HelicopterGame.jar" download="Helicopter Game">download the game here.</a></p>
             <ul class="project-links">
@@ -158,20 +185,18 @@
 
       <!-- CONTACT -->
       <div id="contact">
-        <div class="contentWrap" id="contactWrap">
-          <h3 id="contactHeader">Elliot Boschwitz</h3>
-          <a id="email" href="mailto:ebosch@sas.upenn.edu">ebosch@sas.upenn.edu</a>
-          <a id="resumeBtn" href="attachments/BoschwitzElliot_resume.pdf">VIEW RESUME</a>
-          <div id="socialLinks">
-            <div>
-              <a href="https://github.com/ellbosch"><img src="images/github.png" alt="GitHub"></a>
-            </div>
-            <div>
-              <a href="https://www.linkedin.com/profile/view?id=233700755&authType=name&authToken=QK1t&locale=en_US&pvs=pp&trk=ppro_viewmore"><img src="images/linkedin.png" alt="LinkedIn"></a>
-            </div>
-            <div>
-              <a href="https://www.facebook.com/ellbosch"><img src="images/facebook.png" alt="Facebook"></a>
-            </div>
+        <h3 id="contactHeader">Elliot Boschwitz</h3>
+        <a id="email" href="mailto:ebosch@sas.upenn.edu">ebosch@sas.upenn.edu</a>
+        <a id="resumeBtn" href="attachments/BoschwitzElliot_resume.pdf">VIEW RESUME</a>
+        <div id="socialLinks">
+          <div>
+            <a href="https://github.com/ellbosch"><img src="images/github.png" alt="GitHub"></a>
+          </div>
+          <div>
+            <a href="https://www.linkedin.com/profile/view?id=233700755&authType=name&authToken=QK1t&locale=en_US&pvs=pp&trk=ppro_viewmore"><img src="images/linkedin.png" alt="LinkedIn"></a>
+          </div>
+          <div>
+            <a href="https://www.facebook.com/ellbosch"><img src="images/facebook.png" alt="Facebook"></a>
           </div>
         </div>
       </div>
@@ -179,10 +204,12 @@
   </div>  
 
   <!-- scripts -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-  <!-- <script src="bootstrap/dist/js/bootstrap.min.js"></script> -->
+  <script src="js/jquery-2.1.4.js"></script>
+  <script src="bootstrap/js/bootstrap.min.js"></script>
   <script src="PageTransitions/js/jquery.dlmenu.js"></script>
   <script src="PageTransitions/js/pagetransitions.js"></script>
-  <script type="text/javascript" src="script.js" defer="defer"></script>
+  <script src="OffCanvasMenuEffects/js/classie.js"></script>
+  <script src="OffCanvasMenuEffects/js/main.js"></script>
+  <script src="js/script.js"></script>
 </body>
 </html>
