@@ -10,7 +10,7 @@ $(document).ready(function() {
 		windowHeight: 0,
 		// scrollable booleans
 		on_scroll: false,
-		didClearFog: true,
+		is_on_cover_page: false
 	};
 
 	// creates animation callback for browswer
@@ -107,10 +107,31 @@ $(document).ready(function() {
 		-- WINDOW EVENT HANDLERS --
 	********************************************************************/
 
-	// move window if scroll is pressed
-	// $("#scrollDiv").mousedown(function() {
-	// 	$("html, body").animate({ scrollTop: 727 }, 1000);
-	// });
+	// menu events
+	$(".menu .icon-list a").on('click', function(e) {
+		var clicked_item = $(this).attr("href");
+
+		if (clicked_item != "resume") {
+			e.preventDefault();
+			var is_on_cover_page = Fog.is_on_cover_page;
+			switch (clicked_item) {
+				case "#cover-page":
+					if (!is_on_cover_page) go_to_cover_page();
+					break;
+				case "#projects":
+					if (is_on_cover_page) go_to_content();
+					else {
+						$("#content").animate({ scrollTop: 10 }, 1000);
+					}
+					break;
+				case "#contact":
+					if (is_on_cover_page) {
+						go_to_content();
+					}
+					$("#content").animate({ scrollTop: $("#projects").height() }, 1000);
+			}
+		}
+	});
 
 	// change images when hovering over contact links
 	$("#socialLinks img").hover(
@@ -148,7 +169,6 @@ $(document).ready(function() {
 	$(window).smartresize(function() {
 		var animRequest = Fog.animRequest;
 		var scrollTop = $(window).scrollTop();
-		// var contentTop = Fog.contentTop;
 
 		// recalculate globals
 		initGlobals();
@@ -157,21 +177,11 @@ $(document).ready(function() {
 			cancelAnimationFrame(animRequest);		// clear requestAnimFrame
 			createCanvas();							// recreate canvas and redraw fog with new dimensions
 		}
-
-		// change nav background
-		// if ($(window).width() > 562) {
-		// 	if (scrollTop > contentTop)
-		// 		$("nav").css('background-color', 'rgba(238, 238, 238, 0.8');
-		// 	else
-		// 		$("nav").css('background-color', 'rgba(238, 238, 238, 0');
-		// } else {
-		// 	$("nav").css('background-color', '#3F4995');
-		// }
 	});
 
 	// SCROLL HANDLERS
 	Fog.on_scroll = false;
-	var is_on_cover_page = $("#cover-page").is(":visible");
+	Fog.is_on_cover_page = $("#cover-page").is(":visible");
 
 	$("#content").scroll(function() {
 		on_scroll = true;
@@ -187,90 +197,43 @@ $(document).ready(function() {
 		if (on_scroll) {
 			on_scroll = false;
 			var scrollTop = $dom.scrollTop();
+			var is_on_cover_page = Fog.is_on_cover_page;
 
 			// go back to cover page if user scrolls up all the way
 			if (current_div_name == "content" && scrollTop == 0 && !is_on_cover_page) {
-				is_on_cover_page = true;
-				PageTransitions.nextPage(26);
-
-				// recreate fog
-				cancelAnimationFrame(Fog.animRequest);		// clear requestAnimFrame
-				createCanvas();							// recreate canvas and redraw fog with new dimensions
+				go_to_cover_page();
 			}
 
 			// go to content
 			else if (current_div_name == "cover-page" && scrollTop >= 9 && is_on_cover_page) {
-				is_on_cover_page = false;
-				PageTransitions.nextPage(25);
-
-				// clear canvas scene
-				var width = Fog.WIDTH;
-				var height = Fog.HEIGHT;
-				cancelAnimationFrame(Fog.animRequest);		// clear requestAnimFrame
-				Fog.context.clearRect(-width, -height, width * 2, height * 2);
-				// remove clouds from heap
-				delete Fog.clouds_arr;
+				go_to_content();
 			}
 		}
 	}
 
-	// $(window).scroll(function() {
-	// 	Fog.didScroll = true;
+	// jumps to cover page and sets global booleans
+	function go_to_cover_page() {
+		Fog.is_on_cover_page = true;
+		PageTransitions.nextPage(26);
 
-	// 	if (!isMobile.matches && !isTablet.matches)
-	// 		setInterval(scroll_debounce, 100);
-	// });
+		// recreate fog
+		cancelAnimationFrame(Fog.animRequest);	// clear requestAnimFrame
+		createCanvas();							// recreate canvas and redraw fog with new dimensions
+	}
 
-	// function scroll_debounce() {
+	// jumps to content and sets global booleans
+	function go_to_content() {
+		Fog.is_on_cover_page = false;
+		PageTransitions.nextPage(25);
 
-
-		// if (Fog.didScroll) {
-		// 	Fog.didScroll = false;
-		// 	var scrollTop = $(window).scrollTop();
-		// 	var windowHeight = Fog.windowHeight
-		// 	var contentTop = Fog.contentTop;
-		// 	var didScroll = Fog.didScroll;
-		// 	var didClearFog = Fog.didClearFog;
-
-		// 	// while fog is not cleared
-		// 	if (!didClearFog) {
-		// 		// clear fog and add translucent background to nav if user passes offset of content div
-		// 		if (scrollTop > contentTop) {
-		// 			Fog.didClearFog = true;
-		// 			var width = Fog.WIDTH;
-		// 			var height = Fog.HEIGHT;
-
-		// 			// clear canvas scene
-		// 			$("#canvas_fog").hide();
-		// 			cancelAnimationFrame(Fog.animRequest);		// clear requestAnimFrame
-		// 			Fog.context.clearRect(-width, -height, width * 2, height * 2);
-		// 			// remove clouds from heap
-		// 			delete Fog.clouds_arr;
-
-		// 			// add translucent background to nav
-		// 			// if ($(window).width() > 562)
-		// 			// 	$("nav").css('background-color', 'rgba(238, 238, 238, 0.9');
-		// 			// else
-		// 			// 	$("nav").css('background-color', '#3F4995');
-		// 		} else {
-		// 			// if ($(window).width() > 562)
-		// 			// 	// remove translucency to nav
-		// 			// 	$("nav").css('background-color', 'rgba(238, 238, 238, 0');
-		// 			// else
-		// 			// 	$("nav").css('background-color', '#3F4995');
-		// 		}
-		// 	}
-
-		//     // recreate fog scene if user scrolls back up to cover page area
-		//     if (didClearFog && scrollTop < contentTop) {
-		//     	Fog.didClearFog = false;
-		   	
-		//     	cancelAnimationFrame(Fog.animRequest);		// clear requestAnimFrame
-		// 		createCanvas();							// recreate canvas and redraw fog with new dimensions
-		//     	$("#canvas_fog").fadeIn('slow');
-		//     }
-		// }
-	// }
+		// clear canvas scene
+		var width = Fog.WIDTH;
+		var height = Fog.HEIGHT;
+		cancelAnimationFrame(Fog.animRequest);		// clear requestAnimFrame
+		Fog.context.clearRect(-width, -height, width * 2, height * 2);
+		// remove clouds from heap
+		delete Fog.clouds_arr;
+	}
 
 
 	/*********************************************************************
