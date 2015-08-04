@@ -167,18 +167,16 @@ $(document).ready(function() {
 
 	// handle window resizing events with smart resize
 	$(window).smartresize(function() {
-		if (!Fog.is_mobile) {
-			var animRequest = Fog.animRequest;
-			var scrollTop = $(window).scrollTop();
+		var animRequest = Fog.animRequest;
+		var scrollTop = $(window).scrollTop();
 
-			// recalculate globals
-			initGlobals();
-			set_sf_image_size();
+		// recalculate globals
+		initGlobals();
+		set_sf_image_size();
 
-			if (animRequest != null && Fog.canvas != null) {
-				cancelAnimationFrame(animRequest);		// clear requestAnimFrame
-				createCanvas();							// recreate canvas and redraw fog with new dimensions
-			}
+		if (animRequest != null && Fog.canvas != null) {
+			cancelAnimationFrame(animRequest);		// clear requestAnimFrame
+			createCanvas();							// recreate canvas and redraw fog with new dimensions
 		}
 	});
 
