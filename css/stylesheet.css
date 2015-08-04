@@ -172,11 +172,12 @@ body {
   color: #EEEEEE;
   text-align: center;
   transition: all 5s ease-in;
-  position: fixed;
+  position: relative;
 }
 #cover-page #cover-page_img {
   width: 100%;
   height: auto;
+  position: fixed;
 }
 #cover-page #coverPageHeader {
   /*font-family: @titleFonts;*/
@@ -265,7 +266,6 @@ body {
   position: relative;
   top: 100%;
   width: 100%;
-  margin-top: 100%;
 }
 #projects #projects_header {
   text-align: center;

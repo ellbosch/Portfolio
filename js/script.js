@@ -78,15 +78,15 @@ $(document).ready(function() {
 			$cover_page_img.css({
 				"width": "100%",
 				"height": "auto",
-				"margin-left": margin_left,
-				"margin-top": margin_top
+				"left": margin_left,
+				"top": margin_top
 			});
 		} else {
 			$cover_page_img.css({
 				"width": "auto",
 				"height": "100%",
-				"margin-left": margin_left,
-				"margin-top": margin_top
+				"left": margin_left,
+				"top": margin_top
 			});
 		}
 	}
