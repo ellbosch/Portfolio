@@ -38,20 +38,18 @@
 *******************************/
 html,
 body {
-  width: 100%;
   overflow-x: hidden;
   margin: 0;
   background-color: #2a2a2a;
+  overflow-y: scroll;
+  /* has to be scroll, not auto */
+  -webkit-overflow-scrolling: touch;
 }
 #wrapper-body {
   overflow-x: hidden;
   padding: 0;
   margin: 0;
   width: 100%;
-}
-#container-cp {
-  display: block;
-  padding: 0 10px;
 }
 .carousel {
   margin-top: 30px;
@@ -88,6 +86,24 @@ body {
 .menu .icon-list a span {
   font-family: 'SF-Regular', 'HelveticaNeue-Light', sans-serif;
 }
+.blank-space {
+  /* TO-DO: DISABLE BELOW WHEN TRANSITIONS ARE FIXED */
+  display: none;
+  height: 10px;
+  width: 100%;
+  background-color: #2a2a2a;
+}
+/*.pt-page {
+	visibility: none;
+	position: absolute;
+	top: 0;
+	left: 0;
+	overflow: hidden;
+}
+
+.pt-page-current {
+	visibility: visible;
+}*/
 /*******************************
 		LOADING PAGE
 *******************************/
@@ -136,69 +152,6 @@ body {
   line-height: 100vh;
 }
 /*******************************
-		NAV
-*******************************/
-/*
-nav {
-	position: fixed;
-	top: 0;
-	width: 100%;
-	z-index: 90;
-	height: 40px;
-	line-height: 40px;
-
-	#topPageLink {
-		margin-left: 10px;
-		float: left;
-	}
-
-	ul {
-		list-style-type: none;
-	}
-
-	a {
-		text-decoration: none;
-		color: #3F4995;
-		font-size: 16px;
-		font-family: @bodyFonts;
-	}
-
-	a:hover {
-		text-decoration: none;
-		color: #05A5FB;
-	}
-
-	#navDesktop {
-		display: inline-block;
-		padding-right: 10px;
-		float: right;
-
-		li {
-			float: left;
-			padding-left: 30px;
-			display: inline-block;
-		}
-	}
-
-	#navicon {
-		display: none;
-		margin: 0;
-		margin-bottom: 2px;
-		padding-left: 10px;
-
-		li {
-			display: block;
-			a {
-				display: block;
-			}
-		}
-
-		li:hover img  {
-			content: url("attachments/navicon-active.svg");
-		}			
-	}
-}*/
-/*******************************
 		COVER PAGE/CANVAS
 *******************************/
 #canvas_fog {
@@ -209,21 +162,21 @@ nav {
   left: 0;
 }
 #cover-page {
-  background: url("../images/sf-min.jpg") no-repeat center center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-  filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="images/sf-min.png", sizingMethod='scale');
-  -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src=@file, sizingMethod='scale')";
+  /*background: url("../images/sf-min.jpg") no-repeat center center fixed;
+	.Cover;
+	.CoverIE("images/sf-min.png");*/
   width: 100%;
   height: 100vh;
   bottom: 0;
-  margin-bottom: 10px;
   z-index: 2;
   color: #EEEEEE;
   text-align: center;
   transition: all 5s ease-in;
+  position: fixed;
+}
+#cover-page #cover-page_img {
+  width: 100%;
+  height: auto;
 }
 #cover-page #coverPageHeader {
   /*font-family: @titleFonts;*/
@@ -231,13 +184,13 @@ nav {
   /*font-weight: bold;*/
   font-size: 80px;
   /*letter-spacing: 5px;*/
-  position: fixed;
   text-align: center;
   color: #FFD194;
   /*color: #000B66;*/
-  margin-top: 150px;
   padding-right: 10px;
   width: 100%;
+  top: 17%;
+  position: fixed;
 }
 #cover-page #scrollDiv {
   z-index: 3;
@@ -299,13 +252,19 @@ nav {
 		PROJECTS
 *******************************/
 #content {
-  width: 100%;
+  /*		TO-DO: RE-ENABLE BELOW CODE WHEN TRANSITIONS ARE FIXED
+	display: none;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	*/
   padding: 0;
   z-index: 20;
-  overflow: auto;
-  overflow-y: scroll;
-  /* has to be scroll, not auto */
-  -webkit-overflow-scrolling: touch;
+  position: absolute;
+  top: 100%;
+  width: 100%;
 }
 #projects #projects_header {
   text-align: center;
@@ -443,6 +402,9 @@ nav {
 		MEDIA QUERIES
 *******************************/
 @media only screen and (max-width: 600px) {
+  #cover-page {
+    /*background-attachment: scroll;*/
+  }
   #cover-page #scrollDiv {
     bottom: 100px;
   }

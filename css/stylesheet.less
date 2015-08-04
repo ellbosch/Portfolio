@@ -61,6 +61,7 @@
 	-animation-iteration-count: @iteration;
 	-moz-animation-count: @iteration;
 }
+
 .Border-radius(@radius) {
 	-webkit-border-radius: @radius;
 	-moz-border-radius: @radius;
@@ -72,10 +73,11 @@
 *******************************/
 
 html, body {
-	width: 100%;
 	overflow-x: hidden;
 	margin: 0;
 	background-color: #2a2a2a;
+	overflow-y: scroll; /* has to be scroll, not auto */
+  	-webkit-overflow-scrolling: touch;
 }
 
 #wrapper-body {
@@ -83,11 +85,6 @@ html, body {
 	padding: 0;
 	margin: 0;
 	width: 100%;
-}
-
-#container-cp {
-	display: block;
-	padding: 0 10px;
 }
 
 .carousel {
@@ -132,6 +129,28 @@ html, body {
 .menu .icon-list a span {
 	font-family: @SF-Regular;
 }
+
+.blank-space {
+	/* TO-DO: DISABLE BELOW WHEN TRANSITIONS ARE FIXED */
+	display: none;
+
+	height: 10px;
+	width: 100%;
+	background-color: #2a2a2a;
+}
+
+/*.pt-page {
+	visibility: none;
+	position: absolute;
+	top: 0;
+	left: 0;
+	overflow: hidden;
+}
+
+.pt-page-current {
+	visibility: visible;
+}*/
+
 
 /*******************************
 		LOADING PAGE
@@ -188,71 +207,6 @@ html, body {
 
 
 /*******************************
-		NAV
-*******************************/
-/*
-nav {
-	position: fixed;
-	top: 0;
-	width: 100%;
-	z-index: 90;
-	height: 40px;
-	line-height: 40px;
-
-	#topPageLink {
-		margin-left: 10px;
-		float: left;
-	}
-
-	ul {
-		list-style-type: none;
-	}
-
-	a {
-		text-decoration: none;
-		color: #3F4995;
-		font-size: 16px;
-		font-family: @bodyFonts;
-	}
-
-	a:hover {
-		text-decoration: none;
-		color: #05A5FB;
-	}
-
-	#navDesktop {
-		display: inline-block;
-		padding-right: 10px;
-		float: right;
-
-		li {
-			float: left;
-			padding-left: 30px;
-			display: inline-block;
-		}
-	}
-
-	#navicon {
-		display: none;
-		margin: 0;
-		margin-bottom: 2px;
-		padding-left: 10px;
-
-		li {
-			display: block;
-			a {
-				display: block;
-			}
-		}
-
-		li:hover img  {
-			content: url("attachments/navicon-active.svg");
-		}			
-	}
-}*/
-
-
-/*******************************
 		COVER PAGE/CANVAS
 *******************************/
 
@@ -265,17 +219,22 @@ nav {
 }
 
 #cover-page {
-	background: url("../images/sf-min.jpg") no-repeat center center fixed;
+	/*background: url("../images/sf-min.jpg") no-repeat center center fixed;
 	.Cover;
-	.CoverIE("images/sf-min.png");
+	.CoverIE("images/sf-min.png");*/
 	width: 100%;
 	height: 100vh;
 	bottom: 0;
-	margin-bottom: 10px;
 	z-index: 2;
 	color: #EEEEEE;
 	text-align: center;
 	transition: all 5s ease-in;
+	position: fixed;
+
+	#cover-page_img {
+		width: 100%;
+		height: auto;
+	}
 
 	#coverPageHeader {
 		/*font-family: @titleFonts;*/
@@ -287,9 +246,10 @@ nav {
 		text-align: center;
 		color: #FFD194;
 		/*color: #000B66;*/
-		margin-top: 150px;
 		padding-right: 10px;
 		width: 100%;
+		top: 17%;
+		position: fixed;
 	}
 
 	#scrollDiv {
@@ -345,12 +305,19 @@ nav {
 
 
 #content {
+	/*		TO-DO: RE-ENABLE BELOW CODE WHEN TRANSITIONS ARE FIXED
+	display: none;
+	position: absolute;
+	top: 0;
+	left: 0;
 	width: 100%;
+	height: 100%;
+	*/
 	padding: 0;
 	z-index: 20;
-	overflow: auto;
-	overflow-y: scroll; /* has to be scroll, not auto */
-  	-webkit-overflow-scrolling: touch;
+	position: absolute;
+	top: 100%;
+	width: 100%;
 }
 
 #projects {
@@ -520,8 +487,12 @@ nav {
 *******************************/
 
 @media only screen and (max-width: 600px) {
-	#cover-page #scrollDiv {
-		bottom: 100px;
+	#cover-page {
+		/*background-attachment: scroll;*/
+
+		#scrollDiv {
+			bottom: 100px;
+		}
 	}
 
 	#projects {

@@ -10,7 +10,7 @@ $(document).ready(function() {
 		windowHeight: 0,
 		// scrollable booleans
 		on_scroll: false,
-		is_on_cover_page: false
+		is_on_cover_page: false,
 	};
 
 	// creates animation callback for browswer
@@ -39,16 +39,10 @@ $(document).ready(function() {
 
 	initGlobals();						// calculate global variables
 	fadeToScene();
+	set_sf_image_size();
 	createCanvas();						// create canvas with animating fog
 	
-	// if (!isMobile.matches && !isTablet.matches) {
-	// 	initGlobals();						// calculate global variables
-	// 	// delayInitialElements();				// show/hide elements on page load
-	// 	fadeToScene();
-	// 	createCanvas();						// create canvas with animating fog
-	// } else {
-	// 	fadeToScene();
-	// }
+	// if (isMobile.matches || isTablet.matches) {	} 	// useful check for mobile devices, if ya want to use it
 
 	// pause bootstrap carousel
 	$("#safetypenn-carousel").carousel('pause');
@@ -69,41 +63,30 @@ $(document).ready(function() {
 		animate();							// inimates cloud objects
 	}
 
-	/*********************************************************************
-		-- NAV --
-	********************************************************************/
+	function set_sf_image_size() {
+		var $cover_page_img = $("#cover-page_img");
+		var window_width = $(window).width();
+		var window_height = $(window).height();
+		var img_height = $cover_page_img.height();
+		var margin_left = (window_width <= 1072) ? -(1072 - window_width)/2 : 0;
+		var margin_top = (img_height <= 801) ? 0 : -(img_height - 801)/2;
 
-// 	$("nav #navDesktop li a").on('click', function(event) {
-// 		if ($(this).html() != "Resume") {
-// 			event.preventDefault();
-// 		}
-
-// 		switch($(this).attr("href")) {
-// 			case "#cover-page":
-// // TO-DO: make new transition
-
-// 				$("html, body").animate({ scrollTop: 0 }, 1000);
-// 				break;
-// 			case "#projects":
-// 				$("html, body").animate({ scrollTop: $("#projects").offset().top }, 1000);
-// 				break;
-// 			case "#contact":
-// 				$("html, body").animate({ scrollTop: $("#contact").offset().top }, 1000);
-// 				break;
-// 		}
-// 	});
-
-	// // mobile nav
-	// $("#navicon li a").on('click', function(event) {
-	// 	$("#navDesktop").slideToggle();
-	// 	event.preventDefault();
-	// });
-
-	// $("#navDesktop li a").on('click', function() {
-	// 	if ($(window).width() <= 562) {
-	// 		$("#navDesktop").slideToggle();
-	// 	}
-	// })
+		if (window_width/window_height > 1.339) {
+			$cover_page_img.css({
+				"width": "100%",
+				"height": "auto",
+				"margin-left": margin_left,
+				"margin-top": margin_top
+			});
+		} else {
+			$cover_page_img.css({
+				"width": "auto",
+				"height": "100%",
+				"margin-left": margin_left,
+				"margin-top": margin_top
+			});
+		}
+	}
 
 
 	/*********************************************************************
@@ -135,6 +118,8 @@ $(document).ready(function() {
 			}
 		}
 	});
+
+	// TO-DO: REMOVE OLD LINKS DOWN HERE WITH FONTAWESOME
 
 	// change images when hovering over contact links
 	$("#socialLinks img").hover(
@@ -168,6 +153,13 @@ $(document).ready(function() {
 		}
 	);
 
+	// animate to content when scroll button is clicked
+	$("#scrollDiv").on('click', function() {
+		$("html, body").animate({ scrollTop: $("#content").offset().top }, {
+			duration: 600
+		});
+	});
+
 	// handle window resizing events with smart resize
 	$(window).smartresize(function() {
 		var animRequest = Fog.animRequest;
@@ -175,6 +167,7 @@ $(document).ready(function() {
 
 		// recalculate globals
 		initGlobals();
+		set_sf_image_size();
 
 		if (animRequest != null && Fog.canvas != null) {
 			cancelAnimationFrame(animRequest);		// clear requestAnimFrame
@@ -186,38 +179,49 @@ $(document).ready(function() {
 	Fog.on_scroll = false;
 	Fog.is_on_cover_page = $("#cover-page").is(":visible");
 
-	$("#content").scroll(function() {
-		on_scroll = true;
-		setInterval(scroll_debounce($(this), "content"), 100);
+
+	$(window).scroll(function() {
+		Fog.on_scroll = true;
+		setInterval(scroll_debounce(), 100);
 	});
 
-	$("#wrapper-body").scroll(function() {
-		on_scroll = true;
-		setInterval(scroll_debounce($(this), "cover-page"), 100);
-	});
-
-	function scroll_debounce($dom, current_div_name) {
-		if (on_scroll) {
-			on_scroll = false;
-			var scrollTop = $dom.scrollTop();
+	function scroll_debounce() {
+		if (Fog.on_scroll) {
+			Fog.on_scroll = false;
+			// var scrollTop = $dom.scrollTop();
+			var scrollTop = $(window).scrollTop();
 			var is_on_cover_page = Fog.is_on_cover_page;
 
 			// go back to cover page if user scrolls up all the way
-			if (current_div_name == "content" && scrollTop == 0 && !is_on_cover_page) {
+
+			// TO-DO: ENABLE BELOW WHEN TRANSITIONS ARE FIXED
+
+			// if (scrollTop == 0 && !is_on_cover_page) {
+			// 	go_to_cover_page();
+			// }
+			// go to content
+			// else if (scrollTop >= 9 && is_on_cover_page) {
+			// 	hide_cover_page();
+			// }
+
+			// TEMPORARY CODE TO REMOVE WHEN TRANSITIONS ARE FIXED
+			var height_enable_fog = $("#content").offset().top;
+			if (scrollTop <= height_enable_fog && !is_on_cover_page) {
 				go_to_cover_page();
+			} else if (scrollTop > height_enable_fog && is_on_cover_page) {
+				hide_cover_page();
 			}
 
-			// go to content
-			else if (current_div_name == "cover-page" && scrollTop >= 9 && is_on_cover_page) {
-				go_to_content();
-			}
 		}
 	}
 
 	// jumps to cover page and sets global booleans
 	function go_to_cover_page() {
 		Fog.is_on_cover_page = true;
-		PageTransitions.nextPage(26);
+		// PageTransitions.nextPage(26);
+		
+		// TO-DO: RE-ENABLE BELOW FOR TRANSITIONS
+		// $("#content").fadeOut("slow");
 
 		// recreate fog
 		cancelAnimationFrame(Fog.animRequest);	// clear requestAnimFrame
@@ -225,9 +229,12 @@ $(document).ready(function() {
 	}
 
 	// jumps to content and sets global booleans
-	function go_to_content() {
+	function hide_cover_page() {
 		Fog.is_on_cover_page = false;
-		PageTransitions.nextPage(25);
+		// PageTransitions.nextPage(25);
+		
+		// TO-DO: RE-ENABLE BELOW FOR TRANSITIONS
+		// $("#content").fadeIn("slow");
 
 		// clear canvas scene
 		var width = Fog.WIDTH;
