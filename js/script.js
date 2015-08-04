@@ -11,6 +11,7 @@ $(document).ready(function() {
 		// scrollable booleans
 		on_scroll: false,
 		is_on_cover_page: false,
+		is_mobile: false
 	};
 
 	// creates animation callback for browswer
@@ -43,9 +44,10 @@ $(document).ready(function() {
 	createCanvas();						// create canvas with animating fog
 	
 	// change image if mobile
-	// if (isMobile.matches || isTablet.matches) {
+	if (isMobile.matches || isTablet.matches) {
 	// 	$("#cover-page_img").attr("src", "images/sf-mobile.jpg");
-	// }
+		Fog.is_mobile = true;
+	}
 
 	// pause bootstrap carousel
 	$("#safetypenn-carousel").carousel('pause');
@@ -165,16 +167,18 @@ $(document).ready(function() {
 
 	// handle window resizing events with smart resize
 	$(window).smartresize(function() {
-		var animRequest = Fog.animRequest;
-		var scrollTop = $(window).scrollTop();
+		if (!Fog.is_mobile) {
+			var animRequest = Fog.animRequest;
+			var scrollTop = $(window).scrollTop();
 
-		// recalculate globals
-		initGlobals();
-		set_sf_image_size();
+			// recalculate globals
+			initGlobals();
+			set_sf_image_size();
 
-		if (animRequest != null && Fog.canvas != null) {
-			cancelAnimationFrame(animRequest);		// clear requestAnimFrame
-			createCanvas();							// recreate canvas and redraw fog with new dimensions
+			if (animRequest != null && Fog.canvas != null) {
+				cancelAnimationFrame(animRequest);		// clear requestAnimFrame
+				createCanvas();							// recreate canvas and redraw fog with new dimensions
+			}
 		}
 	});
 
