@@ -42,7 +42,10 @@ $(document).ready(function() {
 	set_sf_image_size();
 	createCanvas();						// create canvas with animating fog
 	
-	// if (isMobile.matches || isTablet.matches) {	} 	// useful check for mobile devices, if ya want to use it
+	// change image if mobile
+	if (isMobile.matches || isTablet.matches) {
+		$("#cover-page_img").attr("src", "images/sf-mobile.jpg");
+	}
 
 	// pause bootstrap carousel
 	$("#safetypenn-carousel").carousel('pause');
