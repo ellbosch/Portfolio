@@ -43,9 +43,9 @@ $(document).ready(function() {
 	createCanvas();						// create canvas with animating fog
 	
 	// change image if mobile
-	if (isMobile.matches || isTablet.matches) {
-		$("#cover-page_img").attr("src", "images/sf-mobile.jpg");
-	}
+	// if (isMobile.matches || isTablet.matches) {
+	// 	$("#cover-page_img").attr("src", "images/sf-mobile.jpg");
+	// }
 
 	// pause bootstrap carousel
 	$("#safetypenn-carousel").carousel('pause');
