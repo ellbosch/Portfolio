@@ -10,7 +10,7 @@ $(document).ready(function() {
 		windowHeight: 0,
 		// scrollable booleans
 		on_scroll: false,
-		is_on_cover_page: false,
+		is_on_cover_page: $("#cover-page").is(":visible"),
 		is_mobile: false
 	};
 
@@ -107,19 +107,13 @@ $(document).ready(function() {
 			var is_on_cover_page = Fog.is_on_cover_page;
 			switch (clicked_item) {
 				case "#cover-page":
-					if (!is_on_cover_page) go_to_cover_page();
+					$("html, body").animate({ scrollTop: 0 }, 700);
 					break;
 				case "#projects":
-					if (is_on_cover_page) go_to_content();
-					else {
-						$("#content").animate({ scrollTop: 10 }, 1000);
-					}
+					$("html, body").animate({ scrollTop: $("#content").offset().top }, 700);
 					break;
 				case "#contact":
-					if (is_on_cover_page) {
-						go_to_content();
-					}
-					$("#content").animate({ scrollTop: $("#projects").height() }, 1000);
+					$("html, body").animate({ scrollTop: $("#contact").offset().top }, 700);
 			}
 		}
 	});
@@ -180,11 +174,6 @@ $(document).ready(function() {
 		}
 	});
 
-	// SCROLL HANDLERS
-	Fog.on_scroll = false;
-	Fog.is_on_cover_page = $("#cover-page").is(":visible");
-
-
 	$(window).scroll(function() {
 		Fog.on_scroll = true;
 		setInterval(scroll_debounce(), 100);
@@ -193,24 +182,10 @@ $(document).ready(function() {
 	function scroll_debounce() {
 		if (Fog.on_scroll) {
 			Fog.on_scroll = false;
-			// var scrollTop = $dom.scrollTop();
 			var scrollTop = $(window).scrollTop();
 			var is_on_cover_page = Fog.is_on_cover_page;
-
-			// go back to cover page if user scrolls up all the way
-
-			// TO-DO: ENABLE BELOW WHEN TRANSITIONS ARE FIXED
-
-			// if (scrollTop == 0 && !is_on_cover_page) {
-			// 	go_to_cover_page();
-			// }
-			// go to content
-			// else if (scrollTop >= 9 && is_on_cover_page) {
-			// 	hide_cover_page();
-			// }
-
-			// TEMPORARY CODE TO REMOVE WHEN TRANSITIONS ARE FIXED
 			var height_enable_fog = $("#content").offset().top;
+
 			if (scrollTop <= height_enable_fog && !is_on_cover_page) {
 				go_to_cover_page();
 			} else if (scrollTop > height_enable_fog && is_on_cover_page) {

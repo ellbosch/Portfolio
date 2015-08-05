@@ -306,16 +306,8 @@ html, body {
 
 
 #content {
-	/*		TO-DO: RE-ENABLE BELOW CODE WHEN TRANSITIONS ARE FIXED
-	display: none;
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	*/
 	padding: 0;
-	z-index: 20;
+	z-index: 3;
 	position: relative;
 	top: 100%;
 	width: 100%;
@@ -487,6 +479,12 @@ html, body {
 		MEDIA QUERIES
 *******************************/
 
+@media only screen and (max-width: 730px) {
+	.menu-button {
+		margin: 0.1em;
+	}
+}
+
 @media only screen and (max-width: 600px) {
 	#projects {
 		#projects_header {
@@ -514,7 +512,6 @@ html, body {
 @media only screen and (max-width: 450px) {
 	#cover-page #coverPageHeader {
 		font-size: 50px;
-		/*margin-top: 100px;*/
 	}
 }
 
